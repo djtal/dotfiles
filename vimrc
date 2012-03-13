@@ -1,5 +1,13 @@
+" inspiration taken from multiple source including :
+"   http://mislav.uniqpath.com/2011/12/vim-revisited/
+"   http://stevelosh.com/blog/2010/09/coming-home-to-vim/
+"   http://vimcasts.org/
+"   http://amix.dk/vim/vimrc.html
+"   https://www.destroyallsoftware.com/screencasts/catalog/some-vim-tips
+"
 call pathogen#infect()
 
+" General option
 set nocompatible
 syntax on
 set background=dark
@@ -10,12 +18,29 @@ set smartcase
 set incsearch
 set showmatch
 set hlsearch
+" highlight current line
+set cursorline
+
+set ai "Auto indent
+set si "Smart indet
+
 let mapleader=","
 nnoremap <leader><leader> <c-^>
-
 nnoremap <leader><space> :noh<cr>
 
-au BufNewFile,BufRead *.less setlocal ft=css
+" Fast saving
+nmap <leader>w :w!<cr>
+" on the fly vimrc editing and applying
+nmap <leader>v :tabedit $MYVIMRC<CR>
+" Source the vimrc file after saving it
+if has("autocmd")
+  autocmd bufwritepost .vimrc source $MYVIMRC
+  au BufNewFile,BufRead *.less setlocal ft=css
+   " Treat JSON files like JavaScript
+  au BufNewFile,BufRead *.json set ft=javascript
+endif
+
+
 
 set number
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
@@ -39,6 +64,28 @@ inoremap jj <ESC>
 " always show statusline
 set laststatus=2
 
-" netrw confi
+" netrw config
 let g:netrw_liststyle=3
 
+" block using arrow key (don't understand why at this time but try)
+map <Left> :echo "no!"<cr>
+map <Right> :echo "no!"<cr>
+map <Up> :echo "no!"<cr>
+map <Down> :echo "no!"<cr>
+
+" => Parenthesis/bracket expanding
+vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+vnoremap $3 <esc>`>a}<esc>`<i{<esc>
+vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+vnoremap $q <esc>`>a'<esc>`<i'<esc>
+vnoremap $e <esc>`>a"<esc>`<i"<esc>
+
+" Map auto complete of (, ", ', [
+inoremap $1 ()<esc>i
+inoremap $2 []<esc>i
+inoremap $3 {}<esc>i
+inoremap $4 {<esc>o}<esc>O
+inoremap $q ''<esc>i
+inoremap $e ""<esc>i
+inoremap $t <><esc>i
