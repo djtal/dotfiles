@@ -18,6 +18,10 @@ set smartcase
 set incsearch
 set showmatch
 set hlsearch
+" No backup file and no swap file
+set nobackup
+set noswapfile
+
 " highlight current line
 set cursorline
 
