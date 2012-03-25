@@ -15,7 +15,7 @@ export GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWUNTRACKEDFILES=1 GIT_PS1_SHOWSTASHST
 
 #export PS1='[\T]\h\[\033[33m[\W]\033[m\]\$ '
 
-export EDITOR='mate -w'
+export EDITOR='mvim -w'
 # overide git path by /usr/local/git/bin to avoid using the apple installed one at /usr/bin/git
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/usr/local/mongodb/bin:/usr/local/mysql/bin:~/bin:$PATH" 
 export PATH="$HOME/.rbenv/bin:$PATH"
