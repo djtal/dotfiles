@@ -77,3 +77,9 @@ map <Right> :echo "no!"<cr>
 map <Up> :echo "no!"<cr>
 map <Down> :echo "no!"<cr>
 
+
+" tabs managment
+map <C-S-tab> :tabprevious<CR>
+map <C-tab> :tabnext<CR>
+map <C-t> :tabnew<CR>
+map <C-w> :tabclose<CR>
