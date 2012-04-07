@@ -29,5 +29,9 @@ eval "$(rbenv init -)"
 # En fait l'important ici c'est le "\033[1;32m\]$(__git_ps1)\[\033[0m\]", le reste c'est mon prompt usuel…
 export PS1='\[\033[33m[\W\[\033[0m\]$(__git_ps1)\[\033[33m]@\[\033[0m\]\h:\[\033[0m\] \$ '
 
+# autojump setting
+if [ -f `brew --prefix`/etc/autojump ]; then
+  . `brew --prefix`/etc/autojump
+fi
 
 cd
