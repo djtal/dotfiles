@@ -26,8 +26,16 @@ alias l="ls -l -G -a"
 alias be="bundle exec"
 alias git=hub
 eval "$(rbenv init -)"
+
+#define some color based on the molokai them see http://stevelosh.com/blog/2009/03/candy-colored-terminal/
+D=$'\e[37;40m'
+PINK=$'\e[35;40m'
+GREEN=$'\e[32;40m'
+ORANGE=$'\e[33;40m'
+
+
 # En fait l'important ici c'est le "\033[1;32m\]$(__git_ps1)\[\033[0m\]", le reste c'est mon prompt usuel…
-export PS1='\[\033[33m[\W\[\033[0m\]$(__git_ps1)\[\033[33m]@\[\033[0m\]\h:\[\033[0m\] \$ '
+export PS1='${PINK}[${GREEN}\W${PINK}$(__git_ps1)${PINK}]@${ORANGE}\h:${D}\$ '
 
 # autojump setting
 if [ -f `brew --prefix`/etc/autojump ]; then
