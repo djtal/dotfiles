@@ -35,7 +35,7 @@ ORANGE=$'\e[33;40m'
 
 
 # En fait l'important ici c'est le "\033[1;32m\]$(__git_ps1)\[\033[0m\]", le reste c'est mon prompt usuel…
-export PS1='${PINK}[${GREEN}\W${PINK}$(__git_ps1)${PINK}]@${ORANGE}\h:${D}\$ '
+export PS1='[\W${GREEN}$(__git_ps1)${D}]@${ORANGE}\h:${D}\$ '
 
 # autojump setting
 if [ -f `brew --prefix`/etc/autojump ]; then
