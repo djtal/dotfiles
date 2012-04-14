@@ -21,6 +21,7 @@ set hlsearch
 " No backup file and no swap file
 set nobackup
 set noswapfile
+set encoding=utf-8 " Necessary to show unicode glyphs
 
 " highlight current line
 set cursorline
@@ -83,3 +84,13 @@ map <C-S-tab> :tabprevious<CR>
 map <C-tab> :tabnext<CR>
 map <C-t> :tabnew<CR>
 map <C-w> :tabclose<CR>
+
+" Powerline configuration
+let g:Powerline_symbols = 'fancy'
+
+" Smart input custom rules
+call smartinput#map_to_trigger('i', '#', '#', '#')
+call smartinput#map_to_trigger('i', '<Bar>', '<Bar>', '<Bar>')
+
+call smartinput#define_rule({'at': '\%#', 'char': '#', 'input': '#{}<Left>', 'filetype': ['ruby'], 'syntax': ['Constant', 'Special']})
+call smartinput#define_rule({'at': '\({\|\<do\>\)\s*\%#', 'char': '<Bar>', 'input': '<Bar><Bar><Left>', 'filetype': ['ruby']})
