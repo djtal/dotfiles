@@ -43,14 +43,29 @@ if has("autocmd")
   au BufNewFile,BufRead *.less setlocal ft=css
    " Treat JSON files like JavaScript
   au BufNewFile,BufRead *.json set ft=javascript
+  " Delete all whitespace in end of line
+  autocmd BufWritePre * :%s/\s\+$//e
 endif
 
+augroup filetypedetect
+    au! BufRead,BufNewFile *.pde  setfiletype arduino
+    au! BufRead,BufNewFile *.ino  setfiletype arduino
+augroup END
 
 
 set number
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+" highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+
+" don't write too long line of code so show me the limit
+"set wrap
+"set textwidth=79
+"set formatoptions=qrn1
+set colorcolumn=85
 
 nmap <C-N><C-N> :set invnumber<CR>
+
+" Make backspace delete lots of things
+set backspace=indent,eol,start
 
 
 " easier navigation between split windows
@@ -85,8 +100,16 @@ map <C-tab> :tabnext<CR>
 map <C-t> :tabnew<CR>
 map <C-w> :tabclose<CR>
 
+" Tab completion
+set wildmode=list:longest,list:full
+set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
+
 " Powerline configuration
 let g:Powerline_symbols = 'fancy'
+
+" T-Comment
+nnoremap <leader>t :TComment<CR>
 
 " Smart input custom rules
 call smartinput#map_to_trigger('i', '#', '#', '#')
