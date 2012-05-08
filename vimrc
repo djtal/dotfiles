@@ -76,6 +76,16 @@ nnoremap <c-l> <c-w>l
 
 nnoremap <leader>ft Vatzf
 
+" match bracket pair with tab
+nnoremap <tab> %
+vnoremap <tab> %
+
+" force saving files that require root permission
+cmap w!! %!sudo tee > /dev/null %
+
+" Keep the cursor in place while joining limes
+nnoremap J mzJ`z
+
 imap <c-l> <space>=><space>
 
 " jj alow to go out from insert/edit mode
@@ -99,6 +109,8 @@ map <C-S-tab> :tabprevious<CR>
 map <C-tab> :tabnext<CR>
 map <C-t> :tabnew<CR>
 map <C-w> :tabclose<CR>
+nmap tt :tabnext<cr>
+map tt :tabnext<cr>
 
 " Tab completion
 set wildmode=list:longest,list:full
@@ -107,6 +119,13 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
 
 " Powerline configuration
 let g:Powerline_symbols = 'fancy'
+
+" Ack.vim
+nnoremap <leader>a :Ack <C-R>=expand("<cword>")<CR>
+
+"custom Rails.vim config (ok stollen form aother dotfiles)
+command! Rroutes :e config/routes.rb
+command! RTroutes :tabe config/routes.rb
 
 " T-Comment
 nnoremap <leader>t :TComment<CR>
