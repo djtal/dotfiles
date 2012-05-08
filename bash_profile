@@ -10,9 +10,6 @@ shopt -s histappend
 shopt -s cdspell
 
 
-if [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-fi
 
 if [ -f `brew --prefix`/etc/bash_completion ]; then
     . `brew --prefix`/etc/bash_completion
@@ -37,7 +34,6 @@ export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 # Highlight section titles in manual pages
-export LESS_TERMCAP_md="$ORANGE"
 
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
@@ -67,8 +63,9 @@ PINK=$'\e[35;40m'
 GREEN=$'\e[32;40m'
 ORANGE=$'\e[33;40m'
 
+export LESS_TERMCAP_md="$ORANGE"
 
-export PS1='[\W${GREEN}$(__git_ps1)${D}]@${ORANGE}\h:${D}\$ '
+export PS1='[\W\[${GREEN}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h\[${D}\] \$ '
 
 # autojump setting
 if [ -f `brew --prefix`/etc/autojump ]; then
