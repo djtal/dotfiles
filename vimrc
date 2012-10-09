@@ -23,11 +23,15 @@ set nobackup
 set noswapfile
 set encoding=utf-8 " Necessary to show unicode glyphs
 
+set smartindent
+set autoindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+
 " highlight current line
 set cursorline
 
-set ai "Auto indent
-set si "Smart indet
 
 let mapleader=","
 nnoremap <leader><leader> <c-^>
@@ -64,6 +68,14 @@ set colorcolumn=85
 
 nmap <C-N><C-N> :set invnumber<CR>
 
+" invisible char
+nmap <leader>l :set list!<CR>
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬
+"Invisible character colors
+highlight NonText guifg=#9797a9
+highlight SpecialKey guifg=#9797a9
+
 " Make backspace delete lots of things
 set backspace=indent,eol,start
 
@@ -79,6 +91,13 @@ nnoremap <leader>ft Vatzf
 " match bracket pair with tab
 nnoremap <tab> %
 vnoremap <tab> %
+
+" easy acces to edit in split mode and tab
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
 
 " force saving files that require root permission
 cmap w!! %!sudo tee > /dev/null %
@@ -136,3 +155,16 @@ call smartinput#map_to_trigger('i', '<Bar>', '<Bar>', '<Bar>')
 
 call smartinput#define_rule({'at': '\%#', 'char': '#', 'input': '#{}<Left>', 'filetype': ['ruby'], 'syntax': ['Constant', 'Special']})
 call smartinput#define_rule({'at': '\({\|\<do\>\)\s*\%#', 'char': '<Bar>', 'input': '<Bar><Bar><Left>', 'filetype': ['ruby']})
+
+" via: http://whynotwiki.com/Vim
+" Ruby
+" Use v or # to get a variable interpolation (inside of a string)}
+" ysiw#   Wrap the token under the cursor in #{}
+" v...s#  Wrap the selection in #{}
+let g:surround_113 = "#{\r}"   " v
+let g:surround_35  = "#{\r}"   " #
+
+" Select text in an ERb file with visual mode and then press s- or s=
+" Or yss- to do entire line.
+let g:surround_45 = "<% \r %>"    " -
+let g:surround_61 = "<%= \r %>"   " =
