@@ -67,10 +67,5 @@ export LESS_TERMCAP_md="$ORANGE"
 
 export PS1='[\W\[${GREEN}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h\[${D}\] \$ '
 
-# autojump setting
-if [ -f `brew --prefix`/etc/autojump ]; then
-  . `brew --prefix`/etc/autojump
-fi
-
 cd
 
