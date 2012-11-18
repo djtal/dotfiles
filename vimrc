@@ -44,7 +44,6 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 " Source the vimrc file after saving it
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
-  au BufNewFile,BufRead *.less setlocal ft=css
    " Treat JSON files like JavaScript
   au BufNewFile,BufRead *.json set ft=javascript
   " Delete all whitespace in end of line

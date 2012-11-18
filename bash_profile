@@ -53,7 +53,7 @@ alias ls="ls -la -G"
 alias l="ls -l -G -a"
 alias be="bundle exec"
 alias git=hub
-eval "$(rbenv init -)"
+eval "$(rbenv init - --no-rehash)"
 
 # Prompt
 
