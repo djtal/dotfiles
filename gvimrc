@@ -15,6 +15,6 @@ if has("gui_macvim")
   let macvim_hig_shift_movement = 1
 
   " macvim alloy file browser
-  noremap <leader>d :maca toggleFileBrowser:<CR>
+  noremap <leader><leader>d :maca toggleFileBrowser:<CR>
   noremap <leader>b :maca openFileBrowser:<CR>
 end
