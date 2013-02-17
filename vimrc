@@ -46,14 +46,12 @@ if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
    " Treat JSON files like JavaScript
   au BufNewFile,BufRead *.json set ft=javascript
+  au BufNewFile,BufRead *.pde set ft=arduino
+  au BufNewFile,BufRead *.ino set ft=arduino
   " Delete all whitespace in end of line
   autocmd BufWritePre * :%s/\s\+$//e
 endif
 
-augroup filetypedetect
-    au! BufRead,BufNewFile *.pde  setfiletype arduino
-    au! BufRead,BufNewFile *.ino  setfiletype arduino
-augroup END
 
 
 set number
