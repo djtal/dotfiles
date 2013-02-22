@@ -9,6 +9,7 @@ shopt -s histappend
 # Autocorrect typos in path names when using `cd`
 shopt -s cdspell
 
+umask 0002
 
 
 if [ -f `brew --prefix`/etc/bash_completion ]; then
@@ -46,6 +47,34 @@ export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/usr/local/mongodb/bin:/usr/local/mysql/bin:~/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 export ARDUINO_SDK_PATH="/Applications/Arduino.app/Contents/Resources/Java"
+
+# Functions
+
+function cdproj() {
+  dir=$(find ~/ciblo/projets -type d -mindepth 1 -maxdepth 2 -name "$1" | head -n 1)
+  if [ "$dir" ]; then
+    cd "$dir"
+    { [ -d 'trunk' ] && cd trunk; } || { [ -d 'webapp' ] && cd webapp; }
+  else
+    echo "Aucun projet '$1' trouvé..." >&2
+    return 1
+  fi
+}
+
+function _projects() {
+  local cur
+  cur=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( $(find ~/ciblo/projets -type d -mindepth 0 -maxdepth 1 ! -name '.*' -name "$cur*" -exec basename {} \;) )
+}
+complete -F _projects cdproj
+
+function rdm() { rake db:migrate "$@"; }
+function rsc() { ruby script/console "$@"; }
+function rsg() { ruby script/generate "$@"; }
+function rss() { ruby script/server "$@"; }
+function sdc() { ./script/dbconsole -p "$@"; }
+function tlf() { tail -f log/${RAILS_ENV:-development}.log; }
+
 
 # Alias
 

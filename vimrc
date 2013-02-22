@@ -127,6 +127,8 @@ map <C-t> :tabnew<CR>
 map <C-w> :tabclose<CR>
 nmap tt :tabnext<cr>
 map tt :tabnext<cr>
+nmap tp :tabprevious<cr>
+map tp :tabprevious<cr>
 
 " Tab completion
 set wildmode=list:longest,list:full
