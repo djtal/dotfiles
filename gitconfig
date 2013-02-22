@@ -1,0 +1,16 @@
+[git-tmbundle "log"]
+	limit = 25
+[git-tmbundle]
+	gitx-path = /Applications/GitX.app
+[alias]
+  lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative
+  st = status -sb
+[core]
+  pager = cat
+	excludesfile = /Users/djtal/Developement/Projects/gitignore/Global/OSX.gitignore
+[push]
+	default = tracking
+[color]
+	ui = true
+[pull]
+	rebase = true
