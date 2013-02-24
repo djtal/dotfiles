@@ -19,15 +19,21 @@ git config --global user.email "$GIT_AUTHOR_EMAIL"
 
 ## Notable things
 
+extract function to extract all kind of file with search wich command tu use
 
+Usage :
+```bash
+$ extract file.zip
+```
 
 ## Credits
 
 Inspiration taken from
 
-[Mathias Bynens dot files](https://github.com/mathiasbynens/dotfiles)
-[dotfiles.github.com](http://dotfiles.github.com/)
-[@climagic](https://twitter.com/climagic)
+* [Mathias Bynens dot files](https://github.com/mathiasbynens/dotfiles)
+* [dotfiles.github.com](http://dotfiles.github.com/)
+* [@climagic](https://twitter.com/climagic)
+* [shell pro tip](https://coderwall.com/p/t/bash) from codewall
 
 My coworkers for all the tips and tricks
 And many others

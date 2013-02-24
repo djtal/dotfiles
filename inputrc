@@ -1,0 +1,11 @@
+# allow to search command from history starting with what you typed
+# with up/down arrow
+# exemple :
+# $ cd :
+# search all command starting with cd
+# Source : https://coderwall.com/p/oqtj8w?i=5&p=1&q=sort%3Ascore+desc&t%5B%5D=bash
+#
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+set show-all-if-ambiguous on
+set completion-ignore-case on
