@@ -47,3 +47,13 @@ function extract {
         echo "'$1' is not a valid file"
     fi
 }
+function _compressed_files() {
+  local cur
+  cur=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( $(find . -type f ! -name '.*' -name "$cur*.tar.bz2" -o -name "$cur*.tar.gz" \
+                -o -name "$cur$.bz2" -o -name "$cur*.rar" -o -name "$cur$.gz" \
+                -o -name "$cur*.tar" -o -name "$cur$.tbz2" -o -name "$cur*.tgz" \
+                -o -name "$cur*.zip" -o -name "$cur$.Z" -o -name "$cur*.7z" \
+                | xargs -n1 basename) )
+}
+complete -F _compressed_files extract
