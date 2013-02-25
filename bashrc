@@ -122,4 +122,4 @@ PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
 
 #enable autojump
 . /usr/share/autojump/autojump.sh
-eval "$(/home/guillaume/Documents/wip/tech/bin/tech init -)"
+eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
