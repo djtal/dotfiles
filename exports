@@ -1,9 +1,29 @@
-
+# vim:syntax=sh
 export GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWUNTRACKEDFILES=1 GIT_PS1_SHOWSTASHSTATE=1
 
 # Export
 
-export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+# only for Linux
+if [ ! $(uname -s) = "Linux" ]; then
+  export EDITOR=vim
+  export TERM="xterm-256color"
+  # to have the indication of cursor's location and line numbers, and R
+  export LESS="-mR"
+
+  export LESS="-X"
+fi
+# Only for OS X
+if [ ! $(uname -s) = "Darwin" ]; then
+  export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+  # overide git path by /usr/local/git/bin to avoid using the apple installed one at /usr/bin/git
+  export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/usr/local/mongodb/bin:/usr/local/mysql/bin:~/bin:$PATH"
+  export ARDUINO_SDK_PATH="/Applications/Arduino.app/Contents/Resources/Java"
+  export PATH="$HOME/.rbenv/bin:$PATH"
+fi
+
+export LANG=fr_FR.UTF-8
+export LC_ALL=fr_FR.UTF-8
+
 # Don’t clear the screen after quitting a manual page
 export MANPAGER="less -X"
 # Highlight section titles in manual pages
@@ -15,10 +35,6 @@ export HISTCONTROL=ignoredups
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
 
-# overide git path by /usr/local/git/bin to avoid using the apple installed one at /usr/bin/git
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/usr/local/mongodb/bin:/usr/local/mysql/bin:~/bin:$PATH"
-export PATH="$HOME/.rbenv/bin:$PATH"
-export ARDUINO_SDK_PATH="/Applications/Arduino.app/Contents/Resources/Java"
-
 
 export LESS_TERMCAP_md="$ORANGE"
+export RAILS_ENV='development'
