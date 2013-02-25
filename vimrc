@@ -153,6 +153,7 @@ endfunction
 
 
 " Powerline configuration
+set rtp+=~/.vim/bundle/powerline.vim/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'
 
 nmap SQ <ESC>:mksession! ~/.vim/Session.vim<CR>:wqa<CR>
