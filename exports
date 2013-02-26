@@ -4,7 +4,7 @@ export GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWUNTRACKEDFILES=1 GIT_PS1_SHOWSTASHST
 # Export
 
 # only for Linux
-if [ ! $(uname -s) = "Linux" ]; then
+if [ $(uname -s) = "Linux" ]; then
   export EDITOR=vim
   export TERM="xterm-256color"
   # to have the indication of cursor's location and line numbers, and R
@@ -13,7 +13,7 @@ if [ ! $(uname -s) = "Linux" ]; then
   export LESS="-X"
 fi
 # Only for OS X
-if [ ! $(uname -s) = "Darwin" ]; then
+if [ $(uname -s) = "Darwin" ]; then
   export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
   # overide git path by /usr/local/git/bin to avoid using the apple installed one at /usr/bin/git
   export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/usr/local/mongodb/bin:/usr/local/mysql/bin:~/bin:$PATH"
