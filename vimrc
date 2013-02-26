@@ -246,3 +246,14 @@ function! ToHaml()
 endfunction
 
 call smartinput#define_rule({'at': '\({\|\<do\>\)\s*\%#', 'char': '<Bar>', 'input': '<Bar><Bar><Left>', 'filetype': ['ruby']})
+
+augroup vim_config
+  autocmd FileType gitrebase call LoadGitrebaseBindings()
+augroup END
+
+fun! LoadGitrebaseBindings()
+  nnoremap  P :Pick<CR>
+  nnoremap  S :Squash<CR>
+  nnoremap  F :Fixup<CR>
+  nnoremap  C :Cycle<CR>
+endfun
