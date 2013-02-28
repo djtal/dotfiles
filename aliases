@@ -26,12 +26,11 @@ alias r='touch tmp/restart'
 alias docs='cd ~/Dropbox/Docs/docs'
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete; find . -name '._*' -ls -delete;"
 
-if [ ! $(uname -s) = "Linux" ]; then
+if [  $(uname -s) = "Darwin" ]; then
   alias git=hub
-  alias mvim='gvim'
 fi
 # Simulate OSX's pbcopy and pbpaste on other platforms
-if [ ! $(uname -s) = "Darwin" ]; then
+if [  $(uname -s) = "Linux" ]; then
     alias pbcopy='xsel --clipboard --input'
     alias pbpaste='xsel --clipboard --output'
 fi
