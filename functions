@@ -5,6 +5,7 @@ function cdproj() {
   dir=$(find ~/ciblo -mindepth 1 -maxdepth 2 -name "$1" -type d -o -type l | head -n 1)
   if [ "$dir" ]; then
     cd "$dir"
+    echo -ne "\033]0;$1\007"
     { [ -d 'trunk' ] && cd trunk; } || { [ -d 'webapp' ] && cd webapp; }
   else
     echo "Aucun projet '$1' trouvé..." >&2
@@ -16,7 +17,7 @@ function _projects() {
   local cur
   cur=${COMP_WORDS[COMP_CWORD]}
   #COMPREPLY=( $(find ~/ciblo/projets -type d -mindepth 0 -maxdepth 1 ! -name '.*' -name "$cur*" -exec basename {} \;) )
-  COMPREPLY=( $(find ~/ciblo/{plugins,projets,r-et-d} -mindepth 0 -maxdepth 1 ! -name '.*' -name "$cur*" -type d -o -type l -exec basename {} \;) )
+  COMPREPLY=( $(find ~/ciblo/{plugins,projets,r-et-d} -mindepth 0 -maxdepth 1 ! -name '.*' -name "$cur*" -type d -o -type l -name "$cur*" -exec basename {} \;) )
 }
 complete -F _projects cdproj
 
