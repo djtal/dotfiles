@@ -30,6 +30,7 @@ if [  $(uname -s) = "Darwin" ]; then
   alias git=hub
   alias vim='mvim -v'
   alias vi='mvim -v'
+  alias ack-grep=ack
 fi
 # Simulate OSX's pbcopy and pbpaste on other platforms
 if [  $(uname -s) = "Linux" ]; then
