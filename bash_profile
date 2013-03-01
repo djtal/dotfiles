@@ -47,5 +47,6 @@ ORANGE=$'\e[33;40m'
 export PS1='[\W\[${GREEN}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h\[${D}\] \$ '
 
 eval "$(rbenv init - --no-rehash)"
+eval "$(~/ciblo/r-et-d/tech/bin/tech init -)"
 cd
 
