@@ -40,6 +40,8 @@ function _devs() {
 }
 complete -F _devs cddev
 
+# Pow managment
+
 # easy add app rails app to pow
 #
 function power() {
@@ -49,6 +51,23 @@ function power() {
   ln -nfs $app_path ~/.pow/$app_name
   echo "application avalaible at ${app_name}.dev"
 }
+
+function powlog() {
+  app_path=$(pwd)
+  app_name=$1
+  : ${app_name:="$(basename $app_path)"}
+  tail -f /Users/djtal/Library/Logs/Pow/apps/${app_name}.log
+}
+
+function repow() {
+  launchctl stop cx.pow.powd
+}
+
+function powaaaa {
+  curl --silent -H host:pow localhost/status.json | python -mjson.tool
+}
+
+# Quick Rails 2.3 alias
 
 function rdm() { rake db:migrate "$@"; }
 function rsc() { ruby script/console "$@"; }
