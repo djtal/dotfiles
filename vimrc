@@ -73,6 +73,8 @@ nmap <Leader>c :set cursorline!<CR>
 
 " invisible char
 " nmap <leader>l :set list!<CR>
+
+" http://bairuidahu.deviantart.com/art/Flying-vs-Cycling-261641977
 nnoremap <leader>l :ls<CR>:b<space>
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
@@ -147,6 +149,13 @@ set wildmode=list:longest,list:full
 set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
 
+" Markdown handling
+
+" Enable spellchecking for Markdown
+au BufRead,BufNewFile *.md setlocal spell
+
+ " Automatically wrap at 80 characters for Markdown
+au BufRead,BufNewFile *.md setlocal textwidth=80"
 
 function! NewHash()
   execute '%s/:\([^ ]*\)\(\s*\)=>/\1:/g'
