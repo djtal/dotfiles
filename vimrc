@@ -72,7 +72,8 @@ nmap <C-N><C-N> :set invnumber<CR>
 nmap <Leader>c :set cursorline!<CR>
 
 " invisible char
-nmap <leader>l :set list!<CR>
+" nmap <leader>l :set list!<CR>
+nnoremap <leader>l :ls<CR>:b<space>
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 "Invisible character colors
