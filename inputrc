@@ -1,3 +1,9 @@
+# This is readline config file
+# Readline is the base of many CLI program console managment like bash, irb, etc...
+# see : http://tiswww.case.edu/php/chet/readline/rluserman.html#SEC_Top
+# and : http://www.bigsmoke.us/readline/shortcuts
+
+
 # allow to search command from history starting with what you typed
 # with up/down arrow
 # exemple :
@@ -9,3 +15,6 @@
 "\e[B": history-search-forward
 set show-all-if-ambiguous on
 set completion-ignore-case on
+
+"\C-f": forward-word
+"\C-b": backward-word

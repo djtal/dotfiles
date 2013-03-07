@@ -26,8 +26,6 @@ set noswapfile
 set ai "Auto indent
 set si "Smart indet
 
-" avoid redraw when executing shell cmd
-set t_ti= t_te=
 
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
@@ -152,7 +150,7 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
 " Markdown handling
 
 " Enable spellchecking for Markdown
-au BufRead,BufNewFile *.md setlocal spell
+" au BufRead,BufNewFile *.md setlocal spell
 
  " Automatically wrap at 80 characters for Markdown
 au BufRead,BufNewFile *.md setlocal textwidth=80"
