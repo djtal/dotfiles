@@ -34,4 +34,4 @@ for name in *; do
       fi
     fi
   fi
-done`'`
+done

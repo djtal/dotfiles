@@ -1,3 +1,6 @@
+
+# DO NOT EDIT BELOW THIS LINE
+
 [git-tmbundle "log"]
 	limit = 25
 [git-tmbundle]

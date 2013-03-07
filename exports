@@ -21,6 +21,9 @@ if [ $(uname -s) = "Darwin" ]; then
   export PATH="$HOME/.rbenv/bin:$PATH"
 fi
 
+# load custom dotfiles scripts
+export PATH="$HOME/.bin:$PATH"
+
 export LANG=fr_FR.UTF-8
 export LC_ALL=fr_FR.UTF-8
 
