@@ -8,7 +8,6 @@
 export PATH="$HOME/bin:$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-source /etc/bash_completion.d/git
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -57,6 +56,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+if [ -f /etc/bash_completion.d/git ]; then
+  source /etc/bash_completion.d/git
+fi
+
+
 umask 0002
 
 # Load the shell dotfiles, and then some:
@@ -96,4 +100,9 @@ ORANGE=$'\e[0;33;40m'
 PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
 
 
-eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
+if [ $(uname -s) = "Linux" ]; then
+  eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
+else
+  eval "$(/Users/djtal/ciblo/r-et-d/tech/bin/tech init -)"
+fi
+
