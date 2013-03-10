@@ -70,7 +70,13 @@ function powaaaa {
 # Quick Rails 2.3 alias
 
 function rdm() { rake db:migrate "$@"; }
-function rsc() { ruby script/console "$@"; }
+function rsc() {
+  if [ -f script/console ]; then
+    bundle exec script/console "$@";
+  else
+    bundle exec rails c "$@"
+  fi
+  }
 function rsg() { ruby script/generate "$@"; }
 function rss() { ruby script/server "$@"; }
 function sdc() { ./script/dbconsole -p "$@"; }
