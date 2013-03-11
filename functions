@@ -115,3 +115,21 @@ function _compressed_files() {
                 | xargs -n1 basename) )
 }
 complete -F _compressed_files extract
+
+
+# handy alias if no argutmet equivalent to git lg
+# other plain old git but two letter less
+# credit to https://github.com/pengwynn/dotfiles
+function g {
+    if [[ $# > 0 ]]; then
+        git $@
+    else
+        git status --short --branch
+    fi
+}
+
+# edit conflic in vim and setup search pattern with conflic marker
+# credit to https://coderwall.com/p/psa3ng
+function editconflicts() {
+  vim +/"<<<<<<<" $( git diff --name-only --diff-filter=U | xargs )
+}

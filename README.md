@@ -2,29 +2,25 @@
 
 ## Using this repo
 
-simply symlink file in your home
+Setup based on thoughbot/dotfile install scrpit. See tehir doc for explanations.
 
-## Customizing sensible data
+Basicaly all files are symlink to ~/. If you want to customize some of them
+simly compy them and a a cutline to delimit the part touched by the reference
+file.
 
-Simply add a ~/.extra file with your data
+File are mainy compatible with Ubuntu 12.04 and Os X.
 
-```bash
-GIT_AUTHOR_NAME="You Name"
-GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
-git config --global user.name "$GIT_AUTHOR_NAME"
-GIT_AUTHOR_EMAIL="your-email"
-GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
-git config --global user.email "$GIT_AUTHOR_EMAIL"
-```
+## Sofware in use
 
-## Notable things
+* bash
+* git
+* vim
+* tmux
+* ack
+* ruby/rails
 
-extract function to extract all kind of file with search wich command tu use
-
-Usage :
-```bash
-$ extract file.zip
-```
+Some functions are based on my filesytem organisation. feel free to change the
+to suit your need. Theses are "cdproj" and "cddev"
 
 ## Credits
 
