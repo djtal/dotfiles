@@ -63,15 +63,9 @@ fi
 
 umask 0002
 
-# Load the shell dotfiles, and then some:
-# * ~/.path can be used to extend `$PATH`.
-# * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,aliases,functions}; do
-	[ -r "$file" ] && source "$file"
-done
-unset file
 
 if [ $(uname -s) = "Darwin" ]; then
+  # use completion script provided by brew if available
   if [ -f `brew --prefix`/etc/bash_completion ]; then
       . `brew --prefix`/etc/bash_completion
   fi
@@ -82,11 +76,15 @@ if [ $(uname -s) = "Darwin" ]; then
   # Add tab completion for `defaults read|write NSGlobalDomain`
   # You could just use `-g` instead, but I like being explicit
   complete -W "NSGlobalDomain" defaults
-
-  if [ -f /usr/local/git/contrib/completion/git-completion.bash ]; then
-    . /usr/local/git/contrib/completion/git-completion.bash
-  fi
 fi
+
+# Load the shell dotfiles, and then some:
+# * ~/.path can be used to extend `$PATH`.
+# * ~/.extra can be used for other settings you don’t want to commit.
+for file in ~/.{path,bash_prompt,exports,aliases,functions}; do
+	[ -r "$file" ] && source "$file"
+done
+unset file
 
 
 #define some color based on the molokai them see http://stevelosh.com/blog/2009/03/candy-colored-terminal/
