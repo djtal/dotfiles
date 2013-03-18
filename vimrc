@@ -164,14 +164,6 @@ endfunction
 set rtp+=~/.vim/bundle/powerline.vim/powerline/bindings/vim
 let g:Powerline_symbols = 'fancy'
 
-nmap SQ <ESC>:mksession! ~/.vim/Session.vim<CR>:wqa<CR>
-function! RestoreSession()
-  if argc() == 0 "vim called without arguments
-    execute  "source ~/.vim/Session.vim"
-    colorscheme molokai-im
-  end
-endfunction
-autocmd VimEnter * call RestoreSession()
 
 " statusline
 " cf the default statusline: %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
