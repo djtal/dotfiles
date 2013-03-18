@@ -1,3 +1,8 @@
-#!/bin/sh
-/System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession \
-  -suspend
+#!/usr/bin/env bash
+
+if [[ $(uname -s) = "Darwin" ]]; then
+  /System/Library/CoreServices/"Menu Extras"/User.menu/Contents/Resources/CGSession \
+    -suspend
+else
+  gnome-screensaver-command --lock
+fi
