@@ -26,6 +26,8 @@ set noswapfile
 set ai "Auto indent
 set si "Smart indet
 
+set ttyfast
+
 
 filetype on           " Enable filetype detection
 filetype indent on    " Enable filetype-specific indenting
@@ -212,12 +214,6 @@ let g:surround_45 = "<% \r %>" " -
 let g:surround_61 = "<%= \r %>" " =
 
 
-"Smartinput custom mapping
-call smartinput#map_to_trigger('i', '#', '#', '#')
-call smartinput#map_to_trigger('i', '<Bar>', '<Bar>', '<Bar>')
-
-call smartinput#define_rule({'at': '\%#', 'char': '#', 'input': '#{}<Left>', 'filetype': ['ruby'], 'syntax': ['String']})
-
 
 "Function: ToHaml
 "Desc: Convert an erb template to an haml one
@@ -245,7 +241,6 @@ function! ToHaml()
   execute 'set filetype=haml'
 endfunction
 
-call smartinput#define_rule({'at': '\({\|\<do\>\)\s*\%#', 'char': '<Bar>', 'input': '<Bar><Bar><Left>', 'filetype': ['ruby']})
 
 augroup vim_config
   autocmd FileType gitrebase call LoadGitrebaseBindings()
