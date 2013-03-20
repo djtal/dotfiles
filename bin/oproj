@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# go in the given rails proj. It should be in ~/ciblo (like cdproj)
+# then split window in 3 pane
+# if a window named like the rails proje exist switch to it instead of
+# creating a new one
+
+set -e
+
+if [ ! -n "$TMUX" ]; then
+  echo "You must be inside a tmux session to run this command"
+  exit 10
+fi
+
+dir=$(find ~/ciblo -mindepth 1 -maxdepth 2 -name "$1" | head -n 1)
+if [ "$dir" ]; then
+  if [ $(tmux list-window | grep $1 | awk '{ print $2 }') ]; then
+    tmux select-window -t $(tmux list-window | grep $1 | awk '{ print $1 }' | cut -b 1)
+  else
+    cd "$dir"
+    { [ -d 'trunk' ] && cd trunk; } || { [ -d 'webapp' ] && cd webapp; }
+    tmux split-window -v -p 30
+    tmux split-window -h -p 40 -t 0
+    tmux select-pane -t 0
+    if [ -f log/$RAILS_ENV.log ]; then
+      tmux send-keys -t 2 "tlf" C-m
+    fi
+    tmux rename-window "$1"
+    tmux send-keys -t 0 " clear" C-m
+    echo -ne "\033]0;$1\007"
+  fi
+else
+  echo "Aucun projet '$1' trouvé..." >&2
+  return 1
+fi
+

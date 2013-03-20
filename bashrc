@@ -97,6 +97,8 @@ ORANGE=$'\e[0;33;40m'
 #PS1='\[\033[33m\][\w$(__git_ps1)]@\[\033[32m\]\h:\[\033[0m\] \$ '
 PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
 
+complete -F _projects oproj
+
 
 if [ $(uname -s) = "Linux" ]; then
   eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
