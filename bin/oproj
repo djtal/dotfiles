@@ -17,6 +17,7 @@ if [ "$dir" ]; then
   if [ $(tmux list-window | grep $1 | awk '{ print $2 }') ]; then
     tmux select-window -t $(tmux list-window | grep $1 | awk '{ print $1 }' | cut -b 1)
   else
+    tmux new-window
     cd "$dir"
     { [ -d 'trunk' ] && cd trunk; } || { [ -d 'webapp' ] && cd webapp; }
     tmux split-window -v -p 30
@@ -26,6 +27,8 @@ if [ "$dir" ]; then
       tmux send-keys -t 2 "tlf" C-m
     fi
     tmux rename-window "$1"
+    tmux send-keys -t 0 " clear" C-m
+    tmux send-keys -t 0 " cdproj $1" C-m
     tmux send-keys -t 0 " clear" C-m
     echo -ne "\033]0;$1\007"
   fi
