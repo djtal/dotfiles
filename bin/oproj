@@ -30,7 +30,6 @@ if [ "$dir" ]; then
     tmux send-keys -t 0 " clear" C-m
     tmux send-keys -t 0 " cdproj $1" C-m
     tmux send-keys -t 0 " clear" C-m
-    echo -ne "\033]0;$1\007"
   fi
 else
   echo "Aucun projet '$1' trouvé..." >&2
