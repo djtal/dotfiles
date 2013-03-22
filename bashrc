@@ -97,7 +97,7 @@ ORANGE=$'\e[0;33;40m'
 #PS1='\[\033[33m\][\w$(__git_ps1)]@\[\033[32m\]\h:\[\033[0m\] \$ '
 PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
 
-complete -F _projects oproj
+complete -C "tech completions open "  oproj
 
 
 if [ $(uname -s) = "Linux" ]; then

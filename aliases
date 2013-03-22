@@ -27,6 +27,7 @@ alias r='touch tmp/restart'
 alias docs='cd ~/Dropbox/Docs/docs'
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete; find . -name '._*' -ls -delete;"
 alias cdproj="tech open $@"
+complete -C "tech completions open "  cdproj
 
 if [  $(uname -s) = "Darwin" ]; then
   alias git=hub
