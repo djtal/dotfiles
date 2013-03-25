@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Automatic windwo splittong for tmux according basic rules and layout
+# Layout are :
+# - for a rails app 3 pane of for editing, one for tailling log
+# - 2  verticale panes for other dev stuff
+# and one for console/cli stuff
+# Work only inside a tmux session at this time
+# Rely on the presence of tech open change to app directory
+
+APP_NAME=$(basename ${1:-$(pwd)})
+
+if [ $(tmux list-window | grep $APP_NAME | awk '{ print $2 }') ]; then
+  tmux select-window -t $(tmux list-window | grep $APP_NAME | awk '{ print $1 }' | cut -b 1)
+else
+  tmux new-window
+  tmux split-window -v -p 30
+  tmux split-window -h -p 40 -t 0
+  tmux select-pane -t 0
+  if [ -f log/$RAILS_ENV.log ]; then
+    tmux send-keys -t 2 "tlf" C-m
+  fi
+  tmux rename-window "$1"
+  tmux send-keys -t 0 " clear" C-m
+  tmux send-keys -t 0 " cdproj $1" C-m
+  tmux send-keys -t 0 " clear" C-m
+fi
+
+
+function _is_rails() {
+
+}
