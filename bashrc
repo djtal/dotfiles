@@ -78,6 +78,12 @@ if [ $(uname -s) = "Darwin" ]; then
   complete -W "NSGlobalDomain" defaults
 fi
 
+if [ $(uname -s) = "Linux" ]; then
+  eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
+else
+  eval "$(/Users/djtal/ciblo/r-et-d/tech/bin/tech init -)"
+fi
+
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
@@ -98,11 +104,3 @@ ORANGE=$'\e[0;33;40m'
 PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
 
 complete -C "tech completions open "  oproj
-
-
-if [ $(uname -s) = "Linux" ]; then
-  eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
-else
-  eval "$(/Users/djtal/ciblo/r-et-d/tech/bin/tech init -)"
-fi
-

@@ -20,6 +20,12 @@ function _devs() {
 }
 complete -F _devs cddev
 
+# thin wrapper to allow same autocomplet for aliases
+function _projs() {
+  cur=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( $(tech completions open ${COMP_WORDS[COMP_CWORD]}))
+}
+
 # Pow managment
 
 # easy add app rails app to pow
