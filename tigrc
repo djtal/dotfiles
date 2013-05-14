@@ -1,0 +1,8 @@
+set line-graphics = utf-8
+set show-filename = auto
+set show-date = relative
+set ignore-case = no
+set tab-size = 2
+
+# Key Binding
+
