@@ -3,6 +3,7 @@ set show-filename = auto
 set show-date = relative
 set ignore-case = no
 set tab-size = 2
+set show-id = yes
 
 # Key Binding
 

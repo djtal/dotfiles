@@ -12,12 +12,15 @@ if [ ! -n "$TMUX" ]; then
   exit 10
 fi
 
+
 dir=$(find ~/ciblo -mindepth 1 -maxdepth 2 -name "$1" | head -n 1)
 if [ "$dir" ]; then
   if [ $(tmux list-window | grep $1 | awk '{ print $2 }') ]; then
     tmux select-window -t $(tmux list-window | grep $1 | awk '{ print $1 }' | cut -b 1)
   else
-    tmux new-window
+    if [ $(tmux list-panes | cut -f1 -d ":" | tail -1) != 0 ]; then
+      tmux new-window
+    fi
     cd "$dir"
     { [ -d 'trunk' ] && cd trunk; } || { [ -d 'webapp' ] && cd webapp; }
     tmux split-window -v -p 30
