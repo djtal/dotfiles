@@ -150,8 +150,8 @@ imap <C-t> <Esc>:tabnew<cr>
 
 " Tab completion
 set wildmode=list:longest,list:full
-set wildignore+=*.o,*.obj,.git,*.rbc,*.class,.svn,vendor/gems/*
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*
+set wildignore+=*.o,*.obj,*.rbc,*.class,.svn,vendor/gems/*
+set wildignore+=*/.hg/*,*/.svn/*
 
 " Markdown handling
 
@@ -200,7 +200,7 @@ autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=rou
 command! Rstart :! touch tmp/restart.txt<CR><CR>
 
 " Ack.vim
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+let g:ackprg="ack -H --nocolor --nogroup --column"
 nnoremap <leader>a :Ack <C-R>=expand("<cword>")<CR>
 
 " Surround.vim
