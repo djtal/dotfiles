@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+if [ $(basename $(pwd)) = "webapp" ]; then
+  cd .. && git submodule update && cd -
+fi
