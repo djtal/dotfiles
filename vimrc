@@ -256,3 +256,8 @@ fun! LoadGitrebaseBindings()
   nnoremap  F :Fixup<CR>
   nnoremap  C :Cycle<CR>
 endfun
+
+" Local config
+if filereadable($HOME . "/.vimrc.local")
+  source ~/.vimrc.local
+endif
