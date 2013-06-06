@@ -94,13 +94,13 @@ unset file
 
 
 #define some color based on the molokai them see http://stevelosh.com/blog/2009/03/candy-colored-terminal/
-D=$'\e[0;37;40m'
-PINK=$'\e[0;35;40m'
-#GREEN=$'\e[32;40m'
-GREEN=$'\e[1;32;40m'
-ORANGE=$'\e[0;33;40m'
+# D=$'\e[0;37;40m'
+# PINK=$'\e[0;35;40m'
+# #GREEN=$'\e[32;40m'
+# GREEN=$'\e[1;32;40m'
+# ORANGE=$'\e[0;33;40m'
 
-#PS1='\[\033[33m\][\w$(__git_ps1)]@\[\033[32m\]\h:\[\033[0m\] \$ '
-PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
+# #PS1='\[\033[33m\][\w$(__git_ps1)]@\[\033[32m\]\h:\[\033[0m\] \$ '
+# PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
 
 complete -F _projs oproj
