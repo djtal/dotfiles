@@ -44,13 +44,20 @@ function git_dirty_flag {
   git status 2> /dev/null | grep -c : | awk '{if ($1 > 0) print "⚡"}'
 }
 
+function reduce_working_dir {
+  dir="$(pwd)"
+  # ${VARIABLE//PATTERN/REPLACEMENT}
+  echo "$(basename ${dir//webapp/})"
+}
+
 function prompt_func() {
     previous_return_value=$?;
     #The lowercase w is the full current working directory
     #prompt="${TITLEBAR}${BLUE}[${RED}\w${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
 
     #Capital W is just the trailing part of the current working directory
-    prompt="${TITLEBAR}${BLUE}[${RED}\W${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
+
+    prompt="${TITLEBAR}${BLUE}[${RED}$(reduce_working_dir)${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
 
     if test $previous_return_value -eq 0
     then
