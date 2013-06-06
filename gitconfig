@@ -6,6 +6,7 @@
 [git-tmbundle]
 	gitx-path = /Applications/GitX.app
 [alias]
+  ctags = !.git/hooks/ctags
   lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative
   st = status -sb
   # Quickly view the latest commits using a helper script to massage the
@@ -26,3 +27,5 @@
 	ui = true
 [pull]
 	rebase = true
+[init]
+  templatedir = ~/.git_template
