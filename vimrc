@@ -10,7 +10,7 @@ call pathogen#infect()
 set nocompatible
 syntax on
 set background=dark
-colorscheme molokai-im
+colorscheme Tomorrow-Night-Bright
 set softtabstop=2
 set ignorecase
 set smartcase
@@ -256,6 +256,12 @@ fun! LoadGitrebaseBindings()
   nnoremap  F :Fixup<CR>
   nnoremap  C :Cycle<CR>
 endfun
+
+let g:syntastic_error_symbol='✗'
+let g:syntastic_warning_symbol='⚠'
+let g:syntastic_mode_map = { 'mode': 'active',
+                               \ 'active_filetypes': ['ruby', 'js', 'coffee'],
+                               \ 'passive_filetypes': ['puppet'] }
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
