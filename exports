@@ -14,11 +14,14 @@ if [ $(uname -s) = "Linux" ]; then
 fi
 # Only for OS X
 if [ $(uname -s) = "Darwin" ]; then
-  export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
+  export EDITOR=vim
+  # export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
   # overide git path by /usr/local/git/bin to avoid using the apple installed one at /usr/bin/git
   export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/usr/local/mongodb/bin:/usr/local/mysql/bin:~/bin:$PATH"
   export ARDUINO_SDK_PATH="/Applications/Arduino.app/Contents/Resources/Java"
   export PATH="$HOME/.rbenv/bin:$PATH"
+  export NODE_PATH="/usr/local/lib/node"
+  export PATH="/usr/local/share/npm/bin:$PATH"
 fi
 
 # load custom dotfiles scripts
