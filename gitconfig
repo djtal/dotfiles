@@ -18,6 +18,8 @@
   delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
   merge-branch = !git checkout master && git merge @{-1} --ff-only
   rebase-origin = !git fetch origin && git rebase origin/master
+  la = "!git config -l | grep alias | cut -c 7-"
+  br = branch -vv
 [core]
   pager = cat
 	excludesfile = /Users/djtal/Developement/Projects/gitignore/Global/OSX.gitignore
