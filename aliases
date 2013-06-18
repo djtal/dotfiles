@@ -28,6 +28,7 @@ alias docs='cd ~/Dropbox/Docs/docs'
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete; find . -name '._*' -ls -delete;"
 alias cdproj="tech open $@"
 complete -F _projs cdproj
+alias e="$EDITOR"
 
 if [  $(uname -s) = "Darwin" ]; then
   alias git=hub
