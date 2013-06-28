@@ -5,8 +5,7 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-export PATH="$HOME/bin:$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+
 
 
 # don't put duplicate lines in the history. See bash(1) for more options
@@ -27,9 +26,6 @@ shopt -s checkwinsize
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-
-export GIT_PS1_SHOWDIRTYSTATE=1 GIT_PS1_SHOWSTASHSTATE=1 GIT_PS1_SHOWUNTRACKEDFILES=1
-# In your prompt: $(__git_ps1 " (%s)")
 
 
 # enable color support of ls and also add handy aliases
@@ -66,8 +62,8 @@ umask 0002
 
 if [ $(uname -s) = "Darwin" ]; then
   # use completion script provided by brew if available
-  if [ -f `brew --prefix`/etc/bash_completion ]; then
-      . `brew --prefix`/etc/bash_completion
+  if [ -f `/usr/local/bin/brew --prefix`/etc/bash_completion ]; then
+      . `/usr/local/bin/brew --prefix`/etc/bash_completion
   fi
 
   # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
@@ -78,11 +74,9 @@ if [ $(uname -s) = "Darwin" ]; then
   complete -W "NSGlobalDomain" defaults
 fi
 
-if [ $(uname -s) = "Linux" ]; then
-  eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
-else
-  eval "$(/Users/djtal/ciblo/r-et-d/tech/bin/tech init -)"
-fi
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
@@ -92,6 +86,13 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions}; do
 done
 unset file
 
+
+
+if [ $(uname -s) = "Linux" ]; then
+  eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
+else
+  eval "$(/Users/djtal/ciblo/r-et-d/tech/bin/tech init -)"
+fi
 
 #define some color based on the molokai them see http://stevelosh.com/blog/2009/03/candy-colored-terminal/
 # D=$'\e[0;37;40m'
