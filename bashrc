@@ -5,8 +5,6 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
-export PATH="$HOME/bin:$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
 
 
 # don't put duplicate lines in the history. See bash(1) for more options
@@ -78,11 +76,6 @@ if [ $(uname -s) = "Darwin" ]; then
   complete -W "NSGlobalDomain" defaults
 fi
 
-if [ $(uname -s) = "Linux" ]; then
-  eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
-else
-  eval "$(/Users/djtal/ciblo/r-et-d/tech/bin/tech init -)"
-fi
 
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.

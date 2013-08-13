@@ -8,6 +8,7 @@
 call pathogen#infect()
 
 set nocompatible
+set encoding=utf-8 " Necessary to show Unicode glyphs"
 syntax on
 set background=dark
 colorscheme Tomorrow-Night-Bright
@@ -164,11 +165,6 @@ au BufRead,BufNewFile *.md setlocal textwidth=80"
 function! NewHash()
   execute '%s/:\([^ ]*\)\(\s*\)=>/\1:/g'
 endfunction
-
-
-" Powerline configuration
-set rtp+=~/.vim/bundle/powerline.vim/powerline/bindings/vim
-let g:Powerline_symbols = 'fancy'
 
 
 " statusline
