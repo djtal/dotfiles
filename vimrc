@@ -56,6 +56,7 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 if has("autocmd")
   autocmd bufwritepost .vimrc source $MYVIMRC
   au BufNewFile,BufRead *.less setlocal ft=css
+  au BufNewFile,BufRead *.prawn setlocal ft=ruby
   au BufNewFile,BufRead Guardfile setlocal ft=ruby
 " Treat JSON files like JavaScript
   au BufNewFile,BufRead *.json set ft=javascript
@@ -72,10 +73,10 @@ nmap <C-N><C-N> :set invnumber<CR>
 nmap <Leader>c :set cursorline!<CR>
 
 " invisible char
-" nmap <leader>l :set list!<CR>
+nmap <leader>l :set list!<CR>
 
 " http://bairuidahu.deviantart.com/art/Flying-vs-Cycling-261641977
-nnoremap <leader>l :ls<CR>:b<space>
+" nnoremap <leader>l :ls<CR>:b<space>
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬
 "Invisible character colors
@@ -165,10 +166,25 @@ function! NewHash()
   execute '%s/:\([^ ]*\)\(\s*\)=>/\1:/g'
 endfunction
 
+" Airline config
 
-" Powerline configuration
-set rtp+=~/.vim/bundle/powerline.vim/powerline/bindings/vim
-let g:Powerline_symbols = 'fancy'
+let g:airline_theme='molokai'
+let g:airline_detect_modified=1
+let g:airline_detect_whitespace=1 "icon and message (default)
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_linecolumn_prefix = '␊ '
+let g:airline_linecolumn_prefix = '␤ '
+let g:airline_linecolumn_prefix = '¶ '
+let g:airline_branch_prefix = '⎇ '
+let g:airline_paste_symbol = 'ρ'
+let g:airline_paste_symbol = 'Þ'
+let g:airline_paste_symbol = '∥'
+let g:airline_whitespace_symbol = 'Ξ'
 
 
 " statusline
@@ -262,6 +278,7 @@ let g:syntastic_warning_symbol='⚠'
 let g:syntastic_mode_map = { 'mode': 'active',
                                \ 'active_filetypes': ['ruby', 'js', 'coffee'],
                                \ 'passive_filetypes': ['puppet'] }
+let g:syntastic_ignore_files=['*.erb']
 
 " Local config
 if filereadable($HOME . "/.vimrc.local")
