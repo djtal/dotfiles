@@ -19,7 +19,6 @@ if ENV['RAILS_ENV']
   IRB.conf[:IRB_RC] = Proc.new do
     logger = Logger.new(STDOUT)
     ActiveRecord::Base.logger = logger
-    ActiveResource::Base.logger = logger
    end
 end
 
