@@ -37,7 +37,7 @@ filetype plugin on    " Enable filetype-specific plugins
 set expandtab
 set tabstop=2
 set shiftwidth=2
-set cursorline
+" set cursorline
 
 " folding
 set foldmethod=indent "fold based on indent
