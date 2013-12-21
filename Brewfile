@@ -4,6 +4,7 @@ install git
 install ssh-copy-id
 
 # Misc tools
+install wget
 install hub
 install ack
 install tree
