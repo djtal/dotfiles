@@ -74,6 +74,12 @@ if [ $(uname -s) = "Darwin" ]; then
   complete -W "NSGlobalDomain" defaults
 fi
 
+# Mac OS X uses path_helper to preload PATH, clear it out first
+if [ -x /usr/libexec/path_helper ]; then
+    PATH=''
+    eval `/usr/libexec/path_helper -s`
+fi
+
 
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
