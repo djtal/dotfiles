@@ -59,6 +59,8 @@ function rdm() { rake db:migrate "$@"; }
 function rsc() {
   if [ -f script/console ]; then
     bundle exec script/console "$@";
+  elif [ -d bin ]; then
+    bundle exec bin/rails c
   else
     bundle exec rails c "$@"
   fi
