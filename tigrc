@@ -1,9 +1,4 @@
 set line-graphics = utf-8
-set show-filename = auto
-set show-date = relative
 set ignore-case = no
 set tab-size = 2
-set show-id = yes
-
-# Key Binding
-
+set main-view = line-number:no,interval=5 id:yes date:relative author:full commit-title:yes,graph,refs,overflow=no
