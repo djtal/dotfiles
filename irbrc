@@ -13,14 +13,14 @@ IRB.conf[:SAVE_HISTORY] = 1000
 # Store results in home directory with specified file name
 IRB.conf[:HISTORY_FILE] = "#{ENV['HOME']}/.irb-history"
 
-#show sl log into console
-if ENV['RAILS_ENV']
-  # Called after the irb session is initialized and Rails has been loaded
-  IRB.conf[:IRB_RC] = Proc.new do
-    logger = Logger.new(STDOUT)
-    ActiveRecord::Base.logger = logger
-   end
-end
+# #show sl log into console
+# if ENV['RAILS_ENV']
+#   # Called after the irb session is initialized and Rails has been loaded
+#   IRB.conf[:IRB_RC] = Proc.new do
+#     logger = Logger.new(STDOUT)
+#     ActiveRecord::Base.logger = logger
+#    end
+# end
 
 
 # hide sql log from rails console

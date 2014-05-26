@@ -84,8 +84,10 @@ highlight NonText guifg=#9797a9
 highlight SpecialKey guifg=#9797a9
 
 "for moving in a line
-noremap <C-A>      <Home>
-noremap <C-E>      <End>
+"noremap <C-A>      <Home>
+"noremap <C-E>      <End>
+nnoremap <A-a> <C-a>
+nnoremap <A-x> <C-x>
 
 
 " more natural split defaut position

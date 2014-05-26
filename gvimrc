@@ -3,7 +3,7 @@ set antialias
 
 " Don't beep
 set visualbell
-set guifont=Source\ Code\ Pro\ ExtraLight\ for\ Powerline:h13
+set guifont=Source\ Code\ Pro\ ExtraLight:h13
 
 set guioptions-=T   " No toolbar
 set guioptions-=r   " No scrollbars
