@@ -26,6 +26,32 @@ function _projs() {
   COMPREPLY=( $(tech completions open ${COMP_WORDS[COMP_CWORD]}))
 }
 
+# Tmux shortcurt
+# see https://gist.github.com/jyurek/7be666a88e06f68d45cf
+tm() {
+  if [ -z "$TMUX" ]; then
+    # not in tmux
+    tmux new-session -As $1
+  else
+    # inside tmux
+    if [ tmux has-session $1 ]; then
+      tmux switch-client -t $1
+    else
+      TMUX= tmux new-session -ds $1
+      tmux switch-client -t $1
+    fi
+ fi
+}
+
+# AUtocompletion for tmux sessions
+# see https://gist.github.com/jyurek/7be666a88e06f68d45cf
+_tmux_complete_session() {
+  local IFS=$'\n'
+  local cur=${COMP_WORDS[COMP_CWORD]}
+  COMPREPLY=( ${COMPREPLY[@]:-} $(compgen -W "$(tmux -q list-sessions | cut -f 1 -d ':')" -- "${cur}") )
+}
+complete -F _tmux_complete_session tm
+
 # Pow managment
 
 # easy add app rails app to pow
@@ -55,7 +81,7 @@ function powaaaa {
 
 # Quick Rails 2.3 alias
 
-function rdm() { rake db:migrate "$@"; }
+function rdm() { bundle exec rake db:migrate "$@"; }
 function rsc() {
   if [ -f script/console ]; then
     bundle exec script/console "$@";
@@ -65,8 +91,6 @@ function rsc() {
     bundle exec rails c "$@"
   fi
   }
-function rsg() { ruby script/generate "$@"; }
-function rss() { ruby script/server "$@"; }
 function sdc() { ./script/dbconsole -p "$@"; }
 function tlf() { tail -f log/${RAILS_ENV:-development}.log; }
 
