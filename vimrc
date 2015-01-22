@@ -275,11 +275,16 @@ fun! LoadGitrebaseBindings()
   nnoremap  C :Cycle<CR>
 endfun
 
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_scss_checkers = ['scss_lint']
+let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_error_symbol='✗'
 let g:syntastic_warning_symbol='⚠'
 let g:syntastic_mode_map = { 'mode': 'active',
-                               \ 'active_filetypes': ['ruby', 'js', 'coffee'],
+                               \ 'active_filetypes': ['ruby', 'coffee', 'scss', 'js'],
                                \ 'passive_filetypes': ['puppet'] }
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_ignore_files=['*.erb']
 
 " Local config

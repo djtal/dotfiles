@@ -143,6 +143,14 @@ function g {
 # autocomplete g like it is git yeah!
 __git_complete g __git_main
 
+function v {
+    if [[ $# > 0 ]]; then
+        vagrant $@
+    else
+        vagrant status
+    fi
+}
+
 # edit conflic in vim and setup search pattern with conflic marker
 # credit to https://coderwall.com/p/psa3ng
 function editconflicts() {

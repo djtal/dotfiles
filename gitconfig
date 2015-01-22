@@ -1,10 +1,5 @@
 
 # DO NOT EDIT BELOW THIS LINE
-
-[git-tmbundle "log"]
-	limit = 25
-[git-tmbundle]
-	gitx-path = /Applications/GitX.app
 [alias]
   ctags = !.git/hooks/ctags
   lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative
@@ -25,10 +20,20 @@
   pager = cat
 	excludesfile = /Users/djtal/Developement/Projects/gitignore/Global/OSX.gitignore
 [push]
-	default = tracking
+	default = upstream
 [color]
 	ui = true
 [pull]
-	rebase = true
+	rebase = preserve
 [init]
   templatedir = ~/.git_template
+[filter "media"]
+	clean = git-media-clean %f
+	smudge = git-media-smudge %f
+[diff]
+	wordRegex = .
+	mnemonicprefix = true
+[status]
+	showUntrackedFiles = all
+[mergetool]
+	prompt = false

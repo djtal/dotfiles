@@ -94,12 +94,6 @@ unset file
 
 
 
-if [ $(uname -s) = "Linux" ]; then
-  eval "$(/home/guillaume/ciblo/r-et-d/tech/bin/tech init -)"
-else
-  eval "$(/Users/guillaumegarcera/ciblo/r-et-d/tech/bin/tech init -)"
-fi
-
 #define some color based on the molokai them see http://stevelosh.com/blog/2009/03/candy-colored-terminal/
 # D=$'\e[0;37;40m'
 # PINK=$'\e[0;35;40m'

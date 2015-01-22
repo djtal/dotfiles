@@ -46,3 +46,9 @@ export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
 
 export LESS_TERMCAP_md="$ORANGE"
 export RAILS_ENV='development'
+
+# VAGRANT SETTINGS
+
+export VAGRANT_PRIVATE_IP="10.0.0.100"
+export VAGRANT_CPU="2"
+export VAGRANT_RAM="4096"
