@@ -1,0 +1,19 @@
+AllCops:
+    RunRailsCops: true
+Metrics/LineLength:
+    Max: 100
+Lint/EndAlignment:
+  AlignWith: variable
+Style/StringLiterals:
+  Enabled: false
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+Style/EmptyLinesAroundClassBody:
+    EnforcedStyle: empty_lines
+Style/EmptyLinesAroundModuleBody:
+  EnforcedStyle: empty_lines
+Rails/ActionFilter:
+  EnforcedStyle: filter
+
