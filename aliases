@@ -29,7 +29,7 @@ complete -F _projs cdproj
 alias e="$EDITOR"
 
 if [  $(uname -s) = "Darwin" ]; then
-  alias git=hub
+  eval "$(hub alias -s)"
   alias vim='mvim -v'
   alias vi='mvim -v'
   alias ack-grep=ack
