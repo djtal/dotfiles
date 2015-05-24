@@ -17,7 +17,7 @@ if [ $(uname -s) = "Darwin" ]; then
   export EDITOR=vim
   # export EDITOR='mvim -f --nomru -c "au VimLeave * !open -a iTerm"'
   # overide git path by /usr/local/git/bin to avoid using the apple installed one at /usr/bin/git
-  export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:$PATH"
+  export PATH="/usr/local/bin:/usr/local/sbin:/usr/local/git/bin:/usr/local/heroku/bin:$PATH"
   export ARDUINO_SDK_PATH="/Applications/Arduino.app/Contents/Resources/Java"
   export NODE_PATH="/usr/local/lib/node"
   export PATH="/usr/local/share/npm/bin:$PATH"
@@ -52,3 +52,5 @@ export RAILS_ENV='development'
 export VAGRANT_PRIVATE_IP="10.0.0.100"
 export VAGRANT_CPU="2"
 export VAGRANT_RAM="4096"
+export JAVA_HOME=`/usr/libexec/java_home -v '1.7*'`
+

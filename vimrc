@@ -10,7 +10,9 @@ call pathogen#infect()
 set nocompatible
 syntax on
 set background=dark
-colorscheme Tomorrow-Night-Bright
+let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme base16-ocean
+" colorscheme Tomorrow-Night-Bright
 set softtabstop=2
 set ignorecase
 set smartcase
@@ -170,7 +172,7 @@ endfunction
 
 " Airline config
 
-let g:airline_theme='molokai'
+let g:airline_theme='base16'
 let g:airline_detect_modified=1
 let g:airline_detect_whitespace=1 "icon and message (default)
 
@@ -218,7 +220,8 @@ autocmd User Rails Rnavcommand config config -glob=**/* -suffix=.rb -default=rou
 command! Rstart :! touch tmp/restart.txt<CR><CR>
 
 " Ack.vim
-let g:ackprg="ack -H --nocolor --nogroup --column"
+" let g:ackprg="ack -H --nocolor --nogroup --column"
+let g:ackprg = 'ag --nogroup --nocolor --column'
 nnoremap <leader>a :Ack <C-R>=expand("<cword>")<CR>
 
 " Surround.vim
@@ -275,6 +278,7 @@ fun! LoadGitrebaseBindings()
   nnoremap  C :Cycle<CR>
 endfun
 
+let g:syntastic_enable_signs = 1
 let g:syntastic_ruby_checkers = ['rubocop']
 let g:syntastic_scss_checkers = ['scss_lint']
 let g:syntastic_javascript_checkers = ['jshint']
@@ -286,7 +290,6 @@ let g:syntastic_mode_map = { 'mode': 'active',
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_ignore_files=['*.erb']
-
 " Local config
 if filereadable($HOME . "/.vimrc.local")
   source ~/.vimrc.local
