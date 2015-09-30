@@ -42,7 +42,8 @@ export HISTFILESIZE=$HISTSIZE
 export HISTCONTROL=ignoredups
 # Make some commands not show up in history
 export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
-
+# share hist beteween tabs thaks https://github.com/arthurnn/dotfiles/blob/5ef816f5eefd9ad14e8cc57498f35959c373dabd/.bashrc#L67
+export PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
 
 export LESS_TERMCAP_md="$ORANGE"
 export RAILS_ENV='development'
