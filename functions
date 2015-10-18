@@ -20,12 +20,6 @@ function _devs() {
 }
 complete -F _devs cddev
 
-# thin wrapper to allow same autocomplet for aliases
-function _projs() {
-  cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( $(tech completions open ${COMP_WORDS[COMP_CWORD]}))
-}
-
 # Tmux shortcurt
 # see https://gist.github.com/jyurek/7be666a88e06f68d45cf
 tm() {

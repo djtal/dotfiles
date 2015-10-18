@@ -92,8 +92,6 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions}; do
 done
 unset file
 
-
-
 #define some color based on the molokai them see http://stevelosh.com/blog/2009/03/candy-colored-terminal/
 # D=$'\e[0;37;40m'
 # PINK=$'\e[0;35;40m'
@@ -107,5 +105,5 @@ unset file
 complete -F _projs oproj
 
 # Base16 Shell
-BASE16_SHELL="$HOME/.bin/base16-ocean.dark.sh"
+BASE16_SHELL="$HOME/bin/base16-ocean.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
