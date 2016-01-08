@@ -1,34 +1,26 @@
-install bash
-install bash-completion
-install git
-install ssh-copy-id
+brew 'bash'
+brew 'bash-completion'
+brew 'git'
+brew 'ssh-copy-id'
 
 # Misc tools
-install wget
-install hub
-install ack
-install tree
-install tmux
-install tig
-install ctags
+brew 'wget'
+brew 'hub'
+brew 'ack'
+brew 'tree'
+brew 'tmux'
+brew 'tig'
+brew 'ctags'
 
 # Imaging
-install imagemagick
 
 # Dev env
-install node
-install phantomjs
-install go
-install erlang
-install elixir
+brew 'node'
+brew 'go'
+brew 'erlang'
+brew 'elixir'
 
 # Databases
 
-install elasticsearch
-install mysql
-install postgres
-install mongodb
-
-install memcached
 
 
