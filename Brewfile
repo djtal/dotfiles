@@ -15,6 +15,7 @@ brew 'tig'
 brew 'ctags'
 brew 'httpie'
 brew 'the_silver_searcher'
+brew 'jq'
 
 # Imaging
 
