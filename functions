@@ -145,6 +145,11 @@ function v {
     fi
 }
 
+
+qh() {
+  grep --color=always "$*" "$HISTFILE" |       less -RX
+}
+
 # edit conflic in vim and setup search pattern with conflic marker
 # credit to https://coderwall.com/p/psa3ng
 function editconflicts() {
