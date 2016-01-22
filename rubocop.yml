@@ -1,7 +1,13 @@
 AllCops:
-    RunRailsCops: true
+  TargetRubyVersion: 2.1
+Rails:
+    Enabled: true
+Metrics/ModuleLength:
+  Max: 200
 Metrics/LineLength:
     Max: 100
+Style/SignalException:
+  Enabled: false
 Lint/EndAlignment:
   AlignWith: variable
 Style/StringLiterals:
@@ -14,6 +20,9 @@ Style/EmptyLinesAroundClassBody:
     EnforcedStyle: empty_lines
 Style/EmptyLinesAroundModuleBody:
   EnforcedStyle: empty_lines
+Style/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+  IndentationWidth: 2
 Rails/ActionFilter:
   EnforcedStyle: filter
 
