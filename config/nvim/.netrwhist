@@ -1,0 +1,8 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_1='/Users/guillaumeg/Developement/Vodeclic/spec/services'
+let g:netrw_dirhist_2='/Users/guillaumeg/Developement/Vodeclic/lib/gems_ext'
+let g:netrw_dirhist_3='/Users/guillaumeg/Developement/Vodeclic/lib/gems_ext/her'
+let g:netrw_dirhist_4='/Users/guillaumeg/Developement/Vodeclic/lib'
+let g:netrw_dirhist_5='/Users/guillaumeg/Developement/ContentBackend/spec/fixtures/seeds'
+let g:netrw_dirhist_6='/Users/guillaumeg/Developement/Vodeclic/config'
