@@ -25,4 +25,8 @@ Style/MultilineMethodCallIndentation:
   IndentationWidth: 2
 Rails/ActionFilter:
   EnforcedStyle: filter
-
+Style/Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+  EnforcedStyle: nested
