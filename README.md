@@ -22,6 +22,20 @@ File are mainy compatible with Ubuntu 12.04 and Os X.
 Some functions are based on my filesytem organisation. feel free to change the
 to suit your need. Theses are "cdproj" and "cddev"
 
+## Karabiner Setup
+
+Allow various keyboard customisation.
+Since I don't know how to set it up automatically...
+
+**Install**
+
+[Karabiner downlaod](https://pqrs.org/osx/karabiner/)
+
+**Remap Control+W to delete previous word**
+
+Open Karabiner and search for “Control+W”. Check the box next to “[ex] Control+W to Option+Delete” under “Emacs Mode”.
+
+
 ## Credits
 
 Inspiration taken from
