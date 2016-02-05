@@ -28,4 +28,8 @@ brew 'elixir'
 # Databases
 
 
+# Add some cask formula too
 
+cask 'macdown', args: { appdir: '/Applications' }
+cask 'mojibar', args: { appdir: '/Applications' }
+cask 'sequel-pro', args: { appdir: '/Applications' }
