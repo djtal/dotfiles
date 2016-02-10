@@ -17,7 +17,7 @@
   la = "!git config -l | grep alias | cut -c 7-"
   br = branch -vv
 [core]
-  pager = cat
+	pager = diff-so-fancy | less --tabs=1,5 -R
 	excludesfile = /Users/djtal/Developement/Projects/gitignore/Global/OSX.gitignore
 [push]
 	default = upstream
