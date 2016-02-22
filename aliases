@@ -27,11 +27,10 @@ alias cleanup="find . -type f -name '*.DS_Store' -ls -delete; find . -name '._*'
 alias cdproj="tech open $@"
 complete -F _projs cdproj
 alias e="$EDITOR"
+alias vi='nvim'
 
 if [  $(uname -s) = "Darwin" ]; then
   eval "$(hub alias -s)"
-  alias vim='mvim -v'
-  alias vi='mvim -v'
   alias ack-grep=ack
 fi
 # Simulate OSX's pbcopy and pbpaste on other platforms
