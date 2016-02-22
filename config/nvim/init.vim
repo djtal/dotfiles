@@ -14,7 +14,8 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'chriskempson/base16-vim'
 Plugin 'rking/ag.vim'
@@ -24,6 +25,7 @@ Plugin 'jgdavey/tslime.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-endwise'
 Plugin 'benekastah/neomake'
+Plugin 'hashivim/vim-terraform'
 
 call vundle#end()            " required
 
@@ -117,7 +119,7 @@ autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
 let g:airline_theme='base16'
 let g:airline_detect_modified=1
-let g:airline_powerline_fonts = 1
+" let g:airline_powerline_fonts = 1
 let g:airline#extensions#branch#enabled=1
 
 " Ag config
@@ -141,15 +143,15 @@ map <Leader>a :call RunAllSpecs()<CR>
 
 
 " unicode symbols
-" let g:airline_left_sep = '»'
-" let g:airline_left_sep = '▶'
-" let g:airline_right_sep = '«'
-" let g:airline_right_sep = '◀'
-" let g:airline_linecolumn_prefix = '␊ '
-" let g:airline_linecolumn_prefix = '␤ '
-" let g:airline_linecolumn_prefix = '¶ '
-" let g:airline_branch_prefix = '⎇ '
-" let g:airline_paste_symbol = 'ρ'
-" let g:airline_paste_symbol = 'Þ'
-" let g:airline_paste_symbol = '∥'
-" let g:airline_whitespace_symbol = 'Ξ'
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_linecolumn_prefix = '␊ '
+let g:airline_linecolumn_prefix = '␤ '
+let g:airline_linecolumn_prefix = '¶ '
+let g:airline_branch_prefix = '⎇ '
+let g:airline_paste_symbol = 'ρ'
+let g:airline_paste_symbol = 'Þ'
+let g:airline_paste_symbol = '∥'
+let g:airline_whitespace_symbol = 'Ξ'
