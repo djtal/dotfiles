@@ -26,6 +26,8 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-endwise'
 Plugin 'benekastah/neomake'
 Plugin 'hashivim/vim-terraform'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf' }
+
 
 call vundle#end()            " required
 
@@ -155,3 +157,4 @@ let g:airline_paste_symbol = 'ρ'
 let g:airline_paste_symbol = 'Þ'
 let g:airline_paste_symbol = '∥'
 let g:airline_whitespace_symbol = 'Ξ'
+
