@@ -105,7 +105,7 @@ unset file
 complete -F _projs oproj
 
 # Base16 Shell
-BASE16_SHELL="$HOME/bin/base16-ocean.dark.sh"
+BASE16_SHELL="$HOME/.config/base16-shell/base16-ocean.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 cowsay $(fortune -s)
