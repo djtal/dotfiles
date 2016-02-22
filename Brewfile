@@ -18,6 +18,7 @@ brew 'the_silver_searcher'
 brew 'jq'
 brew 'htop'
 brew 'neovim/neovim/neovim'
+brew 'fzf'
 
 # Imaging
 

@@ -109,3 +109,5 @@ BASE16_SHELL="$HOME/bin/base16-ocean.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 cowsay $(fortune -s)
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
