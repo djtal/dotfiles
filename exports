@@ -57,4 +57,5 @@ export VAGRANT_PRIVATE_IP="10.0.0.100"
 export VAGRANT_CPU="2"
 export VAGRANT_RAM="4096"
 export JAVA_HOME=`/usr/libexec/java_home -v '1.7*'`
+export GOPATH="$HOME/Developement/Projects/golang"
 
