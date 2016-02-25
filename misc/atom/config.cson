@@ -1,0 +1,20 @@
+"*":
+  core:
+    ignoredNames: [
+      ".*"
+    ]
+    themes: [
+      "one-dark-ui"
+      "base16-ocean-dark-syntax-theme"
+    ]
+  editor:
+    fontFamily: "Fira Code"
+    invisibles: {}
+  "exception-reporting":
+    userId: "c56ae8bf-7261-ebb6-2bab-c653f5ad14e5"
+  "one-dark-ui": {}
+  "tree-view":
+    hideIgnoredNames: true
+    hideVcsIgnoredFiles: true
+  welcome:
+    showOnStartup: false
