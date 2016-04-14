@@ -4,6 +4,10 @@ brew 'git'
 brew 'ssh-copy-id'
 brew 'fortune'
 brew 'cowsay'
+brew 'fzf'
+
+tap 'homebrew/services'
+tap 'caskroom/cask'
 
 # Misc tools
 brew 'wget'
@@ -19,6 +23,7 @@ brew 'jq'
 brew 'htop'
 brew 'neovim/neovim/neovim'
 brew 'fzf'
+brew 'shellcheck'
 
 # Imaging
 
