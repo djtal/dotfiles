@@ -30,3 +30,13 @@ Style/Documentation:
 Style/ClassAndModuleChildren:
   Enabled: false
   EnforcedStyle: nested
+Metrics/ClassLength:
+  CountComments: false
+  Max: 200
+Metrics/MethodLength:
+  Enabled: true
+  Max: 25
+  Exclude:
+  - "spec/**/*"
+Style/EachWithObject:
+  Enabled: false
