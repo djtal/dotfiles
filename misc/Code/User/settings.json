@@ -1,0 +1,28 @@
+// Place your settings in this file to overwrite the default settings
+{
+    "editor.fontFamily": "Fira Code",
+    "editor.fontSize": 14,
+    "editor.fontLigatures": true,
+    // Controls the rendering size of tabs in characters. Accepted values: "auto", 2, 4, 6, etc. If set to "auto", the value will be guessed when a file is opened.
+	"editor.tabSize": 2,
+
+     // Configure glob patterns for excluding files and folders.
+	"files.exclude": {
+        ".*": true,
+        "node_modules": true,
+        "bower_components": true
+	},
+    // When enabled, will trim trailing whitespace when you save a file.
+	"files.trimTrailingWhitespace": true,
+
+    "go.buildOnSave": true,
+    "go.lintOnSave": true,
+    "go.vetOnSave": true,
+    "go.formatOnSave": true,
+    "go.formatTool": "gofmt",
+    "editor.insertSpaces": "auto",
+
+    "search.exclude": {
+        "tmp/**": true,
+	},
+}
