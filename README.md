@@ -2,39 +2,68 @@
 
 ## Using this repo
 
-Setup based on thoughbot/dotfile install scrpit. See tehir doc for explanations.
+This repos contain configuration and installation script to easly setup/maintain config accross multiple computer in a easy way
 
 Basicaly all files are symlink to ~/. If you want to customize some of them
 simly compy them and a a cutline to delimit the part touched by the reference
 file.
 
-File are mainy compatible with Ubuntu 12.04 and Os X.
+Configuration and scripts are compatible with Ubuntu 12.04 and Os X.
 
-## Sofware in use
+## Usage
 
-* bash
-* git
-* vim
+Clone this repo where you want and run the install script
+
+```bash
+$ ./install.sh
+```
+
+It also use [homebrew](http://brew.sh/) to install additionnal sofwtare.
+To update your installed software
+
+```bash
+$ cd dotfiles
+$ brew bundle
+```
+
+## What you'll find here
+
+### Some great sofware
+
+* bash (4.X since osx ship with 3.X)
+* git 
+* neovim
 * tmux
 * ack
-* ruby/rails
+* [ag](http://geoff.greer.fm/ag/)
+* [shellcheck](https://github.com/koalaman/shellcheck)
+
+### Some small utilities function
+
+* **cddev** :
 
 Some functions are based on my filesytem organisation. feel free to change the
 to suit your need. Theses are "cdproj" and "cddev"
 
-## Karabiner Setup
+## Keyboard Setup
 
-Allow various keyboard customisation.
-Since I don't know how to set it up automatically...
+It use [Karabiner](https://pqrs.org/osx/karabiner/) to change mapping of your keys and
+[Seil](https://pqrs.org/osx/karabiner/seil.html.en) to allow to remap your caps lock key too
 
-**Install**
+**Remap Capslock to Ctr when hold or escape when touch**
 
-[Karabiner downlaod](https://pqrs.org/osx/karabiner/)
+* Map  CapsLock to F19 (code 80) in Seil
+* In Karabiner and search for "F19" and ativate. Check the box next to “CapsLock to Escape and Control”.
 
 **Remap Control+W to delete previous word**
 
-Open Karabiner and search for “Control+W”. Check the box next to “[ex] Control+W to Option+Delete” under “Emacs Mode”.
+In Karabiner and search for “Control+W”. Check the box next to “[ex] Control+W to Option+Delete” under “Emacs Mode”.
 
+**Remap ² to Escap**
+
+For PC Keyboard.
+
+In Karabiner and search for "Map ² to escape" and activate.
 
 ## Credits
 
