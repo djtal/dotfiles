@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<root>
+  <item>
+    <name>Tap shift to move over words</name>
+    <appendix>Shift keys move the cursor one word forward or backward when pressed alone. When used with other keys they act as normal shifts.</appendix>
+    <identifier>private.shifts_to_forward_backward_word</identifier>
+
+    <autogen>--KeyOverlaidModifier-- KeyCode::SHIFT_R, ModifierFlag::SHIFT_R | ModifierFlag::NONE, KeyCode::SHIFT_R, KeyCode::CURSOR_RIGHT, ModifierFlag::OPTION_L</autogen>
+    <autogen>--KeyOverlaidModifier-- KeyCode::SHIFT_L, ModifierFlag::SHIFT_L | ModifierFlag::NONE, KeyCode::SHIFT_L, KeyCode::CURSOR_LEFT, ModifierFlag::OPTION_L</autogen>
+  </item>
+  <item>
+    <name>Hold w for CTRL key</name>
+    <appendix>Hold w to siumulate the control key </appendix>
+    <identifier>private.hold_w_ctrl_key</identifier>
+
+    <autogen>--KeyOverlaidModifier-- KeyCode::BACKQUOTE,  KeyCode::CONTROL_L</autogen>
+  </item>
+  <item>
+    <name>Map ² to escape</name>
+    <appendix>Map ² to escape</appendix>
+    <identifier>djtal.danish_dollar_to_escape</identifier>
+
+    <autogen>--KeyOverlaidModifier-- KeyCode::DANISH_DOLLAR,  KeyCode::ESCAPE</autogen>
+  </item>
+    <item>
+    <!--
+        Based off an idea from http://stevelosh.com/blog/2012/10/a-modern-space-cadet/#controlescape
+    -->
+    <name>CapsLock to Escape and Control</name>
+    <appendix>Tap CapsLock for Escape, Hold F19 for Control</appendix>
+    <identifier>djtal.remap.capslock_escape_control</identifier>
+    <autogen>
+      __KeyOverlaidModifier__
+      KeyCode::F19,
+      KeyCode::CONTROL_L,
+      KeyCode::ESCAPE
+    </autogen>
+  </item>
+</root>
