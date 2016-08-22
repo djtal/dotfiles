@@ -25,8 +25,14 @@ Plugin 'jgdavey/tslime.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-endwise'
 Plugin 'benekastah/neomake'
-Plugin 'hashivim/vim-terraform'
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf' }
+Plugin 'mattn/emmet-vim'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plugin 'junegunn/rainbow_parentheses.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'elixir-lang/vim-elixir'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'junegunn/vim-easy-align'
+Plugin 'tpope/vim-vinegar'
 
 
 call vundle#end()            " required
@@ -35,11 +41,19 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 syntax on
 
+set t_Co=256
+set t_AB=^[[48;5;%dm
+set t_AF=^[[38;5;%dm
+
 set background=dark
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-ocean
 
 set colorcolumn=85
+
+" No backup file and no swap file
+set nobackup
+set noswapfile
 
 " Tab/Space
 set expandtab
@@ -71,6 +85,7 @@ if has("autocmd")
   autocmd BufWritePre * :%s/\s\+$//e
   autocmd! BufWritePost * Neomake
 endif
+
 " easy acces to edit in split mode and tab
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>ew :e %%
@@ -78,17 +93,20 @@ map <leader>es :sp %%
 map <leader>ev :vsp %%
 map <leader>et :tabe %%
 
+" easier navigation between split windows
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
 " tabs managment
 map <C-S-tab> :tabprevious<CR>
 map <C-tab> :tabnext<CR>
-map <C-t> :tabnew<CR>
 map <C-w> :tabclose<CR>
 nmap tt :tabnext<cr>
 map tt :tabnext<cr>
 nmap tp :tabprev<cr>
 map tp :tabprev<cr>
-nmap <C-t> :tabnew<cr>
-imap <C-t> <Esc>:tabnew<cr>
 
 
 nnoremap <leader>ft Vatzf
@@ -143,6 +161,8 @@ map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 
+nmap <C-p> :FZF<cr>
+
 
 " unicode symbols
 let g:airline_left_sep = '»'
@@ -158,3 +178,21 @@ let g:airline_paste_symbol = 'Þ'
 let g:airline_paste_symbol = '∥'
 let g:airline_whitespace_symbol = 'Ξ'
 
+" commentary mapping
+xmap \\  <Plug>Commentary<CR>
+nmap \\  <CR><Plug>Commentary
+nmap \\\ <Plug>CommentaryLine<CR>
+nmap \\u <Plug>CommentaryUndo<CR>
+
+
+" Disble The file has been changed since reading it for time change only
+
+function! ProcessFileChangedShell()
+        if v:fcs_reason == 'mode' || v:fcs_reason == 'time'
+                let v:fcs_choice = ''
+        else
+                let v:fcs_choice = 'ask'
+        endif
+endfunction
+
+autocmd FileChangedShell <buffer> call ProcessFileChangedShell()
