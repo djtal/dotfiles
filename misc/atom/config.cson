@@ -4,7 +4,7 @@
       ".*"
     ]
     themes: [
-      "one-dark-ui"
+      "atom-dark-ui"
       "base16-ocean-dark-syntax-theme"
     ]
   editor:
