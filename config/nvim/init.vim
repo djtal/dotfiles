@@ -20,8 +20,6 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'chriskempson/base16-vim'
 Plugin 'rking/ag.vim'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'thoughtbot/vim-rspec'
-Plugin 'jgdavey/tslime.vim'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'tpope/vim-endwise'
 Plugin 'benekastah/neomake'
@@ -33,6 +31,8 @@ Plugin 'elixir-lang/vim-elixir'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'junegunn/vim-easy-align'
 Plugin 'tpope/vim-vinegar'
+Plugin 'janko-m/vim-test'
+Plugin 'BlakeWilliams/vim-tbro'
 
 
 call vundle#end()            " required
@@ -155,11 +155,25 @@ let g:neomake_ruby_enabled_makers = ['rubocop']
 
 let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
 
-" vim-rspec mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+" vim-test config
+
+
+" Use tbro with vim-test
+let g:tbro_window = 1
+
+function! TbroStrategy(cmd)
+  execute 'Tbro ' . a:cmd
+endfunction
+
+let g:test#custom_strategies = {'tbro': function('TbroStrategy')}
+let g:test#strategy = 'tbro'
+
+
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
 
 nmap <C-p> :FZF<cr>
 

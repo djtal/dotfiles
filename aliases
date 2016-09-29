@@ -11,7 +11,7 @@ fi
 alias ls="ls -l ${colorflag}"
 
 # List all files colorized in long format, including dot files
-alias l="ls -lAh ${colorflag}"
+alias l="ls -tlAh ${colorflag}"
 
 # List only directories
 alias lsd='ls -l ${colorflag} | grep "^d"'
@@ -38,3 +38,5 @@ if [  $(uname -s) = "Linux" ]; then
     alias pbcopy='xsel --clipboard --input'
     alias pbpaste='xsel --clipboard --output'
 fi
+
+alias vi="nvim"
