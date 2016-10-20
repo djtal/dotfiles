@@ -40,3 +40,5 @@ if [  $(uname -s) = "Linux" ]; then
 fi
 
 alias vi="nvim"
+
+alias freq='cut -f1 -d" " $HISTFILE | sort | uniq -c | sort -nr | head -n 30'
