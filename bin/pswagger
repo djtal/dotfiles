@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cat doc/swagger.json | jq '.'  > doc/swagger1.json
+rm doc/swagger.json && mv doc/swagger{1,}.json
