@@ -41,3 +41,9 @@ brew 'elixir'
 cask 'macdown', args: { appdir: '/Applications' }
 cask 'mojibar', args: { appdir: '/Applications' }
 cask 'sequel-pro', args: { appdir: '/Applications' }
+
+# Usefull Ql plugins
+
+cask 'quicklook-json'
+cask 'qlmarkdown'
+cask 'qlstephen'
