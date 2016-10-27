@@ -1,4 +1,4 @@
-brew tap 'neovim/neovim'
+tap 'neovim/neovim'
 
 brew 'bash'
 brew 'bash-completion'
