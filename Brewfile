@@ -46,7 +46,6 @@ cask 'pg-commander', args: { appdir: '/Applications' }
 cask 'cumulus', args: { appdir: '/Applications' }
 cask 'medis', args: { appdir: '/Applications' }
 cask 'flux', args: { appdir: '/Applications' }
-cask 'macdown', args: { appdir: '/Applications' }
 cask 'atom', args: { appdir: '/Applications' }
 cask 'visual-studio-code', args: { appdir: '/Applications' }
 cask 'slack', args: { appdir: '/Applications' }
