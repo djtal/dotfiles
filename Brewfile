@@ -1,3 +1,5 @@
+brew tap 'neovim/neovim'
+
 brew 'bash'
 brew 'bash-completion'
 brew 'git'
