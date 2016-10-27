@@ -13,6 +13,12 @@ Configuration and scripts are compatible with Ubuntu 12.04 and Os X.
 ## Usage
 
 Clone this repo where you want and run the install script
+Get the submodule 
+
+```bash
+$ git submodule init
+$ git submodule update
+```
 
 ```bash
 $ ./install.sh
