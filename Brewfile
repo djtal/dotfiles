@@ -19,6 +19,7 @@ brew 'httpie'
 brew 'the_silver_searcher'
 brew 'ripgrep'
 brew 'jq'
+brew 'jid' #incremental json filter
 brew 'htop'
 brew 'neovim/neovim/neovim'
 brew 'shellcheck'
