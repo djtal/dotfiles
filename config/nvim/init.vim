@@ -1,41 +1,36 @@
-set rtp+=~/.config/nvim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-call vundle#begin('~/.config/nvim/bundle')
+call plug#begin('~/.local/share/nvim/plugged')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'airblade/vim-gitgutter'
+Plug 'chriskempson/base16-vim'
+Plug 'vim-ruby/vim-ruby'
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-endwise'
+Plug 'benekastah/neomake'
+Plug 'mattn/emmet-vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-vinegar'
+Plug 'janko-m/vim-test'
+Plug 'BlakeWilliams/vim-tbro'
+" JS plugins
+"
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'chriskempson/base16-vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'tpope/vim-endwise'
-Plugin 'benekastah/neomake'
-Plugin 'mattn/emmet-vim'
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plugin 'junegunn/rainbow_parentheses.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'junegunn/vim-easy-align'
-Plugin 'tpope/vim-vinegar'
-Plugin 'janko-m/vim-test'
-Plugin 'BlakeWilliams/vim-tbro'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 
-
-call vundle#end()            " required
-
+" Initialize plugin system
+call plug#end()
 
 filetype plugin indent on    " required
 syntax on
@@ -204,6 +199,10 @@ let g:airline_paste_symbol = 'ρ'
 let g:airline_paste_symbol = 'Þ'
 let g:airline_paste_symbol = '∥'
 let g:airline_whitespace_symbol = 'Ξ'
+
+" vim-jsx
+
+let g:jsx_ext_required = 0
 
 " commentary mapping
 xmap \\  <Plug>Commentary<CR>
