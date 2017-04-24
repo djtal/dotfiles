@@ -30,6 +30,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'sbdchd/neoformat'
 Plug 'elzr/vim-json'
+Plug 'jaawerth/nrun.vim'
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/seoul256.vim'
@@ -183,6 +184,11 @@ let g:javascript_conceal_super                = "Ω"
 " NeoMake
 
 let g:neomake_ruby_enabled_makers = ['rubocop']
+let g:neomake_jsx_enabled_makers = ['eslint']
+" you can set your enabled makers globally (like below) or on the buffer level as part of an autocmd - see Neomake docs for details
+let g:neomake_javascript_enabled_makers = ['eslint']
+" when switching/opening a JS buffer, set neomake's eslint path, and enable it as a maker
+au BufEnter *.js let b:neomake_javascript_eslint_exe = nrun#Which('eslint')
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
