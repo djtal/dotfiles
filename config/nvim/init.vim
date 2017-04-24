@@ -28,6 +28,8 @@ Plug 'BlakeWilliams/vim-tbro'
 
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'sbdchd/neoformat'
+Plug 'elzr/vim-json'
 
 " Initialize plugin system
 call plug#end()
@@ -129,17 +131,13 @@ command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
 
-" Airline config
-
-let g:airline_theme='base16'
-let g:airline_detect_modified=1
-" let g:airline_powerline_fonts = 1
-let g:airline#extensions#branch#enabled=1
 
 " Ag config
 
 let g:ag_working_path_mode="r"
 
+autocmd BufWritePre *.js Neoformat
+autocmd BufWritePre *.css Neoformat
 
 " NeoMake
 
@@ -185,20 +183,21 @@ nmap <silent> <leader>g :TestVisit<CR>
 
 nmap <C-p> :FZF<cr>
 
+" Airline config
 
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_linecolumn_prefix = '␊ '
-let g:airline_linecolumn_prefix = '␤ '
-let g:airline_linecolumn_prefix = '¶ '
-let g:airline_branch_prefix = '⎇ '
-let g:airline_paste_symbol = 'ρ'
-let g:airline_paste_symbol = 'Þ'
-let g:airline_paste_symbol = '∥'
-let g:airline_whitespace_symbol = 'Ξ'
+let g:airline_theme='base16'
+let g:airline_detect_modified=1
+" let g:airline_powerline_fonts = 1
+
+let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#tabline#enabled=0
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#left_sep = '»'
+let g:airline#extensions#tabline#right_sep = '«'
+let g:airline#extensions#tabline#linecolumn_prefix = '¶ '
+let g:airline#extensions#tabline#branch_prefix = '⎇ '
+let g:airline#extensions#tabline#paste_symbol = 'ρ'
+let g:airline#extensions#tabline#whitespace_symbol = 'Ξ'
 
 " vim-jsx
 
