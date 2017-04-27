@@ -31,7 +31,9 @@ Plug 'mxw/vim-jsx'
 Plug 'sbdchd/neoformat'
 Plug 'elzr/vim-json'
 
-" Initialize plugin system
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/seoul256.vim'
+
 call plug#end()
 
 filetype plugin indent on    " required
@@ -44,6 +46,9 @@ set t_AF=^[[38;5;%dm
 set background=dark
 let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme base16-ocean
+
+" let g:seoul256_background = 236
+" colo seoul256
 
 set colorcolumn=85
 
@@ -78,7 +83,7 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 if has("autocmd")
   autocmd bufwritepost init.vim source $MYVIMRC
   " Delete all whitespace in end of line
-  autocmd BufWritePre * :%s/\s\+$//e
+  " autocmd BufWritePre * :%s/\s\+$//e
   autocmd! BufWritePost * Neomake
 endif
 
@@ -112,6 +117,9 @@ imap <c-l> <space>=><space>
 " jj alow to go out from insert/edit mode
 inoremap jj <ESC>
 
+" visual move block of line
+" vnoremap J :m '>+1<CR>gv=gv
+" vnoremap k :m '<-2<cr>gv=gv
 
 
 " via: http://rails-bestpractices.com/posts/60-remove-trailing-whitespace
@@ -131,13 +139,46 @@ command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
 
+" Airline config
+
+let g:airline_theme='base16'
+let g:airline_detect_modified=1
+" let g:airline_powerline_fonts = 1
+let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#tmuxline#enabled = 0
+" let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled=0
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#left_sep = '»'
+let g:airline#extensions#tabline#right_sep = '«'
+let g:airline#extensions#tabline#linecolumn_prefix = '¶ '
+let g:airline#extensions#tabline#branch_prefix = '⎇ '
+let g:airline#extensions#tabline#paste_symbol = 'ρ'
+let g:airline#extensions#tabline#whitespace_symbol = 'Ξ'
 
 " Ag config
 
 let g:ag_working_path_mode="r"
 
+" Neoformat
+"
 autocmd BufWritePre *.js Neoformat
 autocmd BufWritePre *.css Neoformat
+
+
+
+let g:jsx_ext_required = 0
+
+" conceling
+let g:javascript_conceal_function             = "ƒ"
+let g:javascript_conceal_null                 = "ø"
+let g:javascript_conceal_this                 = "@"
+let g:javascript_conceal_return               = "⇚"
+let g:javascript_conceal_undefined            = "¿"
+let g:javascript_conceal_NaN                  = "ℕ"
+let g:javascript_conceal_prototype            = "¶"
+let g:javascript_conceal_static               = "•"
+let g:javascript_conceal_super                = "Ω"
 
 " NeoMake
 
@@ -181,23 +222,28 @@ nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
 
+
+nnoremap ! :Tbro
+
+nmap <silent> <leader>r :Tbro rake db:migrate<CR>
+
+" vim-goyo
+
+function! s:goyo_enter()
+  silent !tmux set status off
+  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+endfunction
+
+function! s:goyo_leave()
+  silent !tmux set status on
+  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
 nmap <C-p> :FZF<cr>
 
-" Airline config
-
-let g:airline_theme='base16'
-let g:airline_detect_modified=1
-" let g:airline_powerline_fonts = 1
-
-let g:airline#extensions#branch#enabled=1
-let g:airline#extensions#tabline#enabled=0
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#left_sep = '»'
-let g:airline#extensions#tabline#right_sep = '«'
-let g:airline#extensions#tabline#linecolumn_prefix = '¶ '
-let g:airline#extensions#tabline#branch_prefix = '⎇ '
-let g:airline#extensions#tabline#paste_symbol = 'ρ'
-let g:airline#extensions#tabline#whitespace_symbol = 'Ξ'
 
 " vim-jsx
 
@@ -221,3 +267,14 @@ function! ProcessFileChangedShell()
 endfunction
 
 autocmd FileChangedShell <buffer> call ProcessFileChangedShell()
+
+augroup vim_config
+  autocmd FileType gitrebase call LoadGitrebaseBindings()
+augroup END
+
+fun! LoadGitrebaseBindings()
+  nnoremap  P :Pick<CR>
+  nnoremap  S :Squash<CR>
+  nnoremap  F :Fixup<CR>
+  nnoremap  C :Cycle<CR>
+endfun
