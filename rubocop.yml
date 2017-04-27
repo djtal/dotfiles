@@ -9,7 +9,7 @@ Metrics/LineLength:
 Style/SignalException:
   Enabled: false
 Lint/EndAlignment:
-  AlignWith: variable
+  EnforcedStyleAlignWith: variable
 Style/StringLiterals:
   Enabled: false
 Style/StringLiteralsInInterpolation:
