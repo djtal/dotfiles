@@ -8,7 +8,6 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-Plug 'chriskempson/base16-vim'
 Plug 'vim-ruby/vim-ruby'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
@@ -23,6 +22,13 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
 Plug 'janko-m/vim-test'
 Plug 'BlakeWilliams/vim-tbro'
+
+" Themes
+
+Plug 'trevordmiller/nova-vim'
+Plug 'junegunn/seoul256.vim'
+Plug 'chriskempson/base16-vim'
+
 " JS plugins
 "
 
@@ -33,7 +39,9 @@ Plug 'elzr/vim-json'
 Plug 'jaawerth/nrun.vim'
 
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/seoul256.vim'
+
+Plug 'othree/html5.vim'
+Plug 'hail2u/vim-css3-syntax'
 
 call plug#end()
 
@@ -45,8 +53,8 @@ set t_AB=^[[48;5;%dm
 set t_AF=^[[38;5;%dm
 
 set background=dark
-let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme base16-ocean
+" let base16colorspace=256  " Access colors present in 256 colorspace
+colorscheme nova
 
 " let g:seoul256_background = 236
 " colo seoul256
@@ -185,6 +193,7 @@ let g:javascript_conceal_super                = "Ω"
 
 let g:neomake_ruby_enabled_makers = ['rubocop']
 let g:neomake_jsx_enabled_makers = ['eslint']
+let g:neomake_css_enabled_makers = ['stylelint']
 " you can set your enabled makers globally (like below) or on the buffer level as part of an autocmd - see Neomake docs for details
 let g:neomake_javascript_enabled_makers = ['eslint']
 " when switching/opening a JS buffer, set neomake's eslint path, and enable it as a maker
