@@ -37,6 +37,7 @@ Plug 'mxw/vim-jsx'
 Plug 'sbdchd/neoformat'
 Plug 'elzr/vim-json'
 Plug 'jaawerth/nrun.vim'
+Plug 'jparise/vim-graphql'
 
 Plug 'junegunn/goyo.vim'
 
@@ -60,6 +61,11 @@ colorscheme nova
 " colo seoul256
 
 set colorcolumn=85
+" let &colorcolumn=join(range(85,999),",")
+highlight ColorColumn ctermbg=246 guibg=#41535D
+highlight VertSplit guibg=#41535D
+highlight StatusLineNC guibg=#41535D
+
 
 " No backup file and no swap file
 set nobackup
@@ -69,6 +75,7 @@ set noswapfile
 set expandtab
 set tabstop=2
 set shiftwidth=2
+set conceallevel=2
 
 " more natural split defaut position
 set splitbelow
