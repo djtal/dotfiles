@@ -18,11 +18,8 @@ alias lsd='ls -l ${colorflag} | grep "^d"'
 
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
-alias migrate="rake db:migrate && rake db:rollback && rake db:migrate"
 alias be="bundle exec"
 alias man='man -P less'
-alias r='touch tmp/restart'
-alias docs='cd ~/Dropbox/Docs/docs'
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete; find . -name '._*' -ls -delete;"
 alias cdproj="tech open $@"
 complete -F _projs cdproj
@@ -39,6 +36,6 @@ if [  $(uname -s) = "Linux" ]; then
     alias pbpaste='xsel --clipboard --output'
 fi
 
-alias vi="nvim"
 
 alias freq='cut -f1 -d" " $HISTFILE | sort | uniq -c | sort -nr | head -n 30'
+alias https='http --default-scheme=https'
