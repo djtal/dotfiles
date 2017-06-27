@@ -1,0 +1,2 @@
+set -gx LSCOLORS gxfxcxdxbxegedabagacad
+
