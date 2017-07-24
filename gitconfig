@@ -17,8 +17,10 @@
   la = "!git config -l | grep alias | cut -c 7-"
   br = branch -vv
 [core]
-	pager = diff-so-fancy | less --tabs=1,5 -R
+	# pager = diff-so-fancy | less --tabs=1,5 -R
 	excludesfile = /Users/djtal/Developement/Projects/gitignore/Global/OSX.gitignore
+[pager]
+    diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
 [push]
 	default = upstream
 [color]
@@ -60,8 +62,8 @@
   func = blue
   old = red strike
   new = green
-  commit = blue
-  whitespace = red
+  commit = blue bold
+  whitespace = red reverse
   context = normal
 [color "branch"]
   current = cyan
@@ -88,3 +90,8 @@
   selected = normal
   separator = red bold
   linenumber = normal
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
