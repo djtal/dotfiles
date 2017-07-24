@@ -1,5 +1,9 @@
 
 # DO NOT EDIT BELOW THIS LINE
+[includeIf "gitdir:~/Developement/perso/"]
+  path = .gitconfig-perso
+[includeIf "gitdir:~/Developement/Projects/dotfiles/"]
+  path = .gitconfig-perso
 [alias]
   ctags = !.git/hooks/ctags
   lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative
