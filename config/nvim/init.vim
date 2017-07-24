@@ -224,6 +224,11 @@ let g:airline#extensions#tabline#paste_symbol = 'ρ'
 let g:airline#extensions#tabline#whitespace_symbol = 'Ξ'
 
 let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+" let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr',  'maxlinenr', '%3v'])
+let g:airline_section_z = airline#section#create(['linenr',  'maxlinenr', '%3v'])
+let g:airline_symbols = get(g:,'airline_symbols',{})
+let g:airline_symbols.maxlinenr=''
+let g:airline_symbols.linenr = ''
 
 " adding to vim-airline's statusline
 let g:webdevicons_enable_airline_statusline = 1
