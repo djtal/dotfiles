@@ -13,7 +13,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'benekastah/neomake'
 Plug 'mattn/emmet-vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
@@ -22,6 +21,10 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
 Plug 'janko-m/vim-test'
 Plug 'BlakeWilliams/vim-tbro'
+Plug 'mhinz/vim-grepper'
+Plug 'dag/vim-fish'
+Plug 'tpope/vim-projectionist'
+Plug 'ryanoasis/vim-devicons'
 
 " Themes
 
@@ -60,7 +63,7 @@ colorscheme nova
 " let g:seoul256_background = 236
 " colo seoul256
 
-set colorcolumn=85
+set colorcolumn=85,120
 " let &colorcolumn=join(range(85,999),",")
 highlight ColorColumn ctermbg=246 guibg=#41535D
 highlight VertSplit guibg=#41535D
@@ -75,7 +78,7 @@ set noswapfile
 set expandtab
 set tabstop=2
 set shiftwidth=2
-set conceallevel=2
+" set conceallevel=2
 
 " more natural split defaut position
 set splitbelow
@@ -92,6 +95,11 @@ nnoremap <leader><space> :noh<cr>
 
 " Fast saving
 nmap <leader>w :w!<cr>
+" jj alow to go out from insert/edit mode
+inoremap jj <ESC>
+" quickliy go to end of line in insert mode very usefull with auto parenthesis
+inoremap ii <Esc>$a
+
 
 " on the fly vimrc editing and applying
 nmap <leader>v :tabedit $MYVIMRC<CR>
@@ -102,6 +110,11 @@ if has("autocmd")
   " autocmd BufWritePre * :%s/\s\+$//e
   autocmd! BufWritePost * Neomake
 endif
+
+augroup filetypedetect
+    au BufRead,BufNewFile Dangerfile setfiletype ruby
+    " associate *.foo with php filetype
+augroup END
 
 " easy acces to edit in split mode and tab
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
@@ -130,8 +143,6 @@ nnoremap <leader>ft Vatzf
 
 imap <c-l> <space>=><space>
 
-" jj alow to go out from insert/edit mode
-inoremap jj <ESC>
 
 " visual move block of line
 " vnoremap J :m '>+1<CR>gv=gv
@@ -155,12 +166,52 @@ command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
 
+" vim-grepper
+
+let g:grepper = {}
+runtime autoload/grepper.vim
+let g:grepper.jump = 1
+let g:grepper.stop = 500
+noremap <leader>gr :GrepperRg<Space>
+
+" vim-projectionnist
+"
+let g:projectionist_heuristics = {
+      \  "config/prod.exs": {
+      \    "web/controllers/*_controller.ex": {
+      \      "type": "controller",
+      \      "alternate": "test/controllers/{}_controller_test.exs",
+      \    },
+      \    "web/models/*.ex": {
+      \      "type": "model",
+      \      "alternate": "test/models/{}_test.exs",
+      \    },
+      \    "web/views/*_view.ex": {
+      \      "type": "view",
+      \      "alternate": "test/views/{}_view_test.exs",
+      \    },
+      \    "web/templates/*.html.eex": {
+      \      "type": "template",
+      \      "alternate": "web/views/{dirname|basename}_view.ex"
+      \    },
+      \    "test/*_test.exs": {
+      \      "type": "test",
+      \      "alternate": "web/{}.ex",
+      \    }
+      \  }
+      \}
+
+" fzf
+
+set rtp+=/usr/local/opt/fzf
+
 " Airline config
 
 let g:airline_theme='base16'
 let g:airline_detect_modified=1
-" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts=1
 let g:airline#extensions#branch#enabled=1
+let g:airline#extensions#hunks#enabled=0
 let g:airline#extensions#tmuxline#enabled = 0
 " let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled=0
@@ -171,6 +222,11 @@ let g:airline#extensions#tabline#linecolumn_prefix = '¶ '
 let g:airline#extensions#tabline#branch_prefix = '⎇ '
 let g:airline#extensions#tabline#paste_symbol = 'ρ'
 let g:airline#extensions#tabline#whitespace_symbol = 'Ξ'
+
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+
+" adding to vim-airline's statusline
+let g:webdevicons_enable_airline_statusline = 1
 
 " Ag config
 
