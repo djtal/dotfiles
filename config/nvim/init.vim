@@ -167,12 +167,8 @@ autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
 
 " vim-grepper
+nnoremap <leader>g :Grepper -tool rg<cr>
 
-let g:grepper = {}
-runtime autoload/grepper.vim
-let g:grepper.jump = 1
-let g:grepper.stop = 500
-noremap <leader>gr :GrepperRg<Space>
 
 " vim-projectionnist
 "
@@ -303,7 +299,6 @@ nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
-nmap <silent> <leader>g :TestVisit<CR>
 
 
 nnoremap ! :Tbro
