@@ -51,12 +51,13 @@ export PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
 export LESS_TERMCAP_md="$ORANGE"
 export RAILS_ENV='development'
 
+export FZF_DEFAULT_COMMAND='rg -g "" --files'
+
 # VAGRANT SETTINGS
 
 export VAGRANT_PRIVATE_IP="10.0.0.100"
 export VAGRANT_CPU="2"
 export VAGRANT_RAM="4096"
-export JAVA_HOME=`/usr/libexec/java_home -v '1.7*'`
 export GOPATH="$HOME/Developement/Projects/golang"
 export PATH="$(yarn global bin):$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
