@@ -11,7 +11,9 @@ fi
 alias ls="ls -l ${colorflag}"
 
 # List all files colorized in long format, including dot files
-alias l="ls -tlAh ${colorflag}"
+# alias l="ls -tlAh ${colorflag}"
+alias l="exa -l --git -a -h --time-style=long-iso"
+
 
 # List only directories
 alias lsd='ls -l ${colorflag} | grep "^d"'
@@ -36,6 +38,7 @@ if [  $(uname -s) = "Linux" ]; then
     alias pbpaste='xsel --clipboard --output'
 fi
 
-
 alias freq='cut -f1 -d" " $HISTFILE | sort | uniq -c | sort -nr | head -n 30'
 alias https='http --default-scheme=https'
+alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && killall Dock"
+alias klog="kubectl get pods --context=aws-paris --namespace=qa -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :' | xargs stern --context=aws-paris --namespace=qa --tail 100"

@@ -23,6 +23,10 @@ brew 'jid' #incremental json filter
 brew 'htop'
 brew 'neovim/neovim/neovim'
 brew 'shellcheck'
+brew 'stern'
+brew 'knqyf263/pet/pet'
+brew 'mike-engel/jwt-cli/jwt-cli'
+
 
 # Imaging
 
