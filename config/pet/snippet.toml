@@ -1,6 +1,6 @@
 [[snippets]]
   description = "Search an organization by a domain name"
-  command = "http organizations.develop.paris-squad.com/api/organizations/ Authorization:\"Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJvcmdhbml6YXRpb25faWQiOiI0NDQzNTIyMC02M2IwLTQ2MDgtOWFiNy1mMzk4NzgxOTAzYjgiLCJvcmdfdXNlcl9pZCI6Ijg2Y2Y1NGFlLTBlNzEtNDA0Mi1iNGRlLTNmMzAwNDU0MzVmMyIsInBvbGljeSI6InBvbF9hcHByZW5hbnQiLCJ4LXNjb3BlcyI6WyJsYmU6YWRtaW46cmVhZCIsIm9yZzpvcmdhbml6YXRpb25zOnJlYWQiLCJvcmc6dXNlcnM6cmVhZCJdLCJhcHBfbWV0YWRhdGEiOnsib3JnYW5pemF0aW9uX2lkIjoiNDQ0MzUyMjAtNjNiMC00NjA4LTlhYjctZjM5ODc4MTkwM2I4Iiwib3JnX3VzZXJfaWQiOiI4NmNmNTRhZS0wZTcxLTQwNDItYjRkZS0zZjMwMDQ1NDM1ZjMiLCJjaGVja3N1bSI6ImQwMTg4ZWUxMjdiMWI5OWM0M2I5NWJiODFmN2RiYTQ2In0sIngtanRpIjoiY2U4YWUxMmYtYTQ2MC00N2M5LTkwN2UtZmMyNjUyNzk4OTQxIiwiZW1haWwiOiJhZG1pbkBhcnRpc2FuLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJpc3MiOiJodHRwczovL3lhc3Npbi5ldS5hdXRoMC5jb20vIiwic3ViIjoiYXV0aDB8NTgwZGUxNjliMWQ1ZWFlMDU5NTM1ZTNjIiwiYXVkIjoiU25jV3pnbTdQS1FpNGxTSWhXdTVpdnZoTWRrWXpZTXIiLCJleHAiOjE0OTc1NTc3OTgsImlhdCI6MTQ5NzUyMTc5OH0.LdnmEHetv1VnJNE-EDtQ3HfznEafB34IvmgUOvHrZhQ\" | jq  '. [] | select(.domain | contains(\"percipio\"))'"
+  command = "http organizations.develop.paris-squad.com/api/organizations/ Authorization:\"Bearer <token>\" | jq  '. [] | select(.domain | contains(\"percipio\"))'"
   output = ""
 
 [[snippets]]
@@ -16,4 +16,19 @@
 [[snippets]]
   description = "Get a fresh new jwt and decode it"
   command = "https yassin.eu.auth0.com/oauth/token grant_type=\"http://auth0.com/oauth/grant-type/password-realm\" audiencce=\"http://percipio.com/global\" client_id=\"SncWzgm7PKQi4lSIhWu5ivvhMdkYzYMr\" username=\"admin@artisan.com\" password=\"test1234\" scope=\"openid app_metadata\" realm=\"ucmv2\" client_secret=\"gkCZZO9TR-Ty8AmB2Iz1lVmLvXjuZJuHgA4CgZlZDxGC-x8TAqrGHGvloprb1Mxn\" | jq \". .id_token\" | xargs jwt decode"
+  output = ""
+
+[[snippets]]
+  description = "See log of the previous started pod. Usefull wwwhen pod always crash"
+  command = "kubectl logs <pod-name> --previous"
+  output = ""
+
+[[snippets]]
+  description = "Get only header of the api response"
+  command = "http -p h <api-url>"
+  output = ""
+
+[[snippets]]
+  description = "Upload a base64 csv file to lbe"
+  command = "echo '{\"csv\":{\"data\":\"test\"}}' | jq --arg data `base64 -i <path/to/your/csv>` 'setpath([\"csv\", \"data\"]; $data)' | http \"backoffice.artisan.dev/v1/admin/csv_user_imports\" Authorization:\"Bearer <your_jwt>\""
   output = ""
