@@ -41,4 +41,4 @@ fi
 alias freq='cut -f1 -d" " $HISTFILE | sort | uniq -c | sort -nr | head -n 30'
 alias https='http --default-scheme=https'
 alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && killall Dock"
-alias klog="kubectl get pods --context=aws-paris --namespace=qa -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :' | xargs stern --context=aws-paris --namespace=qa --tail 100"
+alias klog="kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :' | xargs stern --exclude \"(/health/all|/api/public/build_version)\" --tail 100"

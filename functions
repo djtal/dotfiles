@@ -150,8 +150,43 @@ qh() {
   grep --color=always "$*" "$HISTFILE" |       less -RX
 }
 
+# fzf integrations see https://junegunn.kr/2016/07/fzf-git/
+is_in_git_repo() {
+  git rev-parse HEAD > /dev/null 2>&1
+}
+
+fzf-down() {
+  fzf --height 50% "$@" --border
+}
+
+gb() {
+  is_in_git_repo || return
+  git branch  | grep -v '/HEAD\s' | sort |
+  fzf-down --ansi --multi --tac --preview-window right:70% \
+    --preview 'git lg -5 $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+  sed 's/^..//' | cut -d' ' -f1 |
+  sed 's#^remotes/##'
+}
+
+bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
+
 # edit conflic in vim and setup search pattern with conflic marker
 # credit to https://coderwall.com/p/psa3ng
 function editconflicts() {
   vim +/"<<<<<<<" $( git diff --name-only --diff-filter=U | xargs )
+}
+
+function prev() {
+  PREV=$(fc -lrn | head -n 1)
+  sh -c "pet new `printf %q "$PREV"`"
+}
+
+function ktty() {
+  selected=$(kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :')
+  if [[ ! -z "$selected" ]]; then
+    pod=$(kubectl get pod -l "app=$selected" -o jsonpath='{.items[0].metadata.name}')
+    if [[ ! -z "$pod" ]]; then
+      kubectl exec -ti "$pod" -- /bin/ash
+    fi
+  fi
 }
