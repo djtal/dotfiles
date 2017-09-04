@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+if [ -z "$TMUX" ]; then
+  # not in tmux
+  tmux new-session -As $1
+else
+  # inside tmux
+  if [ $(tmux list-window | grep $1 | awk '{ print $2 }') ]; then
+    tmux select-window -t $(tmux list-window | grep $1 | awk '{ print $1 }' | cut -b 1)
+  else
+    tmux new-window -n "$1" -c "$HOME/Developement/Projects/$1"
+    if [ -f  "$HOME/.tmux-layout" ]; then
+      tmux source-file  "$HOME/.tmux-layout"
+    fi
+  fi
+fi
