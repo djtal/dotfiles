@@ -99,6 +99,15 @@ for file in ~/.{path,bash_prompt,exports,aliases,functions}; do
 done
 unset file
 
+. /usr/local/etc/profile.d/z.sh
+
+if [ -d ~/.bash_completion.d ]; then
+  for file in ~/.bash_completion.d/*; do
+    source $file
+  done
+fi
+unset file
+
 #define some color based on the molokai them see http://stevelosh.com/blog/2009/03/candy-colored-terminal/
 # D=$'\e[0;37;40m'
 # PINK=$'\e[0;35;40m'
