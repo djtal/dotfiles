@@ -1,6 +1,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
@@ -99,6 +100,10 @@ nmap <leader>w :w!<cr>
 inoremap jj <ESC>
 " quickliy go to end of line in insert mode very usefull with auto parenthesis
 inoremap ii <Esc>$a
+" Do not show stupid q: window
+" https://vi.stackexchange.com/questions/457/does-ex-mode-have-any-practical-use
+" for more exemple of Ex mode
+map q: :q
 
 
 " on the fly vimrc editing and applying
@@ -196,6 +201,12 @@ let g:projectionist_heuristics = {
       \    }
       \  }
       \}
+
+let g:rails_projections = {
+	      \ "doc/*_swagger.yml": {
+        \   "alternate": "spec/swagger/{}_swagger_spec.rb",
+	      \   "command": "swagger"
+	      \ }}
 
 " fzf
 
@@ -326,6 +337,10 @@ nmap <C-p> :FZF<cr>
 " vim-jsx
 
 let g:jsx_ext_required = 0
+
+" vim-rhubarb
+"
+let g:github_enterprise_urls = ['https://github.skillsoft.com']
 
 " commentary mapping
 xmap \\  <Plug>Commentary<CR>
