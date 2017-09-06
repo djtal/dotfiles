@@ -16,7 +16,6 @@ brew 'tmux'
 brew 'tig'
 brew 'ctags'
 brew 'httpie'
-brew 'the_silver_searcher'
 brew 'ripgrep'
 brew 'jq'
 brew 'jid' #incremental json filter
@@ -26,6 +25,12 @@ brew 'shellcheck'
 brew 'stern'
 brew 'knqyf263/pet/pet'
 brew 'mike-engel/jwt-cli/jwt-cli'
+brew 'kubectx'
+brew 'z'
+brew 'exa'
+brew 'watch'
+brew 'diff-so-fancy'
+brew 'tavianator/tap/bfs' #better find
 
 
 # Imaging
@@ -48,7 +53,6 @@ cask 'mojibar', args: { appdir: '/Applications' }
 cask 'sequel-pro', args: { appdir: '/Applications' }
 cask 'spectacle', args: { appdir: '/Applications' }
 cask 'pg-commander', args: { appdir: '/Applications' }
-cask 'cumulus', args: { appdir: '/Applications' }
 cask 'medis', args: { appdir: '/Applications' }
 cask 'flux', args: { appdir: '/Applications' }
 cask 'atom', args: { appdir: '/Applications' }
