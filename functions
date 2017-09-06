@@ -1,5 +1,4 @@
-# vim:syntax=sh
-
+# vim:filetype=sh
 
 function cddev() {
   # dir=$(find ~/ciblo/projets -type d -mindepth 1 -maxdepth 2 -name "$1" | head -n 1)
@@ -19,7 +18,6 @@ function _devs() {
   COMPREPLY=( $(find ~/Developement/Projects -mindepth 1 -maxdepth 2 ! -name '.*' -name "$cur*" -type d -exec basename {} \;) )
 }
 complete -F _devs cddev
-complete -F _fzf_dir_completion -o default -o _devs cddev
 
 # Tmux shortcurt
 # see https://gist.github.com/jyurek/7be666a88e06f68d45cf
@@ -44,8 +42,8 @@ complete -F _fzf_dir_completion -o default -o _devs cddev
 # see https://github.com/bag-man/dotfiles/blob/c88cc454e1ba2a86d2b596b2cee55e61eecf6162/bashrc
 tm() {
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
-  if [ $1 ]; then
-    tmux $change -t "$1" 2>/dev/null || (tmux new-session -d -s $1 && tmux $change -t "$1"); return
+  if [ "$1" ]; then
+    tmux "$change" -t "$1" 2>/dev/null || (tmux new-session -d -s "$1" && tmux "$change" -t "$1"); return
   fi
   session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
 }
@@ -140,8 +138,8 @@ complete -F _compressed_files extract
 # other plain old git but two letter less
 # credit to https://github.com/pengwynn/dotfiles
 function g {
-    if [[ $# > 0 ]]; then
-        git $@
+    if [[ $# -gt 0 ]]; then
+        git "$@"
     else
         git status --short --branch
     fi
@@ -151,8 +149,8 @@ function g {
 __git_complete g __git_main
 
 function v {
-    if [[ $# > 0 ]]; then
-        vagrant $@
+    if [[ $# -gt 0 ]]; then
+        vagrant "$@"
     else
         vagrant status
     fi
