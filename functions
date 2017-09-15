@@ -193,16 +193,41 @@ function prev() {
 }
 
 function ktty() {
-
-  if [[ -d ".kubernetes"  ]]; then
-    selected=$(yaml r .kubernetes/local/organization-api-rc.yml spec.selector.app)
-  fi
-  selected=$(kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :')
+  selected=$(_select_k8_app)
   if [[ ! -z "$selected" ]]; then
     pod=$(kubectl get pod -l "app=$selected" -o jsonpath='{.items[0].metadata.name}')
     if [[ ! -z "$pod" ]]; then
-      kubectl exec -ti "$pod" -- /bin/ash
+      kubectl exec -ti "$pod" -- /bin/sh
     fi
+  fi
+}
+
+function kstatus() {
+  selected=$(_select_k8_app)
+  status=$(kubectl get pod -l app="$selected" -o jsonpath='{.items[0].status.containerStatuses[0].ready}')
+  echo $status
+}
+
+function kreset() {
+  cur=$(kubectl config current-context)
+  if [ "vagrant" == "$cur" ]; then
+    if [[ -f "./bin/kube_reset_app" ]]; then
+      ./bin/kube_reset_app
+    fi
+  else
+    kubectl config use-context vagrant
+    if [[ -f "./bin/kube_reset_app" ]]; then
+      ./bin/kube_reset_app
+    fi
+    kubectl config use-context "$cur"
+  fi
+}
+
+function _select_k8_app()  {
+  if [ -f .kproject ]; then
+    cat .kproject
+  else
+    echo "$(kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :')"
   fi
 }
 
@@ -212,4 +237,11 @@ fvim() {
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 bind -x '"\C-p": fvim'
+
+fbr() {
+  local branches branch
+  branches=$(git branch) &&
+  branch=$(echo "$branches" | fzf +m) &&
+  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+}
 
