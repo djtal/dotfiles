@@ -233,7 +233,7 @@ function _select_k8_app()  {
 
 fvim() {
   local IFS=$'\n'
-  local files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+  local files=($(fzf --query="$1" --multi --select-1 --exit-0))
   [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
 }
 bind -x '"\C-p": fvim'
