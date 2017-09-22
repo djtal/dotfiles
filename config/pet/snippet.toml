@@ -2,6 +2,7 @@
   description = "Search an organization by a domain name"
   command = "http organizations.develop.paris-squad.com/api/organizations/ Authorization:\"Bearer <token>\" | jq  '. [] | select(.domain | contains(\"percipio\"))'"
   output = ""
+  tag = ["jq"]
 
 [[snippets]]
   description = "Decode a base64 value"
@@ -12,23 +13,51 @@
   description = "Get an auth token for auth0"
   command = "https yassin.eu.auth0.com/oauth/token grant_type=\"http://auth0.com/oauth/grant-type/password-realm\" audience=\"http://percipio.com/global\" client_id=\"SncWzgm7PKQi4lSIhWu5ivvhMdkYzYMr\" username=\"admin@artisan.com\" password=\"test1234\" scope=\"openid app_metadata\" realm=\"ucmv2\" client_secret=\"gkCZZO9TR-Ty8AmB2Iz1lVmLvXjuZJuHgA4CgZlZDxGC-x8TAqrGHGvloprb1Mxn\""
   output = ""
+  tag = ["percipio", "jwt"]
 
 [[snippets]]
   description = "Get a fresh new jwt and decode it"
   command = "https yassin.eu.auth0.com/oauth/token grant_type=\"http://auth0.com/oauth/grant-type/password-realm\" audiencce=\"http://percipio.com/global\" client_id=\"SncWzgm7PKQi4lSIhWu5ivvhMdkYzYMr\" username=\"admin@artisan.com\" password=\"test1234\" scope=\"openid app_metadata\" realm=\"ucmv2\" client_secret=\"gkCZZO9TR-Ty8AmB2Iz1lVmLvXjuZJuHgA4CgZlZDxGC-x8TAqrGHGvloprb1Mxn\" | jq \". .id_token\" | xargs jwt decode"
   output = ""
+  tag = ["percipio", "jwt"]
 
 [[snippets]]
   description = "See log of the previous started pod. Usefull wwwhen pod always crash"
   command = "kubectl logs <pod-name> --previous"
   output = ""
+  tag = ["k8"]
 
 [[snippets]]
   description = "Get only header of the api response"
   command = "http -p h <api-url>"
   output = ""
+  tag = ["httpie"]
 
 [[snippets]]
   description = "Upload a base64 csv file to lbe"
   command = "echo '{\"csv\":{\"data\":\"test\"}}' | jq --arg data `base64 -i <path/to/your/csv>` 'setpath([\"csv\", \"data\"]; $data)' | http \"backoffice.artisan.dev/v1/admin/csv_user_imports\" Authorization:\"Bearer <your_jwt>\""
   output = ""
+  tag = ["percipio"]
+
+[[snippets]]
+  description = "Get all generated delegated token for a user. Need to know the JTI from master token"
+  command = "http auth0-proxy.develop.paris-squad.com/tokens-bucket/<xjti>"
+  output = ""
+  tag = ["percipio", "jwt"]
+
+[[snippets]]
+  description = "Download video and extract audio as format"
+  command = "youtube-dl --extract-audio --audio-format <format:mp3> <youtube-url>"
+  output = ""
+
+[[snippets]]
+  description = "open file with diff in vim tabs"
+  command = "vim -p $(git diff --name-only)"
+  output = ""
+  tag = ["vi"]
+
+[[snippets]]
+  description = "jo  -d. csv.data.test=%<file> scheduled_email.send_email=true"
+  command = "Generate Payload suitable to user import csv"
+  output = ""
+  tag = ["json"]
