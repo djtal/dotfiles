@@ -10,6 +10,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-ruby/vim-ruby'
+Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'benekastah/neomake'
@@ -26,6 +27,10 @@ Plug 'mhinz/vim-grepper'
 Plug 'dag/vim-fish'
 Plug 'tpope/vim-projectionist'
 Plug 'ryanoasis/vim-devicons'
+Plug 'kana/vim-textobj-user'
+Plug 'andyl/vim-textobj-elixir'
+Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+Plug 'bfontaine/Brewfile.vim'
 
 " Themes
 
@@ -145,6 +150,13 @@ map tp :tabprev<cr>
 
 
 nnoremap <leader>ft Vatzf
+" open tig in a new tabs
+nnoremap <Leader>gg :tabnew<CR>:terminal tig<CR>
+
+augroup terminalCallbacks
+  autocmd!
+  autocmd TermClose * call feedkeys('<cr>')
+augroup END
 
 imap <c-l> <space>=><space>
 
@@ -167,8 +179,8 @@ function! <SID>StripTrailingWhitespaces()
     let @/=_s
     call cursor(l, c)
 endfunction
-command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
-autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
+" command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
+" autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
 
 " vim-grepper
@@ -195,6 +207,12 @@ let g:projectionist_heuristics = {
       \      "type": "template",
       \      "alternate": "web/views/{dirname|basename}_view.ex"
       \    },
+      \    "CHANGELOG.md": {
+      \      "type": "change",
+      \    },
+      \    "doc/swagger.yaml": {
+      \      "type": "swag",
+      \    },
       \    "test/*_test.exs": {
       \      "type": "test",
       \      "alternate": "web/{}.ex",
@@ -206,11 +224,18 @@ let g:rails_projections = {
 	      \ "doc/*_swagger.yml": {
         \   "alternate": "spec/swagger/{}_swagger_spec.rb",
 	      \   "command": "swagger"
-	      \ }}
+	      \ },
+	      \ "app/use_cases/*.rb": {
+	      \   "command": "case"
+	      \ },
+	      \ "app/serializers/*.rb": {
+	      \   "command": "serializer"
+	      \ },
+	      \ "spec/factories/*.rb": {
+	      \   "command": "factory"
+	      \ }
+        \}
 
-" fzf
-
-set rtp+=/usr/local/opt/fzf
 
 " Airline config
 
@@ -338,6 +363,10 @@ nmap <C-p> :FZF<cr>
 
 let g:jsx_ext_required = 0
 
+" fugitive.vim
+"
+nnoremap <silent> <leader>gs :GStatus<CR>
+
 " vim-rhubarb
 "
 let g:github_enterprise_urls = ['https://github.skillsoft.com']
@@ -371,3 +400,5 @@ fun! LoadGitrebaseBindings()
   nnoremap  F :Fixup<CR>
   nnoremap  C :Cycle<CR>
 endfun
+
+

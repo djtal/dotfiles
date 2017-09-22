@@ -18,7 +18,6 @@ brew 'ctags'
 brew 'httpie'
 brew 'ripgrep'
 brew 'jq'
-brew 'jid' #incremental json filter
 brew 'htop'
 brew 'neovim/neovim/neovim'
 brew 'shellcheck'
@@ -44,6 +43,8 @@ brew 'rbenv'
 brew 'ruby-build'
 
 # Databases
+
+brew 'simon-engledew/gocmdpev/gocmdpev'
 
 
 # Add some cask formula too
