@@ -184,7 +184,7 @@ bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
 # edit conflic in vim and setup search pattern with conflic marker
 # credit to https://coderwall.com/p/psa3ng
 function editconflicts() {
-  vim +/"<<<<<<<" $( git diff --name-only --diff-filter=U | xargs )
+  vim +/"<<<<<<<" -p "$(git diff --name-only --diff-filter=U | xargs)"
 }
 
 function prev() {
