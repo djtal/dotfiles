@@ -1,0 +1,36 @@
+-- Official docs: http://www.postgresql.org/docs/9.3/static/app-psql.html
+-- Unofficial docs: http://robots.thoughtbot.com/improving-the-command-line-postgres-experience
+
+-- Don't display the "helpful" message on startup.
+\set QUIET 1
+\pset null '[NULL]'
+
+-- better table display
+\pset linestyle unicode
+\pset border 1
+
+
+-- custom prompt
+
+\set PROMPT1 '%[%033[0m%]\n%[%033[033m%] ➤ psql (%M): \%033[0;31m%]%/%[%033[0m%] \%033[0;32m%](%n)%033[0m%] %R%[%033[0m%]%# '
+
+
+-- Use a separate history file per-database.
+\set HISTFILE ~/.psql_history- :DBNAME
+-- If a command is run more than once in a row, only store it once in the history.
+\set HISTCONTROL ignoredups
+
+-- Autocomplete keywords (like SELECT) in upper-case, even if you started typing them in lower case.
+\set COMP_KEYWORD_CASE upper
+
+-- null symbol
+\pset null ¤
+
+-- Allow pasting of values to avoid stupid indenting
+\set paste
+
+-- pager with less
+
+\timing
+\pset pager always
+\setenv LESS '-iMSx4 -FXR'
