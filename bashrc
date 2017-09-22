@@ -118,8 +118,6 @@ unset file
 # #PS1='\[\033[33m\][\w$(__git_ps1)]@\[\033[32m\]\h:\[\033[0m\] \$ '
 # PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
 
-complete -F _projs oproj
-
 # Base16 Shell
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-ocean.dark.sh"
 # [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
