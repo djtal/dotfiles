@@ -21,6 +21,7 @@ brew 'jq'
 brew 'htop'
 brew 'neovim/neovim/neovim'
 brew 'shellcheck'
+brew 'hadolint' # Lint Dockerfile
 brew 'stern'
 brew 'knqyf263/pet/pet'
 brew 'mike-engel/jwt-cli/jwt-cli'
@@ -29,8 +30,7 @@ brew 'z'
 brew 'exa'
 brew 'watch'
 brew 'diff-so-fancy'
-brew 'tavianator/tap/bfs' #better find
-
+brew 'tavianator/tap/bfs' # better find
 
 # Imaging
 
@@ -45,7 +45,6 @@ brew 'ruby-build'
 # Databases
 
 brew 'simon-engledew/gocmdpev/gocmdpev'
-
 
 # Add some cask formula too
 
