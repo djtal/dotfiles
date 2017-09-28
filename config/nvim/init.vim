@@ -13,7 +13,7 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
-Plug 'benekastah/neomake'
+Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
@@ -31,12 +31,15 @@ Plug 'kana/vim-textobj-user'
 Plug 'andyl/vim-textobj-elixir'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'bfontaine/Brewfile.vim'
+Plug 'cespare/vim-toml'
 
 " Themes
 
 Plug 'trevordmiller/nova-vim'
 Plug 'junegunn/seoul256.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'mhinz/vim-janah'
+
 
 " JS plugins
 "
@@ -118,7 +121,7 @@ if has("autocmd")
   autocmd bufwritepost init.vim source $MYVIMRC
   " Delete all whitespace in end of line
   " autocmd BufWritePre * :%s/\s\+$//e
-  autocmd! BufWritePost * Neomake
+  " autocmd! BufWritePost * Neomake
 endif
 
 augroup filetypedetect
@@ -221,20 +224,20 @@ let g:projectionist_heuristics = {
       \}
 
 let g:rails_projections = {
-	      \ "doc/*_swagger.yml": {
-        \   "alternate": "spec/swagger/{}_swagger_spec.rb",
-	      \   "command": "swagger"
-	      \ },
-	      \ "app/use_cases/*.rb": {
-	      \   "command": "case"
-	      \ },
-	      \ "app/serializers/*.rb": {
-	      \   "command": "serializer"
-	      \ },
-	      \ "spec/factories/*.rb": {
-	      \   "command": "factory"
-	      \ }
-        \}
+      \ "doc/*_swagger.yml": {
+      \   "alternate": "spec/swagger/{}_swagger_spec.rb",
+      \   "command": "swagger"
+      \ },
+      \ "app/use_cases/*.rb": {
+      \   "command": "case"
+      \ },
+      \ "app/serializers/*.rb": {
+      \   "command": "serializer"
+      \ },
+      \ "spec/factories/*.rb": {
+      \   "command": "factory"
+      \ }
+      \}
 
 
 " Airline config
@@ -289,15 +292,18 @@ let g:javascript_conceal_prototype            = "¶"
 let g:javascript_conceal_static               = "•"
 let g:javascript_conceal_super                = "Ω"
 
-" NeoMake
+" ALE
+"
+"
+let g:ale_sign_column_always = 1
 
-let g:neomake_ruby_enabled_makers = ['rubocop']
-let g:neomake_jsx_enabled_makers = ['eslint']
-let g:neomake_css_enabled_makers = ['stylelint']
-" you can set your enabled makers globally (like below) or on the buffer level as part of an autocmd - see Neomake docs for details
-let g:neomake_javascript_enabled_makers = ['eslint']
-" when switching/opening a JS buffer, set neomake's eslint path, and enable it as a maker
-au BufEnter *.js let b:neomake_javascript_eslint_exe = nrun#Which('eslint')
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:airline#extensions#ale#enabled = 1
+let g:go_fmt_fail_silently = 1 " avoid conflict with vim-ogo : https://github.com/w0rp/ale/issues/609
+
+nmap <silent> <C-M> <Plug>(ale_previous_wrap)
+nmap <silent> <C-m> <Plug>(ale_next_wrap)
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
