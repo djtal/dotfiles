@@ -6,8 +6,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-ruby/vim-ruby'
 Plug 'fatih/vim-go'
@@ -32,6 +31,8 @@ Plug 'andyl/vim-textobj-elixir'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'bfontaine/Brewfile.vim'
 Plug 'cespare/vim-toml'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'haya14busa/incsearch.vim'
 
 " Themes
 
@@ -117,7 +118,7 @@ map q: :q
 " on the fly vimrc editing and applying
 nmap <leader>v :tabedit $MYVIMRC<CR>
 
-if has("autocmd")
+if has('autocmd')
   autocmd bufwritepost init.vim source $MYVIMRC
   " Delete all whitespace in end of line
   " autocmd BufWritePre * :%s/\s\+$//e
@@ -174,8 +175,8 @@ imap <c-l> <space>=><space>
 function! <SID>StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
-    let l = line(".")
-    let c = col(".")
+    let l = line('.')
+    let c = col('.')
     " Do the business:
     %s/\s\+$//e
     " Clean up: restore previous search history, and cursor position
@@ -185,6 +186,83 @@ endfunction
 " command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 " autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
+
+" vim-incsearch
+
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n  <Plug>(incsearch-nohl-n)
+map N  <Plug>(incsearch-nohl-N)
+map *  <Plug>(incsearch-nohl-*)
+map #  <Plug>(incsearch-nohl-#)
+map g* <Plug>(incsearch-nohl-g*)
+map g# <Plug>(incsearch-nohl-g#)
+
+" vim light-line
+"
+set noshowmode
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename' ] ],
+      \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ 'component_expand': {
+      \   'linter_warnings': 'LightlineLinterWarnings',
+      \   'linter_errors': 'LightlineLinterErrors',
+      \   'linter_ok': 'LightlineLinterOK'
+      \ },
+      \ 'component_type': {
+      \   'readonly': 'error',
+      \   'linter_warnings': 'warning',
+      \   'linter_errors': 'error'
+      \ },
+      \ }
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let modified = &modified ? '🔥 ' : ''
+  return modified . filename
+endfunction
+
+function! LightlineLinterWarnings() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ◆', all_non_errors)
+endfunction
+
+function! LightlineLinterErrors() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
+endfunction
+
+function! LightlineLinterOK() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+  return l:counts.total == 0 ? '✓ ' : ''
+endfunction
+
+autocmd User ALELint call s:MaybeUpdateLightline()
+
+" Update and show lightline but only if it's visible (e.g., not in Goyo)
+function! s:MaybeUpdateLightline()
+  if exists('#lightline')
+    call lightline#update()
+  end
+endfunction
 
 " vim-grepper
 nnoremap <leader>g :Grepper -tool rg<cr>
@@ -210,6 +288,10 @@ let g:projectionist_heuristics = {
       \      "type": "template",
       \      "alternate": "web/views/{dirname|basename}_view.ex"
       \    },
+      \    "lib/organizations_api/*.ex": {
+      \      "type": "lib",
+      \      "alternate": "test/lib/organizations_api/*.ex"
+      \    },
       \    "CHANGELOG.md": {
       \      "type": "change",
       \    },
@@ -225,8 +307,11 @@ let g:projectionist_heuristics = {
 
 let g:rails_projections = {
       \ "doc/*_swagger.yml": {
-      \   "alternate": "spec/swagger/{}_swagger_spec.rb",
+      \   "alternate": "spec/swagger/%s_swagger_spec.rb",
       \   "command": "swagger"
+      \ },
+      \ "CHANGELOG.md": {
+      \   "type": "change",
       \ },
       \ "app/use_cases/*.rb": {
       \   "command": "case"
@@ -234,43 +319,18 @@ let g:rails_projections = {
       \ "app/serializers/*.rb": {
       \   "command": "serializer"
       \ },
+      \ "lib/uts_events/*.rb": {
+      \   "command": "uts",
+      \   "alternate": "spec/uts/{}_spec.rb",
+      \ },
       \ "spec/factories/*.rb": {
       \   "command": "factory"
+      \ },
+      \ "spec/requests/*.rb": {
+      \   "alternate": "app/controllers/{}_controller.rb",
       \ }
       \}
 
-
-" Airline config
-
-let g:airline_theme='base16'
-let g:airline_detect_modified=1
-let g:airline_powerline_fonts=1
-let g:airline#extensions#branch#enabled=1
-let g:airline#extensions#hunks#enabled=0
-let g:airline#extensions#tmuxline#enabled = 0
-" let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled=0
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline#extensions#tabline#left_sep = '»'
-let g:airline#extensions#tabline#right_sep = '«'
-let g:airline#extensions#tabline#linecolumn_prefix = '¶ '
-let g:airline#extensions#tabline#branch_prefix = '⎇ '
-let g:airline#extensions#tabline#paste_symbol = 'ρ'
-let g:airline#extensions#tabline#whitespace_symbol = 'Ξ'
-
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
-" let g:airline_section_z = airline#section#create(['windowswap', '%3p%% ', 'linenr',  'maxlinenr', '%3v'])
-let g:airline_section_z = airline#section#create(['linenr',  'maxlinenr', '%3v'])
-let g:airline_symbols = get(g:,'airline_symbols',{})
-let g:airline_symbols.maxlinenr=''
-let g:airline_symbols.linenr = ''
-
-" adding to vim-airline's statusline
-let g:webdevicons_enable_airline_statusline = 1
-
-" Ag config
-
-let g:ag_working_path_mode="r"
 
 " Neoformat
 "
@@ -294,7 +354,6 @@ let g:javascript_conceal_super                = "Ω"
 
 " ALE
 "
-"
 let g:ale_sign_column_always = 1
 
 let g:ale_sign_error = '>>'
@@ -305,26 +364,7 @@ let g:go_fmt_fail_silently = 1 " avoid conflict with vim-ogo : https://github.co
 nmap <silent> <C-M> <Plug>(ale_previous_wrap)
 nmap <silent> <C-m> <Plug>(ale_next_wrap)
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  " set grepprg=ag\ --nogroup\ --nocolor
-  set grepprg=rg\ --color=never\ --no-heading
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag -Q -l --nocolor --hidden -g "" %s'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-
-  if !exists(":Ag")
-    command -nargs=+ -complete=file -bar Ag silent! grep! <args>|cwindow|redraw!
-    nnoremap \ :Ag<SPACE>
-  endif
-endif
-
 " vim-test config
-
 
 " Use tbro with vim-test
 let g:tbro_window = 1
@@ -361,6 +401,8 @@ endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" vim-fzf
 
 nmap <C-p> :FZF<cr>
 
