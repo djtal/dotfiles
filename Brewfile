@@ -31,6 +31,7 @@ brew 'exa'
 brew 'watch'
 brew 'diff-so-fancy'
 brew 'tavianator/tap/bfs' # better find
+brew 'Goles/battery/battery' # show battery status terminal
 
 # Imaging
 
