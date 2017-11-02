@@ -2,18 +2,23 @@
 
 ## Using this repo
 
-This repos contain configuration and installation script to easly setup/maintain config accross multiple computer in a easy way
+Contain configurations for mostly CLI tools and some osx specific options
 
-Basicaly all files are symlink to ~/. If you want to customize some of them
-simly compy them and a a cutline to delimit the part touched by the reference
-file.
+Configurations and scripts are compatible with Ubuntu 12.04 and OS X if possible
 
-Configuration and scripts are compatible with Ubuntu 12.04 and Os X.
+## How it work
+
+All files and directories are symlinked to `~/`. 
+
+You can choose to copy some file to make custom change inside if you don't want to sync change to upstream repo.
+Add cutline to each file you want to copy insteand of symlink 
+This line will delimit the part iof the file that will be sync from the upsteam from the part that will  be kept only locally.
+
 
 ## Usage
 
 Clone this repo where you want and run the install script
-Get the submodule 
+Get the submodules
 
 ```bash
 $ git submodule init
@@ -34,22 +39,48 @@ $ brew bundle
 
 ## What you'll find here
 
-### Some great sofware
+### Brew installed tools
 
 * bash (4.X since osx ship with 3.X)
 * git 
 * neovim
 * tmux
-* ack
-* [ag](http://geoff.greer.fm/ag/)
-* [shellcheck](https://github.com/koalaman/shellcheck)
 
-### Some small utilities function
+Check `Brewfile` for more
 
-* **cddev** :
+### Some small utilities functions
 
 Some functions are based on my filesytem organisation. feel free to change the
 to suit your need. Theses are "cdproj" and "cddev"
+
+* **cddev** :
+
+Quickly jump to any first level directory located in a base directory.
+Customize you base directory by setting the `CD_DEV_PATH` environement variable. Default to `~/`
+
+
+* **tm** :
+
+Easy open tmux session with the given name or switch to it if already exist
+
+
+### Additionals tools
+
+Thoses tools are not automaticaly installed with a `brew bundle`command.
+You need to manualy install them if you need
+
+
+**[mdt](https://github.com/monochromegane/mdt)**
+
+Easy format string to markdown table
+
+**[yaml](https://github.com/mikefarah/yaml )**
+
+[jq]() for yaml files
+
+**[chroma](https://github.com/alecthomas/chroma)**
+
+read any files wilth syntax higlight on you terminal
 
 ## Keyboard Setup
 
@@ -82,4 +113,5 @@ Inspiration taken from
 
 My coworkers for all the tips and tricks
 And many others
+
 
