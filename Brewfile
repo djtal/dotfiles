@@ -1,5 +1,3 @@
-tap 'neovim/neovim'
-
 brew 'bash'
 brew 'bash-completion'
 brew 'git'
@@ -16,24 +14,29 @@ brew 'tmux'
 brew 'tig'
 brew 'ctags'
 brew 'httpie'
-brew 'ripgrep'
-brew 'jq'
+brew 'ripgrep' # better than [grep,ag,ack]
+brew 'fd' # better than find
+brew 'tavianator/tap/bfs' # better find
+brew 'jq' # manipulate json with ease
 brew 'htop'
 brew 'neovim/neovim/neovim'
-brew 'shellcheck'
-brew 'hadolint' # Lint Dockerfile
-brew 'stern'
-brew 'knqyf263/pet/pet'
 brew 'mike-engel/jwt-cli/jwt-cli'
-brew 'kubectx'
 brew 'z'
-brew 'exa'
+brew 'exa' # better than ls
 brew 'watch'
 brew 'diff-so-fancy'
-brew 'tavianator/tap/bfs' # better find
 brew 'Goles/battery/battery' # show battery status terminal
+brew 'knqyf263/pet/pet' # quick ref to usefull cli snippet
 
-# Imaging
+# Lint
+brew 'hadolint' # Lint Dockerfile
+brew 'shellcheck' # Lint bash script
+
+# K8 tools
+
+brew 'kubectx'
+brew 'stern'
+
 
 # Dev env
 brew 'node'
@@ -60,7 +63,7 @@ cask 'atom', args: { appdir: '/Applications' }
 cask 'visual-studio-code', args: { appdir: '/Applications' }
 cask 'slack', args: { appdir: '/Applications' }
 
-# Usefull Ql plugins
+# Usefull QuickLook plugins
 
 cask 'quicklook-json'
 cask 'qlmarkdown'
