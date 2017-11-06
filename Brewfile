@@ -53,15 +53,13 @@ brew 'simon-engledew/gocmdpev/gocmdpev'
 # Add some cask formula too
 
 cask 'macdown', args: { appdir: '/Applications' }
-cask 'mojibar', args: { appdir: '/Applications' }
 cask 'sequel-pro', args: { appdir: '/Applications' }
 cask 'spectacle', args: { appdir: '/Applications' }
 cask 'pg-commander', args: { appdir: '/Applications' }
 cask 'medis', args: { appdir: '/Applications' }
 cask 'flux', args: { appdir: '/Applications' }
-cask 'atom', args: { appdir: '/Applications' }
-cask 'visual-studio-code', args: { appdir: '/Applications' }
 cask 'slack', args: { appdir: '/Applications' }
+cask 'karabiner-elements', args: { appdir: '/Applications' }
 
 # Usefull QuickLook plugins
 
