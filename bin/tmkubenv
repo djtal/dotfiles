@@ -1,0 +1,24 @@
+#!/bin/bash
+
+
+good_color="green"
+middle_color="yellow"
+warn_color="red"
+
+CTX=$(kubectl config current-context)
+
+case $CTX in
+  vagrant)
+    COLOR="#[fg=$good_color]"
+    printf "%s%s" $COLOR $CTX "#[default]"
+    ;;
+  minikube)
+    COLOR="#[fg=$good_color]"
+    printf "%s%s" $COLOR $CTX "#[default]"
+    ;;
+  *) 
+    COLOR="#[fg=$warn_color, bold]"
+    printf "%s%s" $COLOR $CTX "#[default]"
+    ;;
+esac
+
