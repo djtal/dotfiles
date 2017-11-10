@@ -1,0 +1,116 @@
+#!/bin/bash
+
+set -e
+
+
+usage() {
+cat <<EOF
+Kubernetes project aware utility
+k will help you run you daily dev task for app running inside kubernetes
+k usage:
+  k subcommand
+
+  Available subcommands
+
+  psql            open a psql console on the current app database
+  reset           restart the application by using the ./bin/kube_reset_app script if present
+  status, st      show pod(s) status for the current app
+  help            display this help message
+  general:
+    -h, --help    print this message
+EOF
+}
+
+subcommand=$1
+
+if [[ $subcommand == '-h' || $subcommand == '--help' || $subcommand == '-?' ]]; then
+    usage
+    exit 0
+fi
+
+
+function select_k8_app()  {
+  if [ -f .kproject ]; then
+    cat .kproject
+  else
+    echo "$(kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :')"
+  fi
+}
+
+function kstatus() {
+  selected=$(select_k8_app)
+  status=$(kubectl get pod -l app="$selected" -o jsonpath='{.items[0].status.containerStatuses[0].ready}')
+  echo $status
+}
+
+function kreset() {
+  if [[ ! -f ./bin/kube_reset_app ]]; then
+    echo "No ./bin/kube_reset_app to execute"
+    exit 1
+  fi
+
+  cur=$(kubectl config current-context)
+  if [ "vagrant" == "$cur" ]; then
+      ./bin/kube_reset_app
+  else
+    kubectl config use-context vagrant
+    # TODO trap here to restore context
+    ./bin/kube_reset_app
+    kubectl config use-context "$cur"
+  fi
+}
+
+function klog() {
+  selected=$(select_k8_app)
+  #TODO need to check if an app is selected to avoid tailing logs of all pods
+  stern "$selected" --exclude "(/health/all|/api/public/build_version/)" --tail 100
+}
+
+function kpod() {
+  selected=$(select_k8_app)
+  kubectl get pod -l app="$selected" -o wide --no-headers
+}
+
+function ktty() {
+  selected=$(select_k8_app)
+  if [[ ! -z "$selected" ]]; then
+    pod=$(kubectl get pod -l "app=$selected" -o jsonpath='{.items[0].metadata.name}')
+    if [[ ! -z "$pod" ]]; then
+      kubectl exec -ti "$pod" -- /bin/sh
+    fi
+  fi
+}
+
+case $subcommand in
+  log)
+    klog 
+    ;;
+  pod)
+    kpod
+    ;;
+  psql)
+    if [[ -f "$HOME/.pg_services" ]]; then
+      echo "No ~/.pg_services defined"
+      exit 1
+    fi
+    psql  service="$(basename "$(pwd)")"
+    ;;
+  reset)
+    kreset
+    ;;
+  status)
+    kstatus
+    ;;
+  st)
+    kstatus
+    ;;
+  subcommands)
+    echo log pod psql reset status st tty 
+    ;;
+  tty)
+    ktty
+    ;;
+  *) 
+    echo "nothing to do"
+    ;;
+esac
