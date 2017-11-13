@@ -1,8 +1,8 @@
 [[snippets]]
   description = "Search an organization by a domain name"
   command = "http organizations.develop.paris-squad.com/api/organizations/ Authorization:\"Bearer <token>\" | jq  '. [] | select(.domain | contains(\"percipio\"))'"
-  output = ""
   tag = ["jq"]
+  output = ""
 
 [[snippets]]
   description = "Decode a base64 value"
@@ -11,39 +11,39 @@
 
 [[snippets]]
   description = "Get an auth token for auth0"
-  command = "https yassin.eu.auth0.com/oauth/token grant_type=\"http://auth0.com/oauth/grant-type/password-realm\" audience=\"http://percipio.com/global\" client_id=\"SncWzgm7PKQi4lSIhWu5ivvhMdkYzYMr\" username=\"admin@artisan.com\" password=\"test1234\" scope=\"openid app_metadata\" realm=\"ucmv2\" client_secret=\"gkCZZO9TR-Ty8AmB2Iz1lVmLvXjuZJuHgA4CgZlZDxGC-x8TAqrGHGvloprb1Mxn\""
-  output = ""
+  command = "https yassin.eu.auth0.com/oauth/token grant_type=\"http://auth0.com/oauth/grant-type/password-realm\" audience=\"http://percipio.com/global\" client_id=\"SncWzgm7PKQi4lSIhWu5ivvhMdkYzYMr\" username=\"<username>\" password=\"<password>\" scope=\"openid app_metadata\" realm=\"ucmv2\" client_secret=\"<secret>\""
   tag = ["percipio", "jwt"]
+  output = ""
 
 [[snippets]]
   description = "Get a fresh new jwt and decode it"
-  command = "https yassin.eu.auth0.com/oauth/token grant_type=\"http://auth0.com/oauth/grant-type/password-realm\" audiencce=\"http://percipio.com/global\" client_id=\"SncWzgm7PKQi4lSIhWu5ivvhMdkYzYMr\" username=\"admin@artisan.com\" password=\"test1234\" scope=\"openid app_metadata\" realm=\"ucmv2\" client_secret=\"gkCZZO9TR-Ty8AmB2Iz1lVmLvXjuZJuHgA4CgZlZDxGC-x8TAqrGHGvloprb1Mxn\" | jq \". .id_token\" | xargs jwt decode"
-  output = ""
+  command = "https yassin.eu.auth0.com/oauth/token grant_type=\"http://auth0.com/oauth/grant-type/password-realm\" audience=\"http://percipio.com/global\" client_id=\"SncWzgm7PKQi4lSIhWu5ivvhMdkYzYMr\" username=\"<username>\" password=\"<password>\" scope=\"openid app_metadata\" realm=\"ucmv2\" client_secret=\"<secret>\" | jq \". .id_token\" | xargs jwt decode"
   tag = ["percipio", "jwt"]
+  output = ""
 
 [[snippets]]
   description = "See log of the previous started pod. Usefull wwwhen pod always crash"
   command = "kubectl logs <pod-name> --previous"
-  output = ""
   tag = ["k8"]
+  output = ""
 
 [[snippets]]
   description = "Get only header of the api response"
   command = "http -p h <api-url>"
-  output = ""
   tag = ["httpie"]
+  output = ""
 
 [[snippets]]
   description = "Upload a base64 csv file to lbe"
   command = "echo '{\"csv\":{\"data\":\"test\"}}' | jq --arg data `base64 -i <path/to/your/csv>` 'setpath([\"csv\", \"data\"]; $data)' | http \"backoffice.artisan.dev/v1/admin/csv_user_imports\" Authorization:\"Bearer <your_jwt>\""
-  output = ""
   tag = ["percipio"]
+  output = ""
 
 [[snippets]]
   description = "Get all generated delegated token for a user. Need to know the JTI from master token"
   command = "http auth0-proxy.develop.paris-squad.com/tokens-bucket/<xjti>"
-  output = ""
   tag = ["percipio", "jwt"]
+  output = ""
 
 [[snippets]]
   description = "Download video and extract audio as format"
@@ -53,11 +53,89 @@
 [[snippets]]
   description = "open file with diff in vim tabs"
   command = "vim -p $(git diff --name-only)"
-  output = ""
   tag = ["vi"]
+  output = ""
 
 [[snippets]]
   description = "jo  -d. csv.data.test=%<file> scheduled_email.send_email=true"
   command = "Generate Payload suitable to user import csv"
-  output = ""
   tag = ["json"]
+  output = ""
+
+[[snippets]]
+  description = "Show git commit as markdown header"
+  command = "git log --reverse --pretty=format:'### %s%n%h %cD%n%n%b' markdow head log"
+  tag = ["git"]
+  output = ""
+
+[[snippets]]
+  description = "Open cganged files in vim tabs"
+  command = "vim -p $(git diff --name-only)"
+  tag = ["git", "vi"]
+  output = ""
+
+[[snippets]]
+  description = "Connect to the database of pwd application if defined in ~/.pg_service.conf"
+  command = "psql -qXAt service=\"$(basename $(pwd))\""
+  tag = ["psql"]
+  output = ""
+
+[[snippets]]
+  description = "show tree of files only 3 level deep"
+  command = "exa --tree --level=3"
+  tag = ["exa"]
+  output = ""
+
+[[snippets]]
+  description = "edit last typed command in $EDITOR and execute it when closing"
+  command = "fc"
+  tag = ["bash"]
+  output = ""
+
+[[snippets]]
+  description = "Get all logs where pod name match given pod regexp"
+  command = "stern <pod-regexp> --context=<k8-context> --namespace=<k8-namespace>"
+  tag = ["k8"]
+  output = ""
+
+[[snippets]]
+  description = "expand CD_DEV_PATH var if contain a ~"
+  command = "\"${CD_DEV_PATH/#\\~/$HOME}\""
+  tag = ["bash"]
+  output = ""
+
+[[snippets]]
+  description = "restore a pg_dump sql file to a specified datable (via .pgservice.conf)"
+  command = "psql service=\"organizations-api-qa\" < ~/Downloads/orgapi.bak"
+  tag = ["msql"]
+  output = ""
+
+[[snippets]]
+  description = "Get number of object inside an array"
+  command = "jq '. | length'"
+  tag = ["jq"]
+  output = ""
+
+[[snippets]]
+  description = "convert a string to a markdown table"
+  command = "echo \"test,test,test\" | mdt"
+  tag = ["markdown"]
+  output = ""
+
+[[snippets]]
+  description = "get log for all pod belong to this service on contaxt and namespace"
+  command = "kail --svc organization-api --context qa --ns qa"
+  tag = ["k8,", "logs"]
+  output = ""
+
+[[snippets]]
+  description = "Check power source (Battery or PowerSupply) and battery %"
+  command = "pmset -g ps"
+  tag = ["osx"]
+  output = ""
+
+[[snippets]]
+  description = "Get a jwt for any app for a JTI"
+  command = "http auth0-proxy.develop.paris-squad.com/tokens-bucket/<jti> | jq '. .delegationsTokens[] | select(.appId == \"<app-id>\") | .jwt'"
+  tag = ["percipio,", "auth"]
+  output = ""
