@@ -27,28 +27,16 @@ function _devs() {
 }
 complete -F _devs cddev
 
-# Tmux shortcurt
-# see https://gist.github.com/jyurek/7be666a88e06f68d45cf
-# tm() {
-#   newsession=${1:-new}
-#   session=$(tmux list-sessions -F "#{session_name}" | fzf --query="$1" --select-1 --exit-0)
-#   if [ -z "$TMUX" ]; then
-#     # not in tmux
-#     tmux attach-session -t "$session" || tmux new-session -s $newsession
-#   else
-#     # inside tmux
-#     if [ tmux has-session $1 ]; then
-#       tmux switch-client -t $1
-#     else
-#       TMUX= tmux new-session -ds $1
-#       tmux switch-client -t $1
-#     fi
-#  fi
-# }
 
-# Updated one tu use fzf if no args given
 # see https://github.com/bag-man/dotfiles/blob/c88cc454e1ba2a86d2b596b2cee55e61eecf6162/bashrc
+# Updated to use fzf if no args given
+# Usage tm [session-name]
 tm() {
+  if [[ $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
+    echo "Connect to a tmux session"
+    echo "Usage: tm [session-name]"
+    return 0
+  fi
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ "$1" ]; then
     tmux "$change" -t "$1" 2>/dev/null || (tmux new-session -d -s "$1" && tmux "$change" -t "$1"); return
