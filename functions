@@ -2,7 +2,7 @@
 # we are not running inside simple sh so ignore thoses error
 # shellcheck disable=SC2039
 # all these function are intended to use in bash in daily usage
-# shellcheck disable=SC2112 
+# shellcheck disable=SC2112
 
 function cddev() {
   if [ -z "$1" ]; then
@@ -76,7 +76,7 @@ function repow() {
   launchctl stop cx.pow.powd
 }
 
-function powaaaa {
+function powaaaa() {
   curl --silent -H host:pow localhost/status.json | python -mjson.tool
 }
 
@@ -97,7 +97,7 @@ function tlf() { tail -f log/${RAILS_ENV:-development}.log; }
 
 # extract any time of compressed file
 # source https://coderwall.com/p/arwifq?i=9&p=1&q=sort%3Ascore+desc&t%5B%5D=bash
-function extract {
+function extract() {
     echo Extracting $1 ...
     if [ -f $1 ] ; then
         case $1 in
@@ -121,11 +121,11 @@ function extract {
 function _compressed_files() {
   local cur
   cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( $(find . -type f ! -name '.*' -name "$cur*.tar.bz2" -o -name "$cur*.tar.gz" \
+  COMPREPLY=( $(find .  -type f ! -name '.*' -name "$cur*.tar.bz2" -o -name "$cur*.tar.gz" \
                 -o -name "$cur$.bz2" -o -name "$cur*.rar" -o -name "$cur$.gz" \
                 -o -name "$cur*.tar" -o -name "$cur$.tbz2" -o -name "$cur*.tgz" \
                 -o -name "$cur*.zip" -o -name "$cur$.Z" -o -name "$cur*.7z" \
-                | xargs -n1 basename) )
+                 | xargs -n1 basename) )
 }
 complete -F _compressed_files extract
 
@@ -133,7 +133,7 @@ complete -F _compressed_files extract
 # handy alias if no argutmet equivalent to git lg
 # other plain old git but two letter less
 # credit to https://github.com/pengwynn/dotfiles
-function g {
+function g() {
     if [[ $# -gt 0 ]]; then
         git "$@"
     else
@@ -144,7 +144,7 @@ function g {
 # autocomplete g like it is git yeah!
 __git_complete g __git_main
 
-function v {
+function v() {
     if [[ $# -gt 0 ]]; then
         vagrant "$@"
     else
