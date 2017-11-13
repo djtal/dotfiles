@@ -71,12 +71,18 @@ function kpod() {
   kubectl get pod -l app="$selected" -o wide --no-headers
 }
 
+# read shell to use from annoations k-shell or default to /bin/sh if not present
 function ktty() {
   selected=$(select_k8_app)
   if [[ ! -z "$selected" ]]; then
     pod=$(kubectl get pod -l "app=$selected" -o jsonpath='{.items[0].metadata.name}')
+    shell=$(kubectl get pod -l "app=$selected" -o jsonpath='{.items[0].metadata.annotations.k-shell}')
+    if [[ -z "$shell" ]]; then
+      shell="/bin/sh"
+    fi
+    echo "$shell"
     if [[ ! -z "$pod" ]]; then
-      kubectl exec -ti "$pod" -- /bin/sh
+      kubectl exec -ti "$pod" -- "$shell" -l 
     fi
   fi
 }
