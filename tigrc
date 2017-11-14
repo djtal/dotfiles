@@ -1,4 +1,7 @@
+# *color* 'area' 'fgcolor' 'bgcolor' '[attributes]'
 set line-graphics = utf-8
 set ignore-case = no
 set tab-size = 2
 set main-view = line-number:no,interval=5 id:yes date:relative author:full commit-title:yes,graph,refs,overflow=no
+
+bind generic b view-refs
