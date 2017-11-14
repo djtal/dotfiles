@@ -141,6 +141,13 @@ function g() {
     fi
 }
 
+function t() {
+  tig "$@"
+}
+
+complete -F _tig t
+
+
 # autocomplete g like it is git yeah!
 __git_complete g __git_main
 
