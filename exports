@@ -62,6 +62,10 @@ export VAGRANT_PRIVATE_IP="10.0.0.100"
 export VAGRANT_CPU="2"
 export VAGRANT_RAM="4096"
 export GOPATH="$HOME/Developement/Projects/golang"
-export PATH="$(yarn global bin):$PATH"
+# export PATH="$(yarn global bin):$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
+export PATH="/$HOME/Developement/Projects/golang/bin:$PATH"
+
+export EXA_COLORS="uu=0:gu=0"
+export CD_DEV_PATH="~/Developement/Projects"
 
