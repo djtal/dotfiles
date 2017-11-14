@@ -22,7 +22,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
 Plug 'janko-m/vim-test'
 Plug 'BlakeWilliams/vim-tbro'
-Plug 'mhinz/vim-grepper'
 Plug 'dag/vim-fish'
 Plug 'tpope/vim-projectionist'
 Plug 'ryanoasis/vim-devicons'
@@ -32,7 +31,11 @@ Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'bfontaine/Brewfile.vim'
 Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
+Plug 'machakann/vim-highlightedyank'
+
+" Better search
 Plug 'haya14busa/incsearch.vim'
+Plug 'mhinz/vim-grepper'
 
 " Themes
 
@@ -127,6 +130,7 @@ endif
 
 augroup filetypedetect
     au BufRead,BufNewFile Dangerfile setfiletype ruby
+    au BufRead,BufNewFile *.ronn setfiletype markdown
     " associate *.foo with php filetype
 augroup END
 
