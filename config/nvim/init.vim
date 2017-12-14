@@ -17,6 +17,7 @@ Plug 'mattn/emmet-vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+Plug 'chr4/nginx.vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
@@ -214,7 +215,7 @@ let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename' ] ],
-      \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok']]
+      \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok'], ['filetype']]
       \ },
       \ 'component_function': {
       \   'gitbranch': 'fugitive#head',
@@ -316,6 +317,10 @@ let g:rails_projections = {
       \ },
       \ "CHANGELOG.md": {
       \   "type": "change",
+      \ },
+      \ "app/models/resources/*.rb": {
+      \   "command": "res",
+      \   "related": "spec/factories/resources/{}.rb",
       \ },
       \ "app/use_cases/*.rb": {
       \   "command": "case"
