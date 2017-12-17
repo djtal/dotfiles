@@ -64,6 +64,7 @@ Customize you base directory by setting the `CD_DEV_PATH` environement variable.
 Easy open tmux session with the given name or switch to it if already exist
 
 
+
 ### Additionals tools
 
 Thoses tools are not automaticaly installed with a `brew bundle`command.
