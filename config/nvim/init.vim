@@ -16,7 +16,7 @@ Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
+Plug 'elixir-editors/vim-elixir'
 Plug 'chr4/nginx.vim'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'junegunn/vim-easy-align'
@@ -33,6 +33,7 @@ Plug 'bfontaine/Brewfile.vim'
 Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'machakann/vim-highlightedyank'
+Plug 'AndrewRadev/splitjoin.vim'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
