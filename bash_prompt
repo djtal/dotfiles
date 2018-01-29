@@ -1,4 +1,5 @@
 #!/bin/bash
+source "~/kube-ps1.sh"
 
 ########################################################################
 # Matthew's Git Bash Prompt
@@ -13,6 +14,8 @@ WHITE="\[\033[1;37m\]"
 LIGHT_GRAY="\[\033[0;37m\]"
 COLOR_NONE="\[\e[0m\]"
 
+KUBE_PS1_SEPARATOR=''
+
 function parse_git_branch {
   git rev-parse --git-dir &> /dev/null
   git_status="$(git status 2> /dev/null)"
@@ -21,7 +24,7 @@ function parse_git_branch {
   diverge_pattern="Your branch and (.*) have diverged"
 
   if [[ ! ${git_status} =~ "nothing to commit, working tree clean" ]]; then
-    state="${RED}⚡ "
+    state="${RED}⚡"
   fi
   # add an else if or two here if you want to get more specific
   if [[ ${git_status} =~ ${remote_pattern} ]]; then
@@ -57,11 +60,11 @@ function prompt_func() {
 
     #Capital W is just the trailing part of the current working directory
 
-    prompt="${TITLEBAR}${BLUE}[${RED}$(reduce_working_dir)${GREEN}$(parse_git_branch)${BLUE}]${COLOR_NONE}"
+    prompt="${TITLEBAR}${BLUE}[${RED}$(reduce_working_dir)${GREEN}$(parse_git_branch)$(kube_ps1)${BLUE}]${COLOR_NONE}"
 
     if test $previous_return_value -eq 0
     then
-        PS1="${prompt}@${YELLOW}\h ${COLOR_NONE}> "
+        PS1="${prompt}@${YELLOW}\h${COLOR_NONE}> "
     else
         PS1="${prompt}${RED}@${YELLOW}\h>${COLOR_NONE} "
     fi
