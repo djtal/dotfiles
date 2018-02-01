@@ -70,6 +70,9 @@ Easy open tmux session with the given name or switch to it if already exist
 Thoses tools are not automaticaly installed with a `brew bundle`command.
 You need to manualy install them if you need
 
+** [grv](https://github.com/rgburke/grv)**
+
+Git cli GUI. Simillar to `tig`
 
 **[mdt](https://github.com/monochromegane/mdt)**
 
@@ -82,6 +85,10 @@ Easy format string to markdown table
 **[chroma](https://github.com/alecthomas/chroma)**
 
 read any files wilth syntax higlight on you terminal
+
+**[go-jira](https://github.com/Netflix-Skunkworks/go-jira)**
+
+cli tool to read issue from jira and to manage lot of jira stuff too.
 
 ## Keyboard Setup
 

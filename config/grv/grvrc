@@ -1,0 +1,19 @@
+theme --name nova --component MainView.NormalView --bgcolor None --fgcolor Black
+theme --name nova --component All.ActiveViewSelectedRow  --bgcolor e6eef3 --fgcolor 3c4c55
+theme --name nova --component CommitView.Title  --bgcolor None --fgcolor Cyan
+theme --name nova --component CommitView.Author  --bgcolor None --fgcolor Blue
+theme --name nova --component CommitView.Date  --bgcolor None --fgcolor Green
+theme --name nova --component CommitView.ShortOid --bgcolor None --fgcolor Magenta
+
+
+theme --name nova --component RefView.Title  --bgcolor None --fgcolor Cyan
+theme --name nova --component DiffView.Title  --bgcolor None --fgcolor Cyan
+theme --name nova --component DiffView.AddedLine  --bgcolor None --fgcolor Green
+theme --name nova --component DiffView.RemovedLine  --bgcolor None --fgcolor Red
+theme --name nova --component DiffView.CommitAuthor  --bgcolor None --fgcolor Blue
+theme --name nova --component DiffView.CommitCommitter  --bgcolor None --fgcolor Blue
+theme --name nova --component DiffView.CommitAuthorDate  --bgcolor None --fgcolor Green
+theme --name nova --component DiffView.CommitCommitterDate  --bgcolor None --fgcolor Green
+theme --name nova --component GitStatusView.Title  --bgcolor None --fgcolor Cyan
+
+set theme nova
