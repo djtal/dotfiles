@@ -5,6 +5,7 @@
 
 
 K_TTY_SHELL="${DEFAULT_K_TTY_SHELL:-/bin/sh}" 
+K_PROJECT_CONFIG_FILE=".kproject" 
 
 usage() {
 cat <<EOF
@@ -20,6 +21,7 @@ k usage:
   psql            open a psql console on the current app database
   reset           restart the application by using the ./bin/kube_reset_app script if present
   status, st      show pod(s) status for the current app
+  subcommands     list all available subcommands. Uselfull for autocompletion
   tty             open a shell directly on the selected application/pod
   help            display this help message
   general:
@@ -35,18 +37,21 @@ if [[ $subcommand == '-h' || $subcommand == '--help' || $subcommand == '-?' ]]; 
 fi
 
 
+# read project label from 
+# .kproject file if preent
+# present you list of uniq pod app label to select one
 function select_k8_app()  {
   if [ -f .kproject ]; then
-    cat .kproject | head -n 1
+    head -n 1 "$K_PROJECT_CONFIG_FILE"
   else
-    echo "$(kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :')"
+    kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :'
   fi
 }
 
 function kstatus() {
   selected=$(select_k8_app)
   status=$(kubectl get pod -l app="$selected" -o jsonpath='{.items[0].status.containerStatuses[0].ready}')
-  echo $status
+  echo "$status"
 }
 
 function kreset() {
@@ -68,8 +73,11 @@ function kreset() {
 
 function klog() {
   selected=$(select_k8_app)
-  #TODO need to check if an app is selected to avoid tailing logs of all pods
-  stern "$selected" --exclude "(/health/all|/api/public/build_version/)" --tail 100
+  if [[ ! -z "$selected" ]]; then
+    stern "$selected" --exclude "(/health/all|/api/public/build_version/)" --tail 100
+  else
+    echo "No application to tail log for"
+  fi
 }
 
 function kpod() {
@@ -88,7 +96,7 @@ function ktty() {
     # try reading shell from pod annotations
     shell=$(kubectl get pod -l "app=$selected" -o jsonpath='{.items[0].metadata.annotations.k-shell}')
     if [[ -z "$shell" ]]; then
-      kshell=$(grep "shell" ".kproject")
+      kshell=$(grep "shell" "$K_PROJECT_CONFIG_FILE")
       if [ $? -eq 0 ]; then
         shell=${kshell#*=}
         from='./kproject'
