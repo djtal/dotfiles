@@ -23,6 +23,7 @@ k usage:
 
   Available subcommands
 
+  init            create a .kproject file for config if not exist
   psql            open a psql console on the current app database
   reset           restart the application by using the ./bin/kube_reset_app script if present
   status, st      show pod(s) status for the current app
@@ -128,7 +129,8 @@ function ksql() {
   ksqlconfig=$(grep "sql" "$K_PROJECT_CONFIG_FILE")
   if [ $? -eq 0 ]; then
     if [[ "${ksqlconfig#*=}" == "false" ]]; then
-      exit "This app do not have any db"
+      echo "This app do not have any db (via .kproject)"
+      exit 0
     fi
   else
     if [[ -f "$HOME/.pg_services" ]]; then
@@ -147,6 +149,14 @@ function ksql() {
 
 
 case $subcommand in
+  init)
+    if [ ! -f .kproject ]; then
+      echo "$(basename "$(pwd)")" > .kproject
+      echo ".kproject file created"
+    else
+      echo ".kproject file already exist"
+    fi
+    ;;
   log)
     klog 
     ;;
@@ -166,7 +176,7 @@ case $subcommand in
     kstatus
     ;;
   subcommands)
-    echo log pod psql reset status st tty 
+    echo init log pod psql reset status st tty 
     ;;
   tty)
     ktty
