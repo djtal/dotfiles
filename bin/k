@@ -10,11 +10,16 @@ K_PROJECT_CONFIG_FILE=".kproject"
 usage() {
 cat <<EOF
 Kubernetes project aware utility
-k will help you run you daily dev task for app running inside kubernetes
+
+*k* will help you run you daily dev task for app running inside kubernetes.
+It ease your workflow by adopting a set of convention to automate usage of kubectl command
+to perform various task like conecting to a pod or running some commands to reload your
+application
+
 k usage:
   k subcommand
 
-  Lot of subcommand can be configured via a .kproject file in your project
+  Subcommands behaviour can be tunned via a .kproject file in your project root.
 
   Available subcommands
 
@@ -37,9 +42,11 @@ if [[ $subcommand == '-h' || $subcommand == '--help' || $subcommand == '-?' ]]; 
 fi
 
 
-# read project label from 
-# .kproject file if preent
-# present you list of uniq pod app label to select one
+# Get a project to apply subcommands to. 
+# Project name is read in this order : 
+# 1. .kproject file if preent
+# 2. present you list of uniq pod app label to select one
+# it then use this name to select pods using the name to match the app label
 function select_k8_app()  {
   if [ -f .kproject ]; then
     head -n 1 "$K_PROJECT_CONFIG_FILE"
@@ -114,6 +121,31 @@ function ktty() {
   fi
 }
 
+# Open a psql console for the given application. This use a pg_service file
+# to list psql connection setup for each applicatoin managed
+# psql must be available on you $PATH
+function ksql() {
+  ksqlconfig=$(grep "sql" "$K_PROJECT_CONFIG_FILE")
+  if [ $? -eq 0 ]; then
+    if [[ "${ksqlconfig#*=}" == "false" ]]; then
+      exit "This app do not have any db"
+    fi
+  else
+    if [[ -f "$HOME/.pg_services" ]]; then
+      echo "No ~/.pg_services defined"
+      exit 1
+    fi
+    selected=$(select_k8_app)
+    if [[ ! -z "$selected" ]]; then
+      # psql  service="$(basename "$(pwd)")"
+      psql service="$selected"
+    else
+      echo "No app selected"
+    fi
+  fi
+}
+
+
 case $subcommand in
   log)
     klog 
@@ -121,12 +153,8 @@ case $subcommand in
   pod)
     kpod
     ;;
-  psql)
-    if [[ -f "$HOME/.pg_services" ]]; then
-      echo "No ~/.pg_services defined"
-      exit 1
-    fi
-    psql  service="$(basename "$(pwd)")"
+  sql)
+    ksql
     ;;
   reset)
     kreset
