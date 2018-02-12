@@ -195,45 +195,6 @@ function prev() {
   sh -c "pet new `printf %q "$PREV"`"
 }
 
-function ktty() {
-  selected=$(_select_k8_app)
-  if [[ ! -z "$selected" ]]; then
-    pod=$(kubectl get pod -l "app=$selected" -o jsonpath='{.items[0].metadata.name}')
-    if [[ ! -z "$pod" ]]; then
-      kubectl exec -ti "$pod" -- /bin/sh
-    fi
-  fi
-}
-
-function kstatus() {
-  selected=$(_select_k8_app)
-  status=$(kubectl get pod -l app="$selected" -o jsonpath='{.items[0].status.containerStatuses[0].ready}')
-  echo $status
-}
-
-function kreset() {
-  cur=$(kubectl config current-context)
-  if [ "vagrant" == "$cur" ]; then
-    if [[ -f "./bin/kube_reset_app" ]]; then
-      ./bin/kube_reset_app
-    fi
-  else
-    kubectl config use-context vagrant
-    if [[ -f "./bin/kube_reset_app" ]]; then
-      ./bin/kube_reset_app
-    fi
-    kubectl config use-context "$cur"
-  fi
-}
-
-function _select_k8_app()  {
-  if [ -f .kproject ]; then
-    cat .kproject
-  else
-    echo "$(kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :')"
-  fi
-}
-
 fvim() {
   local IFS=$'\n'
   local files=($(fzf --query="$1" --multi --select-1 --exit-0))
@@ -245,6 +206,11 @@ fbr() {
   local branches branch
   branches=$(git branch) &&
   branch=$(echo "$branches" | fzf +m) &&
-  git checkout $(echo "$branch" | awk '{print $1}' | sed "s/.* //")
+  git checkout "$(echo "$branch" | awk '{print $1}' | sed "s/.* //")"
 }
 
+bind -x '"\C-b": fbr'
+
+function treed() {
+  tree -aC -I ".git" --dirsfirst "$@" | less -FRNX
+}
