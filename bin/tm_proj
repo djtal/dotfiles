@@ -1,12 +1,29 @@
 #!/usr/bin/env bash
 
+#/ Usage: tm_proj <project_name>
+#/ Open a new tmux window named after the project directory
+#/ and setup it according ~/.tmux-layout file if present
+#/ If a window already with the same name exist in your current sessio
+#/ it will switch to it
+#
+# Can be hooked up with tmux/fzf to give you a nice autocmpletion of your projects
+# add a line lick this in your tmux conf
+# bind -n C-n run-shell "ls -1 /Users/xxx/Projects | fzf-tmux | xargs tm_proj"
+
+usage() {
+    grep '^#/' "$0" | cut -c4-
+    exit 0
+}
+
+expr "$*" : ".*--help" > /dev/null && usage
+
 if [ -z "$TMUX" ]; then
   # not in tmux
-  tmux new-session -As $1
+  tmux new-session -As "$1"
 else
   # inside tmux
-  if [ $(tmux list-window | grep $1 | awk '{ print $2 }') ]; then
-    tmux select-window -t $(tmux list-window | grep $1 | awk '{ print $1 }' | cut -b 1)
+  if [ "$(tmux list-window | grep "$1" | awk '{ print $2}')" ]; then
+    tmux select-window -t "$(tmux list-window | grep "$1" | awk '{ print $1 }' | cut -b 1)"
   else
     tmux new-window -n "$1" -c "$HOME/Developement/Projects/$1"
     if [ -f  "$HOME/.tmux-layout" ]; then
