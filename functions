@@ -163,11 +163,6 @@ function editconflicts() {
   vim +/"<<<<<<<" -p "$(git diff --name-only --diff-filter=U | xargs)"
 }
 
-function prev() {
-  PREV=$(fc -lrn | head -n 1)
-  sh -c "pet new `printf %q "$PREV"`"
-}
-
 fvim() {
   local IFS=$'\n'
   local files=($(fzf --query="$1" --multi --select-1 --exit-0))

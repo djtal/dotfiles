@@ -13,7 +13,7 @@ alias ls="ls -l ${colorflag}"
 # List all files colorized in long format, including dot files
 # alias l="ls -tlAh ${colorflag}"
 alias l="exa -l --git -a -h --time-style=long-iso"
-
+alias lr="exa -l --git -a -h --time-style=long-iso -T -L=2"
 
 # List only directories
 alias lsd='ls -l ${colorflag} | grep "^d"'
@@ -21,24 +21,24 @@ alias lsd='ls -l ${colorflag} | grep "^d"'
 # Always use color output for `ls`
 alias ls="command ls ${colorflag}"
 alias be="bundle exec"
-alias man='man -P less'
+alias man="man -P less"
 alias cleanup="find . -type f -name '*.DS_Store' -ls -delete; find . -name '._*' -ls -delete;"
-alias cdproj="tech open $@"
-complete -F _projs cdproj
 alias e="$EDITOR"
 alias vi='nvim'
 
 if [  $(uname -s) = "Darwin" ]; then
   eval "$(hub alias -s)"
-  alias ack-grep=ack
 fi
-# Simulate OSX's pbcopy and pbpaste on other platforms
+# Simulate OSX pbcopy and pbpaste on other platforms
 if [  $(uname -s) = "Linux" ]; then
-    alias pbcopy='xsel --clipboard --input'
-    alias pbpaste='xsel --clipboard --output'
+  alias pbcopy='xsel --clipboard --input'
+  alias pbpaste='xsel --clipboard --output'
 fi
 
 alias freq='cut -f1 -d" " $HISTFILE | sort | uniq -c | sort -nr | head -n 30'
 alias https='http --default-scheme=https'
 alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && killall Dock"
-alias klog="kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :' | xargs stern --exclude \"(/health/all|/api/public/build_version)\" --tail 100"
+alias klog="kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :' | xargs stern --exclude \"(/health/all|/api/public/build_version/)\" --tail 100"
+alias ksql="psql  service=\"$(basename $(pwd))\""
+alias cat=ccat
+alias prev='cmd=$(fc -ln -2 -2 | sed -E "s/^[ \\t]*//; s/[ ]*\$//"); eval pet new $(printf %q "$cmd")'
