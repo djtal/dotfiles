@@ -63,6 +63,13 @@ Customize you base directory by setting the `CD_DEV_PATH` environement variable.
 
 Easy open tmux session with the given name or switch to it if already exist
 
+### Quick scripts
+
+**gifenc**
+
+Create short gif from a video. Usefull to send terminal based video inside PR or 
+via slack.
+It need `ffmpeg` to work and is based on [High quality GIF with FFmpeg](http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html for more details)
 
 
 ### Additionals tools
@@ -89,6 +96,10 @@ read any files wilth syntax higlight on you terminal
 **[go-jira](https://github.com/Netflix-Skunkworks/go-jira)**
 
 cli tool to read issue from jira and to manage lot of jira stuff too.
+
+**[tad](https://www.tadviewer.com/)
+
+CSV viewer based on electron
 
 ## Keyboard Setup
 
