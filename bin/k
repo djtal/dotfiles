@@ -3,12 +3,11 @@
 # cannot use it now since in tty it exit when grep find nothing
 # set -e
 
-
-K_TTY_SHELL="${DEFAULT_K_TTY_SHELL:-/bin/sh}" 
-K_PROJECT_CONFIG_FILE=".kproject" 
+K_TTY_SHELL="${DEFAULT_K_TTY_SHELL:-/bin/sh}"
+K_PROJECT_CONFIG_FILE=".kproject"
 
 usage() {
-cat <<EOF
+  cat <<EOF
 Kubernetes project aware utility
 
 *k* will help you run you daily dev task for app running inside kubernetes.
@@ -38,21 +37,20 @@ EOF
 subcommand=$1
 
 if [[ $subcommand == '-h' || $subcommand == '--help' || $subcommand == '-?' ]]; then
-    usage
-    exit 0
+  usage
+  exit 0
 fi
 
-
-# Get a project to apply subcommands to. 
-# Project name is read in this order : 
+# Get a project to apply subcommands to.
+# Project name is read in this order :
 # 1. .kproject file if preent
 # 2. present you list of uniq pod app label to select one
 # it then use this name to select pods using the name to match the app label
-function select_k8_app()  {
+function select_k8_app() {
   if [ -f .kproject ]; then
     head -n 1 "$K_PROJECT_CONFIG_FILE"
   else
-    kubectl get pods  -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :'
+    kubectl get pods -o=jsonpath="{.items[*].metadata.labels.app}" | tr ' ' '\n' | uniq | fzf --header='App :'
   fi
 }
 
@@ -70,7 +68,7 @@ function kreset() {
 
   cur=$(kubectl config current-context)
   if [ "vagrant" == "$cur" ]; then
-      ./bin/kube_reset_app
+    ./bin/kube_reset_app
   else
     kubectl config use-context vagrant
     # TODO trap here to restore context
@@ -94,7 +92,7 @@ function kpod() {
 }
 
 # read shell to use from by priority
-# 1. k8 pod annoations k-shell 
+# 1. k8 pod annoations k-shell
 # 2. .kproject file line with shell=/you/shell/here
 # 3. default to /bin/sh if not present
 function ktty() {
@@ -117,7 +115,7 @@ function ktty() {
     fi
     if [[ ! -z "$pod" ]]; then
       echo "Log into: $selected ($pod) with: $shell (from $from)"
-      kubectl exec -ti "$pod" -- "$shell" -l 
+      kubectl exec -ti "$pod" -- "$shell" -l
     fi
   fi
 }
@@ -147,41 +145,40 @@ function ksql() {
   fi
 }
 
-
 case $subcommand in
-  init)
-    if [ ! -f .kproject ]; then
-      echo "$(basename "$(pwd)")" > .kproject
-      echo ".kproject file created"
-    else
-      echo ".kproject file already exist"
-    fi
-    ;;
-  log)
-    klog 
-    ;;
-  pod)
-    kpod
-    ;;
-  sql)
-    ksql
-    ;;
-  reset)
-    kreset
-    ;;
-  status)
-    kstatus
-    ;;
-  st)
-    kstatus
-    ;;
-  subcommands)
-    echo init log pod psql reset status st tty 
-    ;;
-  tty)
-    ktty
-    ;;
-  *) 
-    echo "nothing to do"
-    ;;
+init)
+  if [ ! -f .kproject ]; then
+    echo "$(basename "$(pwd)")" >.kproject
+    echo ".kproject file created"
+  else
+    echo ".kproject file already exist"
+  fi
+  ;;
+log)
+  klog
+  ;;
+pod)
+  kpod
+  ;;
+sql)
+  ksql
+  ;;
+reset)
+  kreset
+  ;;
+status)
+  kstatus
+  ;;
+st)
+  kstatus
+  ;;
+subcommands)
+  echo init log pod psql reset status st tty
+  ;;
+tty)
+  ktty
+  ;;
+*)
+  echo "nothing to do"
+  ;;
 esac

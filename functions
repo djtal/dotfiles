@@ -23,10 +23,9 @@ function cddev() {
 function _devs() {
   local cur
   cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( $(find "${CD_DEV_PATH/#\~/$HOME}"  -mindepth 1 -maxdepth 1 ! -name '.*' -name "$cur*" -type d -exec basename {} \;) )
+  COMPREPLY=($(find "${CD_DEV_PATH/#\~/$HOME}" -mindepth 1 -maxdepth 1 ! -name '.*' -name "$cur*" -type d -exec basename {} \;))
 }
 complete -F _devs cddev
-
 
 # see https://github.com/bag-man/dotfiles/blob/c88cc454e1ba2a86d2b596b2cee55e61eecf6162/bashrc
 # Updated to use fzf if no args given
@@ -39,9 +38,10 @@ tm() {
   fi
   [[ -n "$TMUX" ]] && change="switch-client" || change="attach-session"
   if [ "$1" ]; then
-    tmux "$change" -t "$1" 2>/dev/null || (tmux new-session -d -s "$1" && tmux "$change" -t "$1"); return
+    tmux "$change" -t "$1" 2>/dev/null || (tmux new-session -d -s "$1" && tmux "$change" -t "$1")
+    return
   fi
-  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) &&  tmux $change -t "$session" || echo "No sessions found."
+  session=$(tmux list-sessions -F "#{session_name}" 2>/dev/null | fzf --exit-0) && tmux $change -t "$session" || echo "No sessions found."
 }
 
 # AUtocompletion for tmux sessions
@@ -49,7 +49,7 @@ tm() {
 _tmux_complete_session() {
   local IFS=$'\n'
   local cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( ${COMPREPLY[@]:-} $(compgen -W "$(tmux -q list-sessions | cut -f 1 -d ':')" -- "${cur}") )
+  COMPREPLY=(${COMPREPLY[@]:-} $(compgen -W "$(tmux -q list-sessions | cut -f 1 -d ':')" -- "${cur}"))
 }
 complete -F _tmux_complete_session tm
 
@@ -58,60 +58,59 @@ complete -F _tmux_complete_session tm
 function rdm() { bundle exec rake db:migrate "$@"; }
 function rsc() {
   if [ -f script/console ]; then
-    bundle exec script/console "$@";
+    bundle exec script/console "$@"
   elif [ -d bin ]; then
     bundle exec bin/rails c
   else
     bundle exec rails c "$@"
   fi
-  }
+}
 function sdc() { ./script/dbconsole -p "$@"; }
 function tlf() { tail -f log/${RAILS_ENV:-development}.log; }
 
 # extract any time of compressed file
 # source https://coderwall.com/p/arwifq?i=9&p=1&q=sort%3Ascore+desc&t%5B%5D=bash
 function extract() {
-    echo Extracting $1 ...
-    if [ -f $1 ] ; then
-        case $1 in
-            *.tar.bz2)   tar xjf $1  ;;
-            *.tar.gz)    tar xzf $1  ;;
-            *.bz2)       bunzip2 $1  ;;
-            *.rar)       rar x $1    ;;
-            *.gz)        gunzip $1   ;;
-            *.tar)       tar xf $1   ;;
-            *.tbz2)      tar xjf $1  ;;
-            *.tgz)       tar xzf $1  ;;
-            *.zip)       unzip $1   ;;
-            *.Z)         uncompress $1  ;;
-            *.7z)        7z x $1  ;;
-            *)        echo "'$1' cannot be extracted via extract()" ;;
-        esac
-    else
-        echo "'$1' is not a valid file"
-    fi
+  echo Extracting $1 ...
+  if [ -f $1 ]; then
+    case $1 in
+    *.tar.bz2) tar xjf $1 ;;
+    *.tar.gz) tar xzf $1 ;;
+    *.bz2) bunzip2 $1 ;;
+    *.rar) rar x $1 ;;
+    *.gz) gunzip $1 ;;
+    *.tar) tar xf $1 ;;
+    *.tbz2) tar xjf $1 ;;
+    *.tgz) tar xzf $1 ;;
+    *.zip) unzip $1 ;;
+    *.Z) uncompress $1 ;;
+    *.7z) 7z x $1 ;;
+    *) echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
 }
 function _compressed_files() {
   local cur
   cur=${COMP_WORDS[COMP_CWORD]}
-  COMPREPLY=( $(find .  -type f ! -name '.*' -name "$cur*.tar.bz2" -o -name "$cur*.tar.gz" \
-                -o -name "$cur$.bz2" -o -name "$cur*.rar" -o -name "$cur$.gz" \
-                -o -name "$cur*.tar" -o -name "$cur$.tbz2" -o -name "$cur*.tgz" \
-                -o -name "$cur*.zip" -o -name "$cur$.Z" -o -name "$cur*.7z" \
-                 | xargs -n1 basename) )
+  COMPREPLY=($(find . -type f ! -name '.*' -name "$cur*.tar.bz2" -o -name "$cur*.tar.gz" \
+    -o -name "$cur$.bz2" -o -name "$cur*.rar" -o -name "$cur$.gz" \
+    -o -name "$cur*.tar" -o -name "$cur$.tbz2" -o -name "$cur*.tgz" \
+    -o -name "$cur*.zip" -o -name "$cur$.Z" -o -name "$cur*.7z" |
+    xargs -n1 basename))
 }
 complete -F _compressed_files extract
-
 
 # handy alias if no argutmet equivalent to git lg
 # other plain old git but two letter less
 # credit to https://github.com/pengwynn/dotfiles
 function g() {
-    if [[ $# -gt 0 ]]; then
-        git "$@"
-    else
-        git status --short --branch
-    fi
+  if [[ $# -gt 0 ]]; then
+    git "$@"
+  else
+    git status --short --branch
+  fi
 }
 
 function t() {
@@ -120,26 +119,24 @@ function t() {
 
 complete -F _tig t
 
-
 # autocomplete g like it is git yeah!
 __git_complete g __git_main
 
 function v() {
-    if [[ $# -gt 0 ]]; then
-        vagrant "$@"
-    else
-        vagrant status
-    fi
+  if [[ $# -gt 0 ]]; then
+    vagrant "$@"
+  else
+    vagrant status
+  fi
 }
 
-
 qh() {
-  grep --color=always "$*" "$HISTFILE" |       less -RX
+  grep --color=always "$*" "$HISTFILE" | less -RX
 }
 
 # fzf integrations see https://junegunn.kr/2016/07/fzf-git/
 is_in_git_repo() {
-  git rev-parse HEAD > /dev/null 2>&1
+  git rev-parse HEAD >/dev/null 2>&1
 }
 
 fzf-down() {
@@ -148,11 +145,11 @@ fzf-down() {
 
 gb() {
   is_in_git_repo || return
-  git branch  | grep -v '/HEAD\s' | sort |
-  fzf-down --ansi --multi --tac --preview-window right:70% \
-    --preview 'git lg -5 $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
-  sed 's/^..//' | cut -d' ' -f1 |
-  sed 's#^remotes/##'
+  git branch | grep -v '/HEAD\s' | sort |
+    fzf-down --ansi --multi --tac --preview-window right:70% \
+      --preview 'git lg -5 $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
+    sed 's/^..//' | cut -d' ' -f1 |
+    sed 's#^remotes/##'
 }
 
 bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
@@ -173,12 +170,17 @@ bind -x '"\C-p": fvim'
 fbr() {
   local branches branch
   branches=$(git branch) &&
-  branch=$(echo "$branches" | fzf +m) &&
-  git checkout "$(echo "$branch" | awk '{print $1}' | sed "s/.* //")"
+    branch=$(echo "$branches" | fzf +m) &&
+    git checkout "$(echo "$branch" | awk '{print $1}' | sed "s/.* //")"
 }
 
 bind -x '"\C-b": fbr'
 
 function treed() {
   tree -aC -I ".git" --dirsfirst "$@" | less -FRNX
+}
+pman() {
+  ps=$(mktemp -t manpageXXXX).ps
+  man -t $@ >"$ps"
+  open "$ps"
 }
