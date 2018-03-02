@@ -50,6 +50,7 @@ brew 'ruby-build'
 # Databases
 
 brew 'simon-engledew/gocmdpev/gocmdpev'
+brew 'pspg' #pager for psql
 
 # Add some cask formula too
 

@@ -5,9 +5,12 @@
 \set QUIET 1
 \pset null '[NULL]'
 
--- better table display
+-- pager with pspg https://github.com/okbob/pspg
+\setenv PAGER 'pspg -b -s 11'
+\setenv LESS '-iMSx4 -FXR'
+\pset border 2
 \pset linestyle unicode
-\pset border 1
+\pset pager always
 
 
 -- custom prompt
@@ -29,8 +32,5 @@
 -- Allow pasting of values to avoid stupid indenting
 \set paste
 
--- pager with less
 
 \timing
-\pset pager always
-\setenv LESS '-iMSx4 -FXR'
