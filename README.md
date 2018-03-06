@@ -101,6 +101,19 @@ cli tool to read issue from jira and to manage lot of jira stuff too.
 
 CSV viewer based on electron
 
+**[shfmt](https://github.com/mvdan/sh)**
+
+Bash formater
+
+**[tyke](http://tyke.io/)**
+
+Add quick txt not to you menubar for later use.
+A fork exist : https://github.com/buddax2/tmpNote
+
+
+
+
+
 ## Keyboard Setup
 
 It use [Karabiner](https://pqrs.org/osx/karabiner/) to change mapping of your keys and
@@ -129,6 +142,7 @@ Inspiration taken from
 * [dotfiles.github.com](http://dotfiles.github.com/)
 * [@climagic](https://twitter.com/climagic)
 * [shell pro tip](https://coderwall.com/p/t/bash) from codewall
+* [ahmetb](https://github.com/ahmetb/dotfiles)
 
 My coworkers for all the tips and tricks
 And many others
