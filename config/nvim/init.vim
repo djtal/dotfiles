@@ -17,7 +17,9 @@ Plug 'mattn/emmet-vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
 Plug 'elixir-editors/vim-elixir'
+Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
 Plug 'chr4/nginx.vim'
+Plug 'racer-rust/vim-racer'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
@@ -34,6 +36,7 @@ Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'machakann/vim-highlightedyank'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
@@ -192,6 +195,12 @@ endfunction
 " command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 " autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
+" deoplete
+let g:deoplete#enable_at_startup = 1
+
+" vim-racer
+set hidden
+let g:racer_cmd = "/Users/guillaume/.cargo/bin/racer"
 
 " vim-incsearch
 
@@ -331,7 +340,7 @@ let g:rails_projections = {
       \ },
       \ "lib/uts_events/*.rb": {
       \   "command": "uts",
-      \   "alternate": "spec/uts/{}_spec.rb",
+      \   "alternate": "spec/uts_events/{}_spec.rb",
       \ },
       \ "spec/factories/*.rb": {
       \   "command": "factory"
