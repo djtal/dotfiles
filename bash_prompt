@@ -1,9 +1,9 @@
 #!/bin/bash
-source "~/kube-ps1.sh"
 
 ########################################################################
 # Matthew's Git Bash Prompt
 ########################################################################
+RED="\[\033[0;31m\]"
 RED="\[\033[0;31m\]"
 YELLOW="\[\033[0;33m\]"
 GREEN="\[\033[0;32m\]"
@@ -15,6 +15,7 @@ LIGHT_GRAY="\[\033[0;37m\]"
 COLOR_NONE="\[\e[0m\]"
 
 KUBE_PS1_SEPARATOR=''
+KUBE_PS1_DIVIDER="|"
 
 function parse_git_branch {
   git rev-parse --git-dir &> /dev/null
@@ -24,8 +25,9 @@ function parse_git_branch {
   diverge_pattern="Your branch and (.*) have diverged"
 
   if [[ ! ${git_status} =~ "nothing to commit, working tree clean" ]]; then
-    state="${RED}⚡"
+    state="${LIGHT_RED} !!"
   fi
+
   # add an else if or two here if you want to get more specific
   if [[ ${git_status} =~ ${remote_pattern} ]]; then
     if [[ ${BASH_REMATCH[1]} == "ahead" ]]; then
@@ -39,7 +41,7 @@ function parse_git_branch {
   fi
   if [[ ${git_status} =~ ${branch_pattern} ]]; then
     branch=${BASH_REMATCH[1]}
-    echo " (${branch})${remote}${state}"
+    echo " (${branch}${remote}${state})"
   fi
 }
 
@@ -60,13 +62,13 @@ function prompt_func() {
 
     #Capital W is just the trailing part of the current working directory
 
-    prompt="${TITLEBAR}${BLUE}[${RED}$(reduce_working_dir)${GREEN}$(parse_git_branch)$(kube_ps1)${BLUE}]${COLOR_NONE}"
+    prompt="${TITLEBAR}${RED}$(reduce_working_dir)${GREEN}$(parse_git_branch)${COLOR_NONE} $(kube_ps1)${COLOR_NONE}"
 
     if test $previous_return_value -eq 0
     then
-        PS1="${prompt}@${YELLOW}\h${COLOR_NONE}> "
+        PS1="${prompt} ~ ${YELLOW}\h${COLOR_NONE}> "
     else
-        PS1="${prompt}${RED}@${YELLOW}\h>${COLOR_NONE} "
+        PS1="${prompt}${RED} ~ ${YELLOW}\h>${COLOR_NONE} "
     fi
 }
 
