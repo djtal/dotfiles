@@ -16,8 +16,6 @@ Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
-Plug 'elixir-editors/vim-elixir'
-Plug 'awetzel/elixir.nvim', { 'do': 'yes \| ./install.sh' }
 Plug 'chr4/nginx.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'mustache/vim-mustache-handlebars'
@@ -27,11 +25,9 @@ Plug 'janko-m/vim-test'
 Plug 'BlakeWilliams/vim-tbro'
 Plug 'dag/vim-fish'
 Plug 'tpope/vim-projectionist'
-Plug 'ryanoasis/vim-devicons'
-Plug 'kana/vim-textobj-user'
-Plug 'andyl/vim-textobj-elixir'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
 Plug 'bfontaine/Brewfile.vim'
+Plug 'tpope/vim-bundler'
 Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'machakann/vim-highlightedyank'
@@ -81,7 +77,7 @@ colorscheme nova
 " let g:seoul256_background = 236
 " colo seoul256
 
-set colorcolumn=85,120
+set colorcolumn=85,126
 " let &colorcolumn=join(range(85,999),",")
 highlight ColorColumn ctermbg=246 guibg=#41535D
 highlight VertSplit guibg=#41535D
@@ -129,12 +125,13 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 if has('autocmd')
   autocmd bufwritepost init.vim source $MYVIMRC
   " Delete all whitespace in end of line
-  " autocmd BufWritePre * :%s/\s\+$//e
+  autocmd BufWritePre * :%s/\s\+$//e
   " autocmd! BufWritePost * Neomake
 endif
 
 augroup filetypedetect
     au BufRead,BufNewFile Dangerfile setfiletype ruby
+    au BufNewFile,BufRead *.json.jbuilder set ft=ruby
     au BufRead,BufNewFile *.ronn setfiletype markdown
     " associate *.foo with php filetype
 augroup END
@@ -377,6 +374,10 @@ let g:ale_sign_column_always = 1
 
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
+
+let g:ale_linters = {
+\   'ruby': ['rubocop'],
+\}
 let g:airline#extensions#ale#enabled = 1
 let g:go_fmt_fail_silently = 1 " avoid conflict with vim-ogo : https://github.com/w0rp/ale/issues/609
 

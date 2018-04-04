@@ -36,7 +36,7 @@ brew 'shellcheck' # Lint bash script
 
 brew 'kubectx'
 brew 'stern'
-brew 'farmotive/k8s/kex' args: ["without-kubernetes-cli"]
+brew 'farmotive/k8s/kex', args: ["without-kubernetes-cli"]
 
 
 # Dev env
