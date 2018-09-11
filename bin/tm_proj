@@ -25,9 +25,14 @@ else
   if [ "$(tmux list-window | grep "$1" | awk '{ print $2}')" ]; then
     tmux select-window -t "$(tmux list-window | grep "$1" | awk '{ print $1 }' | cut -b 1)"
   else
-    tmux new-window -n "$1" -c "$HOME/Developement/Projects/$1"
-    if [ -f  "$HOME/.tmux-layout" ]; then
+    proj_dir="$HOME/Developement/Projects/$1"
+    tmux new-window -n "$1" -c "$proj_dir"
+    if [ -f  "$proj_dir/.tmux-layout" ]; then
+      tmux source-file  "$proj_dir/.tmux-layout"
+      tmux display-message "sourced from local tmux-layout"
+    elif [ -f  "$HOME/.tmux-layout" ]; then
       tmux source-file  "$HOME/.tmux-layout"
+      tmux display-message "sourced from global tmux-layout"
     fi
   fi
 fi
