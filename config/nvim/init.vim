@@ -7,15 +7,17 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-ruby/vim-ruby'
+Plug 'rlue/vim-fold-rspec'
 Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'w0rp/ale'
 Plug 'mattn/emmet-vim'
 Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'kchmck/vim-coffee-script', { 'for': 'coffee' }
+Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml'] }
 Plug 'chr4/nginx.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'mustache/vim-mustache-handlebars'
@@ -32,6 +34,7 @@ Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'machakann/vim-highlightedyank'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'lifepillar/pgsql.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 " Better search
@@ -55,6 +58,7 @@ Plug 'sbdchd/neoformat'
 Plug 'elzr/vim-json'
 Plug 'jaawerth/nrun.vim'
 Plug 'jparise/vim-graphql'
+Plug 'posva/vim-vue'
 
 Plug 'junegunn/goyo.vim'
 
@@ -198,6 +202,17 @@ let g:deoplete#enable_at_startup = 1
 " vim-racer
 set hidden
 let g:racer_cmd = "/Users/guillaume/.cargo/bin/racer"
+
+" pgsql.vim
+
+let g:sql_type_default = 'pgsql'
+
+" vim-fold-rspec
+"
+let g:fold_rspec_foldenable = 1      " disables folding (toggle with `zi`)
+let g:fold_rspec_foldlevel = 2       " sets initial open/closed state of all folds (open unless nested more than two levels deep)
+let g:fold_rspec_foldcolumn = 4      " shows a 4-character column on the lefthand side of the window displaying the document's fold structure
+let g:fold_rspec_foldminlines = 3    " disables closing of folds containing two lines or fewer
 
 " vim-incsearch
 
@@ -378,6 +393,10 @@ let g:ale_sign_warning = '--'
 let g:ale_linters = {
 \   'ruby': ['rubocop'],
 \}
+
+let g:ale_fixers = {}
+let g:ale_fixers['javascript'] = [] "['prettier']
+
 let g:airline#extensions#ale#enabled = 1
 let g:go_fmt_fail_silently = 1 " avoid conflict with vim-ogo : https://github.com/w0rp/ale/issues/609
 
@@ -468,5 +487,35 @@ fun! LoadGitrebaseBindings()
   nnoremap  F :Fixup<CR>
   nnoremap  C :Cycle<CR>
 endfun
+
+" sessions managment
+" based on https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
+"
+let g:sessions_dir = '~/vim-sessions'
+
+function! SessionName()
+  let sessionName = expand('%:r')
+  if exists('*fugitive#head')
+    let branch =  fugitive#head()
+    return sessionName . branch . '.vim'
+  endif
+  return sessionName . '.vim'
+endfunction
+
+" save a session
+" exec 'nnoremap <Leader>ss :mksession! ' . g:sessions_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
+exec 'nnoremap <Leader>ss :mksession! ' . g:sessions_dir . '/' . SessionName()
+
+" restore a session
+exec 'nnoremap <Leader>sr :so ' . g:sessions_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
+
+" rubocop tips
+"
+function! RubocopAutocorrect()
+  execute "!rubocop -a " . bufname("%")
+  " call ALELint()
+endfunction
+
+map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
 
 
