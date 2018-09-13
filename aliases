@@ -38,5 +38,10 @@ fi
 alias freq='cut -f1 -d" " $HISTFILE | sort | uniq -c | sort -nr | head -n 30'
 alias https='http --default-scheme=https'
 alias dockspace="defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type="spacer-tile";}' && killall Dock"
-alias cat=ccat
 alias prev='cmd=$(fc -ln -2 -2 | sed -E "s/^[ \\t]*//; s/[ ]*\$//"); eval pet new $(printf %q "$cmd")'
+alias sqlc='psql service="$(basename $(pwd))"'
+alias cat=bat
+alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+alias preview="fzf --preview 'bat --color \"always\" {}'"
+# use english as local for git https://stackoverflow.com/questions/10633564/how-does-one-change-the-language-of-the-command-line-interface-of-git
+alias git='LC_ALL=en_GB hub'
