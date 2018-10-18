@@ -169,8 +169,8 @@ bind -x '"\C-p": fvim'
 
 fbr() {
   local branches branch
-  branches=$(git branch) &&
-    branch=$(echo "$branches" | fzf +m) &&
+  branches=$(git branch --sort='-authordate' --no-merged) &&
+    branch=$(echo "$branches" | fzf +m +s) &&
     git checkout "$(echo "$branch" | awk '{print $1}' | sed "s/.* //")"
 }
 
