@@ -184,3 +184,8 @@ pman() {
   man -t $@ >"$ps"
   open "$ps"
 }
+
+rails_migrate_down() {
+  version=$(ls db/migrate | fzf | awk -F _ '{print $1}')
+  [[ -n "$version" ]] && rails db:migrate:down VERSION="$version"
+}
