@@ -49,11 +49,10 @@ export HISTIGNORE="ls:ls *:cd:cd -:pwd;exit:date:* --help"
 export PROMPT_COMMAND="history -a;history -c;history -r;$PROMPT_COMMAND"
 
 export LESS_TERMCAP_md="$ORANGE"
-export RAILS_ENV='development'
 
 export FZF_DEFAULT_COMMAND='rg -g "" --files'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="bfs -type d -nohidden"
+export FZF_ALT_C_COMMAND="fd --type directory --color=always"
 export FZF_DEFAULT_OPTS='--bind J:down,K:up --reverse --ansi --multi'
 
 # VAGRANT SETTINGS

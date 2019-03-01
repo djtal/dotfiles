@@ -16,10 +16,9 @@ brew 'ctags'
 brew 'httpie'
 brew 'ripgrep' # better than [grep,ag,ack]
 brew 'fd' # better than find
-brew 'tavianator/tap/bfs' # better find
 brew 'jq' # manipulate json with ease
 brew 'htop'
-brew 'neovim/neovim/neovim'
+brew 'neovim'
 brew 'mike-engel/jwt-cli/jwt-cli'
 brew 'z'
 brew 'exa' # better than ls
@@ -58,7 +57,6 @@ cask 'macdown', args: { appdir: '/Applications' }
 cask 'sequel-pro', args: { appdir: '/Applications' }
 cask 'spectacle', args: { appdir: '/Applications' }
 cask 'pg-commander', args: { appdir: '/Applications' }
-cask 'medis', args: { appdir: '/Applications' }
 cask 'flux', args: { appdir: '/Applications' }
 cask 'slack', args: { appdir: '/Applications' }
 cask 'karabiner-elements', args: { appdir: '/Applications' }
