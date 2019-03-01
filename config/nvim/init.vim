@@ -28,6 +28,7 @@ Plug 'BlakeWilliams/vim-tbro'
 Plug 'dag/vim-fish'
 Plug 'tpope/vim-projectionist'
 Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
+Plug 'tweekmonster/fzf-filemru'
 Plug 'bfontaine/Brewfile.vim'
 Plug 'tpope/vim-bundler'
 Plug 'cespare/vim-toml'
@@ -36,10 +37,11 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'lifepillar/pgsql.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'andymass/vim-matchup'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
-Plug 'mhinz/vim-grepper'
+" Plug 'mhinz/vim-grepper'
 
 " Themes
 
@@ -54,7 +56,6 @@ Plug 'mhinz/vim-janah'
 
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'sbdchd/neoformat'
 Plug 'elzr/vim-json'
 Plug 'jaawerth/nrun.vim'
 Plug 'jparise/vim-graphql'
@@ -64,6 +65,7 @@ Plug 'junegunn/goyo.vim'
 
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
+Plug 'ap/vim-css-color'
 
 call plug#end()
 
@@ -363,12 +365,6 @@ let g:rails_projections = {
       \}
 
 
-" Neoformat
-"
-autocmd BufWritePre *.js Neoformat
-autocmd BufWritePre *.css Neoformat
-
-
 
 let g:jsx_ext_required = 0
 
@@ -394,8 +390,10 @@ let g:ale_linters = {
 \   'ruby': ['rubocop'],
 \}
 
-let g:ale_fixers = {}
-let g:ale_fixers['javascript'] = [] "['prettier']
+let g:ale_fixers = {
+\   'javascript': ['prettier'],
+\}
+let g:ale_fix_on_save = 1
 
 let g:airline#extensions#ale#enabled = 1
 let g:go_fmt_fail_silently = 1 " avoid conflict with vim-ogo : https://github.com/w0rp/ale/issues/609
@@ -443,7 +441,10 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " vim-fzf
 
-nmap <C-p> :FZF<cr>
+" nmap <C-p> :FZF<cr>
+let g:fzf_tags_command = 'ptags'
+nnoremap <c-p> :FilesMru --tiebreak=end<cr>
+nnoremap <c-t> :Tags<cr>
 
 
 " vim-jsx

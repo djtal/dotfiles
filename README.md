@@ -8,10 +8,10 @@ Configurations and scripts are compatible with Ubuntu 12.04 and OS X if possible
 
 ## How it work
 
-All files and directories are symlinked to `~/`. 
+All files and directories are symlinked to `~/`.
 
 You can choose to copy some file to make custom change inside if you don't want to sync change to upstream repo.
-Add cutline to each file you want to copy insteand of symlink 
+Add cutline to each file you want to copy insteand of symlink
 This line will delimit the part iof the file that will be sync from the upsteam from the part that will  be kept only locally.
 
 
@@ -42,7 +42,7 @@ $ brew bundle
 ### Brew installed tools
 
 * bash (4.X since osx ship with 3.X)
-* git 
+* git
 * neovim
 * tmux
 
@@ -67,7 +67,7 @@ Easy open tmux session with the given name or switch to it if already exist
 
 **gifenc**
 
-Create short gif from a video. Usefull to send terminal based video inside PR or 
+Create short gif from a video. Usefull to send terminal based video inside PR or
 via slack.
 It need `ffmpeg` to work and is based on [High quality GIF with FFmpeg](http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html for more details)
 
@@ -110,6 +110,13 @@ Bash formater
 Add quick txt not to you menubar for later use.
 A fork exist : https://github.com/buddax2/tmpNote
 
+
+**[ptags](https://github.com/dalance/ptags)**
+
+A parallel universal-ctags wrapper for git repository
+Quickly index tags on any git repos
+Used from vim also
+Install from `cargo` `cargo install ptags`
 
 
 
