@@ -1,17 +1,21 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-abolish'
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
+Plug 'mkitt/tabline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-ruby/vim-ruby'
 Plug 'rlue/vim-fold-rspec'
 Plug 'fatih/vim-go'
+Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'w0rp/ale'
@@ -38,6 +42,12 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'lifepillar/pgsql.vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'andymass/vim-matchup'
+Plug 'mcchrish/nnn.vim'
+Plug 'tpope/vim-dadbod'
+Plug 'AndrewRadev/switch.vim'
+Plug 'liuchengxu/vista.vim'
+Plug 'kana/vim-textobj-user'
+Plug 'bootleq/vim-textobj-rubysymbol'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
@@ -89,6 +99,11 @@ highlight ColorColumn ctermbg=246 guibg=#41535D
 highlight VertSplit guibg=#41535D
 highlight StatusLineNC guibg=#41535D
 
+hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
+hi TabLineFill  ctermfg=Black  ctermbg=Green     cterm=NONE
+hi TabLineSel   ctermfg=White  ctermbg=DarkBlue  cterm=NONE
+
+
 
 " No backup file and no swap file
 set nobackup
@@ -138,6 +153,7 @@ endif
 augroup filetypedetect
     au BufRead,BufNewFile Dangerfile setfiletype ruby
     au BufNewFile,BufRead *.json.jbuilder set ft=ruby
+    au BufNewFile,BufRead *.json.jb set ft=ruby
     au BufRead,BufNewFile *.ronn setfiletype markdown
     " associate *.foo with php filetype
 augroup END
@@ -197,6 +213,13 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 " command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 " autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
+
+" vista.vim
+"
+" let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_icon_indent = ["▸ ", ""]
+let g:vista#renderer#enable_icon = 0
+let g:vista_sidebar_width = 40
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -334,37 +357,6 @@ let g:projectionist_heuristics = {
       \  }
       \}
 
-let g:rails_projections = {
-      \ "doc/*_swagger.yml": {
-      \   "alternate": "spec/swagger/%s_swagger_spec.rb",
-      \   "command": "swagger"
-      \ },
-      \ "CHANGELOG.md": {
-      \   "type": "change",
-      \ },
-      \ "app/models/resources/*.rb": {
-      \   "command": "res",
-      \   "related": "spec/factories/resources/{}.rb",
-      \ },
-      \ "app/use_cases/*.rb": {
-      \   "command": "case"
-      \ },
-      \ "app/serializers/*.rb": {
-      \   "command": "serializer"
-      \ },
-      \ "lib/uts_events/*.rb": {
-      \   "command": "uts",
-      \   "alternate": "spec/uts_events/{}_spec.rb",
-      \ },
-      \ "spec/factories/*.rb": {
-      \   "command": "factory"
-      \ },
-      \ "spec/requests/*.rb": {
-      \   "alternate": "app/controllers/{}_controller.rb",
-      \ }
-      \}
-
-
 
 let g:jsx_ext_required = 0
 
@@ -446,8 +438,14 @@ let g:fzf_tags_command = 'ptags'
 nnoremap <c-p> :FilesMru --tiebreak=end<cr>
 nnoremap <c-t> :Tags<cr>
 
+" nnn
+let g:nnn#action = {
+      \ '<c-t>': 'tab split',
+      \ '<c-x>': 'split',
+      \ '<c-v>': 'vsplit' }
+let g:nnn#layout = { 'left': '~20%' }
 
-" vim-jsx
+"" vim-jsx
 
 let g:jsx_ext_required = 0
 
