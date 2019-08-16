@@ -48,6 +48,7 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'liuchengxu/vista.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'bootleq/vim-textobj-rubysymbol'
+Plug 'segeljakt/vim-silicon'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
@@ -57,8 +58,8 @@ Plug 'haya14busa/incsearch.vim'
 
 Plug 'trevordmiller/nova-vim'
 Plug 'junegunn/seoul256.vim'
-Plug 'chriskempson/base16-vim'
 Plug 'mhinz/vim-janah'
+Plug 'arcticicestudio/nord-vim'
 
 
 " JS plugins
@@ -88,21 +89,25 @@ set t_AF=^[[38;5;%dm
 
 set background=dark
 " let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme nova
+colorscheme nord
 
 " let g:seoul256_background = 236
 " colo seoul256
 
 set colorcolumn=85,126
 " let &colorcolumn=join(range(85,999),",")
-highlight ColorColumn ctermbg=246 guibg=#41535D
+"highlight ColorColumn ctermbg=246 guibg=#41535D
 highlight VertSplit guibg=#41535D
 highlight StatusLineNC guibg=#41535D
 
 hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
 hi TabLineFill  ctermfg=Black  ctermbg=Green     cterm=NONE
 hi TabLineSel   ctermfg=White  ctermbg=DarkBlue  cterm=NONE
+" avoid red background SignColor (maybe a bug with ALE/gitgutter)
+hi clear SignColumn
 
+let g:gitgutter_override_sign_column_highlight = 0
+highlight SignColumn ctermbg=Black    " terminal Vim
 
 
 " No backup file and no swap file
@@ -374,6 +379,7 @@ let g:javascript_conceal_super                = "Ω"
 " ALE
 "
 let g:ale_sign_column_always = 1
+let g:ale_set_highlights = 0
 
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
