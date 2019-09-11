@@ -126,42 +126,12 @@ function v() {
   fi
 }
 
-qh() {
-  grep --color=always "$*" "$HISTFILE" | less -RX
-}
-
-# fzf integrations see https://junegunn.kr/2016/07/fzf-git/
-is_in_git_repo() {
-  git rev-parse HEAD >/dev/null 2>&1
-}
-
-fzf-down() {
-  fzf --height 50% "$@" --border
-}
-
-gb() {
-  is_in_git_repo || return
-  git branch | grep -v '/HEAD\s' | sort |
-    fzf-down --ansi --multi --tac --preview-window right:70% \
-      --preview 'git lg -5 $(sed s/^..// <<< {} | cut -d" " -f1) | head -'$LINES |
-    sed 's/^..//' | cut -d' ' -f1 |
-    sed 's#^remotes/##'
-}
-
-bind '"\C-g\C-b": "$(gb)\e\C-e\er"'
-
 # edit conflic in vim and setup search pattern with conflic marker
 # credit to https://coderwall.com/p/psa3ng
 function editconflicts() {
   vim +/"<<<<<<<" -p "$(git diff --name-only --diff-filter=U | xargs)"
 }
 
-fvim() {
-  local IFS=$'\n'
-  local files=($(fzf --query="$1" --multi --select-1 --exit-0))
-  [[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
-}
-bind -x '"\C-p": fvim'
 
 fbr() {
   local branches branch
