@@ -6,23 +6,19 @@
   path = .gitconfig-perso
 [alias]
   ctags = !.git/hooks/ctags
-  lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative
+  lg = log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=human
   st = status -sbu
-  # Quickly view the latest commits using a helper script to massage the
-	# "git log" output.
-	l = ! git-tild-log
-	# Like "git l", but show all and draw the history graph, too.
-	ll = ! git-tild-log --graph
-  lst= for-each-ref --sort=-committerdate refs/heads/ refs/remotes/ --format='%(committerdate:short) - %(authorname) - %(refname:short)'
   create-branch = !sh -c 'git push origin HEAD:refs/heads/$1 && git fetch origin && git branch --track $1 origin/$1 && cd . && git checkout $1' -
-  delete-branch = !sh -c 'git push origin :refs/heads/$1 && git remote prune origin && git branch -D $1' -
   merge-branch = !git checkout master && git merge @{-1} --ff-only
   rebase-origin = !git fetch origin && git rebase origin/master
-  la = "!git config -l | grep alias | cut -c 7-"
-  br = branch -vv
+[blame]
+  date = format:%d/%m/%y %H:%M
+  abbrev = 7
 [core]
-	# pager = diff-so-fancy | less --tabs=1,5 -R
 	excludesfile = /Users/djtal/Developement/Projects/gitignore/Global/OSX.gitignore
+  abbrev = 7
+[hub]
+  protocol = https
 [pager]
     diff = diff-so-fancy | less --tabs=4 -RFX --pattern '^(Date|added|deleted|modified): '
 [push]
@@ -30,12 +26,9 @@
 [color]
 	ui = true
 [pull]
-	rebase = preserve
+	rebase = merges
 [init]
   templatedir = ~/.git_template
-[filter "media"]
-	clean = git-media-clean %f
-	smudge = git-media-smudge %f
 [diff]
 	wordRegex = .
 	mnemonicprefix = true
@@ -52,6 +45,7 @@
   showBranch = auto
   interactive = auto
   grep = auto
+# nova theme color from https://github.com/trevordmiller/nova-git
 [color "status"]
   header = black bold
   branch = cyan
@@ -99,3 +93,5 @@
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
+[commit]
+	gpgsign = true
