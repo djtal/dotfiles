@@ -53,20 +53,16 @@ _tmux_complete_session() {
 }
 complete -F _tmux_complete_session tm
 
-# Quick Rails 2.3 alias
 
-function rdm() { bundle exec rake db:migrate "$@"; }
 function rsc() {
-  if [ -f script/console ]; then
-    bundle exec script/console "$@"
-  elif [ -d bin ]; then
-    bundle exec bin/rails c
-  else
-    bundle exec rails c "$@"
-  fi
+  bundle exec rails c "$@"
 }
-function sdc() { ./script/dbconsole -p "$@"; }
-function tlf() { tail -f log/${RAILS_ENV:-development}.log; }
+
+# migrate down choosen migration
+rdr() {
+  version=$(ls db/migrate | fzf | awk -F _ '{print $1}')
+  [[ -n "$version" ]] && rails db:migrate:down VERSION="$version"
+}
 
 # extract any time of compressed file
 # source https://coderwall.com/p/arwifq?i=9&p=1&q=sort%3Ascore+desc&t%5B%5D=bash
