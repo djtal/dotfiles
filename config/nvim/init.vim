@@ -13,12 +13,12 @@ Plug 'mkitt/tabline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-ruby/vim-ruby'
 Plug 'rlue/vim-fold-rspec'
-Plug 'fatih/vim-go'
+Plug 'fatih/vim-go', { 'for': ['go'] }
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'w0rp/ale'
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'haml'] }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml'] }
 Plug 'chr4/nginx.vim'
