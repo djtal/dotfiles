@@ -1,8 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rhubarb'
+Plug 'RobertAudi/git-blame.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
@@ -10,6 +8,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-abolish'
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
+Plug 'itchyny/vim-gitbranch'
 Plug 'mkitt/tabline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'vim-ruby/vim-ruby'
@@ -261,6 +260,7 @@ map g# <Plug>(incsearch-nohl-g#)
 
 " vim light-line
 "
+      " \   'gitbranch': 'fugitive#head',
 set noshowmode
 let g:lightline = {
       \ 'colorscheme': 'wombat',
@@ -270,8 +270,8 @@ let g:lightline = {
       \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok'], ['filetype']]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
       \   'filename': 'LightlineFilename',
+      \   'gitbranch': 'gitbranch#name'
       \ },
       \ 'component_expand': {
       \   'linter_warnings': 'LightlineLinterWarnings',
