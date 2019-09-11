@@ -23,7 +23,6 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml'] }
 Plug 'chr4/nginx.vim'
 Plug 'racer-rust/vim-racer'
-Plug 'mustache/vim-mustache-handlebars'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
 Plug 'janko-m/vim-test'
@@ -88,7 +87,7 @@ set t_AF=^[[38;5;%dm
 
 set background=dark
 " let base16colorspace=256  " Access colors present in 256 colorspace
-colorscheme nord
+colorscheme nova
 
 " let g:seoul256_background = 236
 " colo seoul256
@@ -122,6 +121,9 @@ set shiftwidth=2
 " more natural split defaut position
 set splitbelow
 set splitright
+
+" use system clipboard
+set clipboard=unnamed
 
 set number
 highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
