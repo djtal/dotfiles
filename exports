@@ -55,11 +55,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type directory --color=always"
 export FZF_DEFAULT_OPTS='--bind J:down,K:up --reverse --ansi --multi --color=bg:238,bg+:240,fg+:247,fg:247,hl:117,hl+:117'
 
-# VAGRANT SETTINGS
-
-export VAGRANT_PRIVATE_IP="10.0.0.100"
-export VAGRANT_CPU="2"
-export VAGRANT_RAM="4096"
 export GOPATH="$HOME/Developement/Projects/golang"
 # export PATH="$(yarn global bin):$PATH"
 export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
