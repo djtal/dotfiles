@@ -53,7 +53,7 @@ export LESS_TERMCAP_md="$ORANGE"
 export FZF_DEFAULT_COMMAND='rg -g "" --files'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND="fd --type directory --color=always"
-export FZF_DEFAULT_OPTS='--bind J:down,K:up --reverse --ansi --multi'
+export FZF_DEFAULT_OPTS='--bind J:down,K:up --reverse --ansi --multi --color=bg:238,bg+:240,fg+:247,fg:247,hl:117,hl+:117'
 
 # VAGRANT SETTINGS
 
