@@ -1,0 +1,30 @@
+{
+  "name": "nova-sublime-text",
+  "version": "1.0.1",
+  "scripts": {
+    "start": "scripts/start",
+    "build": "scripts/build"
+  },
+  "devDependencies": {
+    "eslint": "3.5.0",
+    "watch": "0.19.2"
+  },
+  "dependencies": {
+    "nova-colors": "2.1.4"
+  },
+  "main": "colors/nova.tmTheme",
+  "description": "Nova color scheme plugin for Sublime Text",
+  "homepage": "https://trevordmiller.github.io/nova",
+  "author": "Dries Vints <dries.vints@gmail.com> (https://driesvints.com)",
+  "license": "MIT",
+  "keywords": [
+    "sublime-text",
+    "sublime-text-theme",
+    "color-scheme",
+    "colors"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/driesvints/nova-sublime-text.git"
+  }
+}
