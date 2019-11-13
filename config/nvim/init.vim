@@ -17,7 +17,7 @@ Plug 'fatih/vim-go', { 'for': ['go'] }
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'haml'] }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml'] }
@@ -37,8 +37,9 @@ Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'machakann/vim-highlightedyank'
 Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/sideways.vim'
+Plug 'AndrewRadev/switch.vim'
 Plug 'lifepillar/pgsql.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'andymass/vim-matchup'
 Plug 'mcchrish/nnn.vim'
 Plug 'tpope/vim-dadbod'
@@ -47,6 +48,9 @@ Plug 'liuchengxu/vista.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'bootleq/vim-textobj-rubysymbol'
 Plug 'segeljakt/vim-silicon'
+Plug 'edkolev/tmuxline.vim'
+Plug 'natebosch/vim-lsc'
+Plug 'ajh17/VimCompletesMe'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
@@ -220,15 +224,62 @@ endfunction
 " command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
 " autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
 
+" vim-lsc
+"
+let g:lsc_server_commands = {
+ \  'ruby': {
+ \    'command': 'solargraph stdio',
+ \    'log_level': -1,
+ \    'suppress_stderr': v:true,
+ \  },
+ \  'javascript': {
+ \    'command': 'typescript-language-server --stdio',
+ \    'log_level': -1,
+ \    'suppress_stderr': v:true,
+ \  }
+ \}
+let g:lsc_auto_map = {
+ \  'GoToDefinition': 'gd',
+ \  'FindReferences': 'gr',
+ \  'Rename': 'gR',
+ \  'ShowHover': 'K',
+ \  'Completion': 'omnifunc',
+ \}
+let g:lsc_enable_autocomplete  = v:true
+let g:lsc_enable_diagnostics   = v:false
+let g:lsc_reference_highlights = v:false
+let g:lsc_trace_level          = 'off'
+
+
+" vim-silicon
+"
+let g:silicon = {
+      \ 'theme':              'Dracula',
+      \ 'font':                  'Hack',
+      \ 'background':         '#aaaaff',
+      \ 'shadow-color':       '#555555',
+      \ 'line-pad':                   2,
+      \ 'pad-horiz':                 80,
+      \ 'pad-vert':                 100,
+      \ 'shadow-blur-radius':         0,
+      \ 'shadow-offset-x':            0,
+      \ 'shadow-offset-y':            0,
+      \ 'line-number':           v:true,
+      \ 'round-corner':          v:true,
+      \ 'window-controls':       v:true,
+      \ 'default-file-pattern':       '',
+      \ }
+
+let g:silicon['default-file-pattern'] =
+      \ '~/Pictures/screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png'
+
 " vista.vim
 "
 " let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
 let g:vista_icon_indent = ["▸ ", ""]
 let g:vista#renderer#enable_icon = 0
 let g:vista_sidebar_width = 40
-
-" deoplete
-let g:deoplete#enable_at_startup = 1
+" let g:vista_default_executive = 'ptags'
 
 " vim-racer
 set hidden
@@ -387,13 +438,19 @@ let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
 
 let g:ale_linters = {
-\   'ruby': ['rubocop'],
+\   'ruby': ['standardrb'],
+\   'haml': ['hamllint'],
+\   'vim': ['vint'],
 \}
 
 let g:ale_fixers = {
-\   'javascript': ['prettier'],
-\}
+      \   'javascript': ['prettier'],
+      \   'ruby': ['standardrb'],
+      \}
 let g:ale_fix_on_save = 1
+let g:ale_fix_on_save_ignore = {
+      \   'ruby': ['standardrb'],
+      \ }
 
 let g:airline#extensions#ale#enabled = 1
 let g:go_fmt_fail_silently = 1 " avoid conflict with vim-ogo : https://github.com/w0rp/ale/issues/609
