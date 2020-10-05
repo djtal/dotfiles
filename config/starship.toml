@@ -3,7 +3,9 @@ add_newline = false
 
 # Replace the "❯" symbol in the prompt with "➜"
 [character]      # The name of the module we are configuring is "character"
-symbol = "$ "     # The "symbol" segment is being set to "➜"
+success_symbol = "[\\$](bold green)"
+error_symbol = "[\\$](bold red)"
+vicmd_symbol = "[\\$](bold green)"
 
 [cmd_duration]
 disabled = true
@@ -19,24 +21,33 @@ disabled = true
 disabled = true
 
 [directory]
-prefix = ''
 style  = "red"
+format = "[$path]($style)[$read_only]($read_only_style) "
 truncate_to_repo = true
 truncation_length = 1
 
 [git_status]
-prefix = '('
-suffix = ')'
-untracked = ''
-stashed = ''
+format = " [$all_status$ahead_behind]($style)\\] "
+all_status = "$conflicted$stashed$deleted$renamed$modified$staged$untracked"
+ahead_count = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind_count = "⇣${count}"
 style = 'yellow dimmed'
+untracked =  ""
+stashed =  ""
 
 [git_branch]
-symbol = ''
+format = "\\[[$symbol$branch]($style)"
+symbol = '⎇ '
 style = 'green'
+
+[git_state]
+disabled = true
+format = "[\\($state( $progress_current of $progress_total)\\)]($style) "
 
 [ruby]
 disabled = true
+symbol = "🔺"
 
 [jobs]
 disabled = true
