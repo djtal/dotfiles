@@ -1,6 +1,10 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Git/Github interaction
 Plug 'RobertAudi/git-blame.vim'
+Plug 'tyru/open-browser.vim'
+Plug 'tyru/open-browser-github.vim'
+
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
@@ -11,17 +15,14 @@ Plug 'maximbaz/lightline-ale'
 Plug 'itchyny/vim-gitbranch'
 Plug 'mkitt/tabline.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'vim-ruby/vim-ruby'
-Plug 'rlue/vim-fold-rspec'
 Plug 'fatih/vim-go', { 'for': ['go'] }
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'dense-analysis/ale'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'haml'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'haml', 'eruby'] }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml'] }
-Plug 'chr4/nginx.vim'
 Plug 'racer-rust/vim-racer'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
@@ -42,15 +43,23 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'lifepillar/pgsql.vim'
 Plug 'andymass/vim-matchup'
 Plug 'mcchrish/nnn.vim'
-Plug 'tpope/vim-dadbod'
 Plug 'AndrewRadev/switch.vim'
 Plug 'liuchengxu/vista.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'bootleq/vim-textobj-rubysymbol'
+Plug 'vim-ruby/vim-ruby'
+Plug 'rlue/vim-fold-rspec'
 Plug 'segeljakt/vim-silicon'
 Plug 'edkolev/tmuxline.vim'
 Plug 'natebosch/vim-lsc'
-Plug 'ajh17/VimCompletesMe'
+Plug 'thirtythreeforty/lessspace.vim'
+Plug 'justinmk/vim-dirvish'
+Plug 'aserebryakov/vim-todo-lists'
+Plug 'pocke/yaml-path.vim'
+Plug 'munen/find_yaml_key'
+Plug 'pechorin/any-jump.vim'
+Plug 'RRethy/vim-illuminate'
+Plug 'rizzatti/dash.vim'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
@@ -59,28 +68,30 @@ Plug 'haya14busa/incsearch.vim'
 " Themes
 
 Plug 'trevordmiller/nova-vim'
-Plug 'junegunn/seoul256.vim'
-Plug 'mhinz/vim-janah'
-Plug 'arcticicestudio/nord-vim'
+Plug 'gruvbox-community/gruvbox'
+Plug 'wojciechkepka/vim-github-dark'
 
 
 " JS plugins
+"
 "
 
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
-Plug 'jaawerth/nrun.vim'
 Plug 'jparise/vim-graphql'
-Plug 'posva/vim-vue'
-
-Plug 'junegunn/goyo.vim'
+Plug 'joukevandermaas/vim-ember-hbs'
 
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
 
 call plug#end()
+
+lua << EOF
+  vim.api.nvim_set_keymap('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
+  vim.api.nvim_set_keymap('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
+EOF
 
 filetype plugin indent on    " required
 syntax on
@@ -92,6 +103,9 @@ set t_AF=^[[38;5;%dm
 set background=dark
 " let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme nova
+
+let g:gh_color = "soft"
+
 
 " let g:seoul256_background = 236
 " colo seoul256
@@ -105,6 +119,7 @@ highlight StatusLineNC guibg=#41535D
 hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
 hi TabLineFill  ctermfg=Black  ctermbg=Green     cterm=NONE
 hi TabLineSel   ctermfg=White  ctermbg=DarkBlue  cterm=NONE
+highlight Comment cterm=italic
 " avoid red background SignColor (maybe a bug with ALE/gitgutter)
 hi clear SignColumn
 
@@ -138,6 +153,7 @@ let mapleader=","
 nnoremap <leader><leader> <c-^>
 nnoremap <leader><space> :noh<cr>
 
+
 " Fast saving
 nmap <leader>w :w!<cr>
 " jj alow to go out from insert/edit mode
@@ -158,6 +174,7 @@ if has('autocmd')
   " Delete all whitespace in end of line
   autocmd BufWritePre * :%s/\s\+$//e
   " autocmd! BufWritePost * Neomake
+  autocmd FileType html,css,scss,eruby,less EmmetInstall
 endif
 
 augroup filetypedetect
@@ -184,7 +201,6 @@ nnoremap <c-l> <c-w>l
 " tabs managment
 map <C-S-tab> :tabprevious<CR>
 map <C-tab> :tabnext<CR>
-map <C-w> :tabclose<CR>
 nmap tt :tabnext<cr>
 map tt :tabnext<cr>
 nmap tp :tabprev<cr>
@@ -207,23 +223,6 @@ imap <c-l> <space>=><space>
 " vnoremap J :m '>+1<CR>gv=gv
 " vnoremap k :m '<-2<cr>gv=gv
 
-
-" via: http://rails-bestpractices.com/posts/60-remove-trailing-whitespace
-" Strip trailing whitespace
-function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line('.')
-    let c = col('.')
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
-endfunction
-" command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
-" autocmd BufWritePre <buffer> call <SID>StripTrailingWhitespaces()
-
 " vim-lsc
 "
 let g:lsc_server_commands = {
@@ -236,7 +235,7 @@ let g:lsc_server_commands = {
  \    'command': 'typescript-language-server --stdio',
  \    'log_level': -1,
  \    'suppress_stderr': v:true,
- \  }
+ \  },
  \}
 let g:lsc_auto_map = {
  \  'GoToDefinition': 'gd',
@@ -250,6 +249,12 @@ let g:lsc_enable_diagnostics   = v:false
 let g:lsc_reference_highlights = v:false
 let g:lsc_trace_level          = 'off'
 
+" vim-illuminate
+
+nnoremap <c-s> '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>'
+
+" don't show previw  on automplete
+set completeopt-=preview
 
 " vim-silicon
 "
@@ -279,7 +284,11 @@ let g:silicon['default-file-pattern'] =
 let g:vista_icon_indent = ["▸ ", ""]
 let g:vista#renderer#enable_icon = 0
 let g:vista_sidebar_width = 40
-" let g:vista_default_executive = 'ptags'
+let g:vista_default_executive = 'ctags'
+
+" let g:vista_executive_for = {
+"   \ 'ruby': 'vim_lsc',
+"   \ }
 
 " vim-racer
 set hidden
@@ -436,6 +445,7 @@ let g:ale_set_highlights = 0
 
 let g:ale_sign_error = '>>'
 let g:ale_sign_warning = '--'
+let g:ale_ruby_rubocop_executable = 'rubocop-daemon-wrapper'
 
 let g:ale_linters = {
 \   'ruby': ['standardrb'],
@@ -481,21 +491,6 @@ nnoremap ! :Tbro
 
 nmap <silent> <leader>r :Tbro rake db:migrate<CR>
 
-" vim-goyo
-
-function! s:goyo_enter()
-  silent !tmux set status off
-  silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-endfunction
-
-function! s:goyo_leave()
-  silent !tmux set status on
-  silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
 " vim-fzf
 
 " nmap <C-p> :FZF<cr>
@@ -517,6 +512,13 @@ let g:jsx_ext_required = 0
 " fugitive.vim
 "
 nnoremap <silent> <leader>gs :GStatus<CR>
+
+" anyjump.vim
+"
+" window size & position options
+let g:any_jump_window_width_ratio  = 0.8
+let g:any_jump_window_height_ratio = 0.8
+let g:any_jump_grouping_enabled = 1
 
 " vim-rhubarb
 "
@@ -582,4 +584,32 @@ endfunction
 
 map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
 
+function! GetJiraIssueFromGit()
+  let l:jiraIssue = matchstr(gitbranch#name(), '\v\c(TKT-[0-9]*)')
+  if strlen(l:jiraIssue)
+    return toupper(l:jiraIssue)
+  endif
+endfunction
 
+" replace templated JIRA issue with proper reference infered from
+" template look like
+" _TODO: Add the Jira issue number below._
+"
+" **Jira issue:** [TKT-XXX](https://tracktorfr.atlassian.net/browse/TKT-XXX)
+function ReplaceJiraIssue()
+  let l:jiraIssue = GetJiraIssueFromGit()
+  if strlen(l:jiraIssue)
+    g/TKT-XXX/-2d
+    %s/TKT-XXX/\=GetJiraIssueFromGit()/g
+  endif
+endfunction
+
+
+abbr gtkt <C-R>=GetJiraIssueFromGit()<CR>
+command! SJiraIssue call ReplaceJiraIssue()
+
+" remove pre-formatted issue type from release note
+" line are formatted like this
+" * <IssueType> - Issue long summary [ISSUE-ID][]
+" It will then remove `<IssueType> -`
+command! SJiraIssueType %s/*\zs.\{-}-\ze//g | :noh
