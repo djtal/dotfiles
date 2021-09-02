@@ -1,11 +1,14 @@
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the start of this file.
+[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
+#### END FIG ENV VARIABLES ####
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
 
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
-
-
 
 
 # don't put duplicate lines in the history. See bash(1) for more options
@@ -23,12 +26,8 @@ HISTFILESIZE=2000
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-# Prepend cd to directory names automatically
-shopt -s autocd
 # Correct spelling errors during tab-completion
 shopt -s cdspell
-# Correct spelling errors in arguments supplied to cd
-shopt -s dirspell
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -59,19 +58,10 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-if [ -f /etc/bash_completion.d/git ]; then
-  source /etc/bash_completion.d/git
-fi
-
 
 umask 0002
 
-
 if [ $(uname -s) = "Darwin" ]; then
-  # use completion script provided by brew if available
-  if [ -f `/usr/local/bin/brew --prefix`/etc/bash_completion ]; then
-      . `/usr/local/bin/brew --prefix`/etc/bash_completion
-  fi
 
   # Add tab completion for SSH hostnames based on ~/.ssh/config, ignoring wildcards
   [ -e "$HOME/.ssh/config" ] && complete -o "default" -o "nospace" -W "$(grep "^Host" ~/.ssh/config | grep -v "[?*]" | cut -d " " -f2)" scp sftp ssh
@@ -88,18 +78,14 @@ if [ -x /usr/libexec/path_helper ]; then
 fi
 
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
-for file in ~/.{path,bash_prompt,exports,aliases,functions}; do
+for file in ~/.{path,exports,aliases,functions}; do
 	[ -r "$file" ] && source "$file"
 done
 unset file
 
-. /usr/local/etc/profile.d/z.sh
 
 if [ -d ~/.bash_completion.d ]; then
   for file in ~/.bash_completion.d/*; do
@@ -108,20 +94,36 @@ if [ -d ~/.bash_completion.d ]; then
 fi
 unset file
 
-#define some color based on the molokai them see http://stevelosh.com/blog/2009/03/candy-colored-terminal/
-# D=$'\e[0;37;40m'
-# PINK=$'\e[0;35;40m'
-# #GREEN=$'\e[32;40m'
-# GREEN=$'\e[1;32;40m'
-# ORANGE=$'\e[0;33;40m'
+eval "$(rbenv init -)"
 
-# #PS1='\[\033[33m\][\w$(__git_ps1)]@\[\033[32m\]\h:\[\033[0m\] \$ '
-# PS1='[\[${GREEN}\]\w\[${D}\]$(__git_ps1)\[${D}\]]@\[${ORANGE}\]\h: \[${D}\] \$ '
+if type brew &>/dev/null; then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  for COMPLETION in "${HOMEBREW_PREFIX}/etc/bash_completion.d/"*; do
+    [[ -r "$COMPLETION" ]] && source "$COMPLETION"
+  done
+fi
 
-# Base16 Shell
-# BASE16_SHELL="$HOME/.config/base16-shell/base16-ocean.dark.sh"
-# [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+# This should come after loading completion from brew in later version of bash >4
+# handy alias if no argutmet equivalent to git lg
+# other plain old git but two letter less
+# credit to https://github.com/pengwynn/dotfiles
+function g() {
+  if [[ $# -gt 0 ]]; then
+    git "$@"
+  else
+    git status --short --branch
+  fi
+}
+# This should come after loading completion from brew in later version of bash >4
+# autocomplete g like it is git yeah!
+__git_complete g __git_main
 
 cowsay $(fortune -s)
 
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+. "$HOME/.cargo/env"
+eval "$(starship init bash)"
+
+#### FIG ENV VARIABLES ####
+# Please make sure this block is at the end of this file.
+[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
+#### END FIG ENV VARIABLES ####
