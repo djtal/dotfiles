@@ -25,7 +25,7 @@ else
   if [ "$(tmux list-window | grep "$1" | awk '{ print $2}')" ]; then
     tmux select-window -t "$(tmux list-window | grep "$1" | awk '{ print $1 }' | cut -b 1)"
   else
-    proj_dir="$HOME/Developement/Projects/$1"
+    proj_dir="$HOME/dev/projects/$1"
     tmux new-window -n "$1" -c "$proj_dir"
     if [ -f  "$proj_dir/.tmux-layout" ]; then
       tmux source-file  "$proj_dir/.tmux-layout"

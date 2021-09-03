@@ -28,10 +28,6 @@ truncation_length = 1
 
 [git_status]
 format = " [$all_status$ahead_behind]($style) "
-all_status = "$conflicted$stashed$deleted$renamed$modified$staged$untracked"
-ahead_count = "⇡${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-behind_count = "⇣${count}"
 style = 'yellow dimmed'
 untracked =  ""
 stashed =  ""

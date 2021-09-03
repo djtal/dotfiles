@@ -98,16 +98,6 @@ function _compressed_files() {
 }
 complete -F _compressed_files extract
 
-# handy alias if no argutmet equivalent to git lg
-# other plain old git but two letter less
-# credit to https://github.com/pengwynn/dotfiles
-function g() {
-  if [[ $# -gt 0 ]]; then
-    git "$@"
-  else
-    git status --short --branch
-  fi
-}
 
 function t() {
   tig "$@"
@@ -115,16 +105,7 @@ function t() {
 
 complete -F _tig t
 
-# autocomplete g like it is git yeah!
-__git_complete g __git_main
 
-function v() {
-  if [[ $# -gt 0 ]]; then
-    vagrant "$@"
-  else
-    vagrant status
-  fi
-}
 
 # edit conflic in vim and setup search pattern with conflic marker
 # credit to https://coderwall.com/p/psa3ng

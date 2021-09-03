@@ -61,5 +61,9 @@ export PATH="/usr/local/opt/gnu-getopt/bin:$PATH"
 export PATH="/$HOME/Developement/Projects/golang/bin:$PATH"
 
 export EXA_COLORS="uu=0:gu=0"
-export CD_DEV_PATH="~/Developement/Projects"
+export CD_DEV_PATH="~/dev/projects"
+export BASH_SILENCE_DEPRECATION_WARNING=1
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
