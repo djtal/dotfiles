@@ -30,8 +30,10 @@ Plug 'janko-m/vim-test'
 Plug 'BlakeWilliams/vim-tbro'
 Plug 'dag/vim-fish'
 Plug 'tpope/vim-projectionist'
-Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
-Plug 'tweekmonster/fzf-filemru'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
+" Plug 'tweekmonster/fzf-filemru'
 Plug 'bfontaine/Brewfile.vim'
 Plug 'tpope/vim-bundler'
 Plug 'cespare/vim-toml'
@@ -51,25 +53,20 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'rlue/vim-fold-rspec'
 Plug 'segeljakt/vim-silicon'
 Plug 'edkolev/tmuxline.vim'
-Plug 'natebosch/vim-lsc'
-Plug 'thirtythreeforty/lessspace.vim'
-Plug 'justinmk/vim-dirvish'
+Plug 'thirtythreeforty/lessspace.vim' " remove unwanted space
 Plug 'aserebryakov/vim-todo-lists'
-Plug 'pocke/yaml-path.vim'
-Plug 'munen/find_yaml_key'
 Plug 'pechorin/any-jump.vim'
-Plug 'RRethy/vim-illuminate'
 Plug 'rizzatti/dash.vim'
+Plug 'neovim/nvim-lspconfig'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
+Plug 'RRethy/vim-illuminate'
 " Plug 'mhinz/vim-grepper'
 
 " Themes
 
 Plug 'trevordmiller/nova-vim'
-Plug 'gruvbox-community/gruvbox'
-Plug 'wojciechkepka/vim-github-dark'
 
 
 " JS plugins
@@ -89,8 +86,6 @@ Plug 'ap/vim-css-color'
 call plug#end()
 
 lua << EOF
-  vim.api.nvim_set_keymap('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
-  vim.api.nvim_set_keymap('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
 EOF
 
 filetype plugin indent on    " required
@@ -218,36 +213,68 @@ augroup END
 
 imap <c-l> <space>=><space>
 
+lua << EOF
+vim.api.nvim_set_keymap('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
+vim.api.nvim_set_keymap('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
+
+require'lspconfig'.solargraph.setup{}
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
+)
+
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  --Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { "solargraph" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+	on_attach = on_attach,
+	flags = {
+	  debounce_text_changes = 150,
+	}
+  }
+end
+EOF
+
 
 " visual move block of line
 " vnoremap J :m '>+1<CR>gv=gv
 " vnoremap k :m '<-2<cr>gv=gv
 
-" vim-lsc
-"
-let g:lsc_server_commands = {
- \  'ruby': {
- \    'command': 'solargraph stdio',
- \    'log_level': -1,
- \    'suppress_stderr': v:true,
- \  },
- \  'javascript': {
- \    'command': 'typescript-language-server --stdio',
- \    'log_level': -1,
- \    'suppress_stderr': v:true,
- \  },
- \}
-let g:lsc_auto_map = {
- \  'GoToDefinition': 'gd',
- \  'FindReferences': 'gr',
- \  'Rename': 'gR',
- \  'ShowHover': 'K',
- \  'Completion': 'omnifunc',
- \}
-let g:lsc_enable_autocomplete  = v:true
-let g:lsc_enable_diagnostics   = v:false
-let g:lsc_reference_highlights = v:false
-let g:lsc_trace_level          = 'off'
 
 " vim-illuminate
 
@@ -276,7 +303,7 @@ let g:silicon = {
       \ }
 
 let g:silicon['default-file-pattern'] =
-      \ '~/Pictures/screenshots/silicon-{time:%Y-%m-%d-%H%M%S}.png'
+      \ '~/Pictures/capture/silicon-{time:%Y-%m-%d-%H%M%S}.png'
 
 " vista.vim
 "
@@ -440,12 +467,12 @@ let g:javascript_conceal_super                = "Ω"
 
 " ALE
 "
-let g:ale_sign_column_always = 1
+let g:ale_sign_column_always = 0
 let g:ale_set_highlights = 0
 
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '--'
-let g:ale_ruby_rubocop_executable = 'rubocop-daemon-wrapper'
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
+let g:ale_sign_info = ''
 
 let g:ale_linters = {
 \   'ruby': ['standardrb'],
@@ -492,11 +519,16 @@ nnoremap ! :Tbro
 nmap <silent> <leader>r :Tbro rake db:migrate<CR>
 
 " vim-fzf
+nnoremap <c-f> :Files<cr>
+" no preview window at all
+let g:fzf_preview_window = []
 
 " nmap <C-p> :FZF<cr>
 let g:fzf_tags_command = 'ptags'
-nnoremap <c-p> :FilesMru --tiebreak=end<cr>
-nnoremap <c-t> :Tags<cr>
+nnoremap <c-p> :FZFMru --tiebreak=end<cr>
+"nnoremap <c-p> :FZFMru<cr>
+let g:fzf_mru_relative = 1
+" nnoremap <c-t> :Tags<cr>
 
 " nnn
 let g:nnn#action = {
@@ -509,10 +541,6 @@ let g:nnn#layout = { 'left': '~20%' }
 
 let g:jsx_ext_required = 0
 
-" fugitive.vim
-"
-nnoremap <silent> <leader>gs :GStatus<CR>
-
 " anyjump.vim
 "
 " window size & position options
@@ -520,9 +548,6 @@ let g:any_jump_window_width_ratio  = 0.8
 let g:any_jump_window_height_ratio = 0.8
 let g:any_jump_grouping_enabled = 1
 
-" vim-rhubarb
-"
-let g:github_enterprise_urls = ['https://github.skillsoft.com']
 
 " commentary mapping
 xmap \\  <Plug>Commentary<CR>
