@@ -8,7 +8,8 @@ Plug 'tyru/open-browser-github.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-abolish'
 Plug 'itchyny/lightline.vim'
 Plug 'maximbaz/lightline-ale'
@@ -22,7 +23,6 @@ Plug 'tpope/vim-endwise'
 Plug 'dense-analysis/ale'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'haml', 'eruby'] }
 Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'kchmck/vim-coffee-script', { 'for': ['coffee', 'haml'] }
 Plug 'racer-rust/vim-racer'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
@@ -85,9 +85,6 @@ Plug 'ap/vim-css-color'
 
 call plug#end()
 
-lua << EOF
-EOF
-
 filetype plugin indent on    " required
 syntax on
 
@@ -96,14 +93,9 @@ set t_AB=^[[48;5;%dm
 set t_AF=^[[38;5;%dm
 
 set background=dark
-" let base16colorspace=256  " Access colors present in 256 colorspace
 colorscheme nova
 
 let g:gh_color = "soft"
-
-
-" let g:seoul256_background = 236
-" colo seoul256
 
 set colorcolumn=85,126
 " let &colorcolumn=join(range(85,999),",")
