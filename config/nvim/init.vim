@@ -5,6 +5,7 @@ Plug 'RobertAudi/git-blame.vim'
 Plug 'tyru/open-browser.vim'
 Plug 'tyru/open-browser-github.vim'
 
+Plug 'preservim/vim-markdown'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
@@ -16,7 +17,6 @@ Plug 'maximbaz/lightline-ale'
 Plug 'itchyny/vim-gitbranch'
 Plug 'mkitt/tabline.vim'
 Plug 'airblade/vim-gitgutter'
-Plug 'fatih/vim-go', { 'for': ['go'] }
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
@@ -49,6 +49,7 @@ Plug 'AndrewRadev/switch.vim'
 Plug 'liuchengxu/vista.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'bootleq/vim-textobj-rubysymbol'
+Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'vim-ruby/vim-ruby'
 Plug 'rlue/vim-fold-rspec'
 Plug 'segeljakt/vim-silicon'
@@ -61,6 +62,7 @@ Plug 'neovim/nvim-lspconfig'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
+Plug 'ggandor/leap.nvim'
 Plug 'RRethy/vim-illuminate'
 " Plug 'mhinz/vim-grepper'
 
@@ -109,6 +111,8 @@ hi TabLineSel   ctermfg=White  ctermbg=DarkBlue  cterm=NONE
 highlight Comment cterm=italic
 " avoid red background SignColor (maybe a bug with ALE/gitgutter)
 hi clear SignColumn
+" ufo folding
+hi default link UfoFoldedEllipsis Comment
 
 let g:gitgutter_override_sign_column_highlight = 0
 highlight SignColumn ctermbg=Black    " terminal Vim
@@ -137,6 +141,8 @@ nmap <C-N><C-N> :set invnumber<CR>
 nmap <Leader>c :set cursorline!<CR>
 
 let mapleader=","
+let localmapleader=";"
+
 nnoremap <leader><leader> <c-^>
 nnoremap <leader><space> :noh<cr>
 
@@ -163,6 +169,9 @@ if has('autocmd')
   " autocmd! BufWritePost * Neomake
   autocmd FileType html,css,scss,eruby,less EmmetInstall
 endif
+
+au FileType markdown setl conceallevel=0
+
 
 augroup filetypedetect
     au BufRead,BufNewFile Dangerfile setfiletype ruby
@@ -205,7 +214,11 @@ augroup END
 
 imap <c-l> <space>=><space>
 
+lua require('leap').add_default_mappings()
+
 lua << EOF
+
+-- lsp config
 vim.api.nvim_set_keymap('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
 vim.api.nvim_set_keymap('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
 
@@ -303,7 +316,7 @@ let g:silicon['default-file-pattern'] =
 let g:vista_icon_indent = ["▸ ", ""]
 let g:vista#renderer#enable_icon = 0
 let g:vista_sidebar_width = 40
-let g:vista_default_executive = 'ctags'
+let g:vista_default_executive = 'nvim_lsp'
 
 " let g:vista_executive_for = {
 "   \ 'ruby': 'vim_lsc',
@@ -492,6 +505,12 @@ nmap <silent> <C-m> <Plug>(ale_next_wrap)
 " Use tbro with vim-test
 let g:tbro_window = 1
 
+vmap <silent> <localleader>t :call tbro#run_selection()<cr>
+nmap <silent> <localleader>t :call tbro#run_line()<cr>
+
+" vim-markown
+let g:vim_markdown_conceal_code_blocks = 0
+
 function! TbroStrategy(cmd)
   execute 'Tbro ' . a:cmd
 endfunction
@@ -511,13 +530,13 @@ nnoremap ! :Tbro
 nmap <silent> <leader>r :Tbro rake db:migrate<CR>
 
 " vim-fzf
-nnoremap <c-f> :Files<cr>
 " no preview window at all
 let g:fzf_preview_window = []
-
+let g:fzf_layout = { 'down': '~40%' }
 " nmap <C-p> :FZF<cr>
 let g:fzf_tags_command = 'ptags'
-nnoremap <c-p> :FZFMru --tiebreak=end<cr>
+" nnoremap <c-p> :FZFMru --tiebreak=end<cr>
+nnoremap <c-p> :Files<cr>
 "nnoremap <c-p> :FZFMru<cr>
 let g:fzf_mru_relative = 1
 " nnoremap <c-t> :Tags<cr>
