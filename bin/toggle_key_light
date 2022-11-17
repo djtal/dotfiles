@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+status=$(curl --silent --location --request GET 'http://192.168.1.30:9123/elgato/lights' --header 'Content-Type: application/json' | jq '.lights[0].on')
+status=$((status ^= 1))
+curl --silent --location --request PUT 'http://192.168.1.30:9123/elgato/lights' --header 'Content-Type: application/json' --data-raw "{\"lights\":[{\"brightness\":20,\"temperature\":226,\"on\":${status}}],\"numberOfLights\":1}" > /dev/null
