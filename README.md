@@ -71,13 +71,21 @@ Create short gif from a video. Usefull to send terminal based video inside PR or
 via slack.
 It need `ffmpeg` to work and is based on [High quality GIF with FFmpeg](http://blog.pkh.me/p/21-high-quality-gif-with-ffmpeg.html for more details)
 
+### Apps
+
+These are specfic apps I use
+
+* [Alfred](https://www.alfredapp.com/)
+* [Rectangle](https://rectangleapp.com/)
+* [Karabiner Elements](https://karabiner-elements.pqrs.org/)
+
 
 ### Additionals tools
 
 Thoses tools are not automaticaly installed with a `brew bundle`command.
 You need to manualy install them if you need
 
-** [grv](https://github.com/rgburke/grv)**
+**[grv](https://github.com/rgburke/grv)**
 
 Git cli GUI. Simillar to `tig`
 
@@ -93,11 +101,12 @@ Easy format string to markdown table
 
 read any files wilth syntax higlight on you terminal
 
-**[go-jira](https://github.com/Netflix-Skunkworks/go-jira)**
+**[go-jira](https://github.com/go-jira/jira)**
 
 cli tool to read issue from jira and to manage lot of jira stuff too.
+Need to copy the `jira.d` directory to `~/.jira.d` and set appriate keys coresponding to your jira account
 
-**[tad](https://www.tadviewer.com/)
+**[tad](https://www.tadviewer.com/)**
 
 CSV viewer based on electron
 
@@ -118,18 +127,26 @@ Quickly index tags on any git repos
 Used from vim also
 Install from `cargo` `cargo install ptags`
 
+**[Atuin](https://github.com/ellie/atuin)**
 
+Allow recording shell history inside a sqlite db
+The you can query it as you want
+
+
+**[switchaudio-osx](https://github.com/deweller/switchaudio-osx)** : 
+
+Allow changing audio output device from cli
+The we use [Alfred](https://www.alfredapp.com/) to change source via keyboard easily
 
 
 ## Keyboard Setup
 
-It use [Karabiner](https://pqrs.org/osx/karabiner/) to change mapping of your keys and
-[Seil](https://pqrs.org/osx/karabiner/seil.html.en) to allow to remap your caps lock key too
+It use [Karabiner](https://karabiner-elements.pqrs.org/) to add some custom mappings
 
 **Remap Capslock to Ctr when hold or escape when touch**
 
-* Map  CapsLock to F19 (code 80) in Seil
-* In Karabiner and search for "F19" and ativate. Check the box next to “CapsLock to Escape and Control”.
+**Remap Capslock to Ctr when hold or escape when touch**
+
 
 **Remap Control+W to delete previous word**
 
