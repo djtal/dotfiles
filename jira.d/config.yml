@@ -1,0 +1,58 @@
+user: <your.email@my.mail>
+endpoint: "https://<my_company>.atlassian.net"
+editor: "nvim"
+password-source: "keyring"
+custom-commands:
+  - name: mine
+    help: display issues assigned to me
+    script: |-
+      if [ -n "$JIRA_PROJECT" ]; then
+          # if `project: ...` configured just list the issues for current project
+          {{jira}} list --query "resolution = unresolved and assignee=currentuser() and project = $JIRA_PROJECT ORDER BY priority asc, created" --queryfields "assignee,created,priority,reporter,status,summary,updated,issuetype,customfield_10016,worklog"
+      else
+          # otherwise list issues for all project
+          {{jira}} list --query "resolution = unresolved and assignee=currentuser() ORDER BY priority asc, created" --queryfields "assignee,created,priority,reporter,status,summary,updated,issuetype,customfield_10016,worklog"
+      fi
+  - name: estimates
+    help: list issues with estimates
+    script: |-
+      if [ -n "$JIRA_PROJECT" ]; then
+          # if `project: ...` configured just list the issues for current project
+          {{jira}} list --template "estimates" --query "project = $JIRA_PROJECT ORDER BY priority asc, created" --queryfields "assignee,created,priority,reporter,status,summary,updated,issuetype,customfield_10016"
+      else
+          # otherwise list issues for all project
+          {{jira}} list --template "estimates" --queryfields "assignee,created,priority,reporter,status,summary,updated,issuetype,customfield_10016"
+      fi
+  - name: open
+    help: open issue matching branch name
+    script: |-
+      if git rev-parse --git-dir > /dev/null 2>&1; then
+        {{ jira }} browse "TKT-$(git branch | grep \* | cut -d '-' -f 2)"
+      else
+        echo "Must run inside a git repo"
+      fi
+
+  - name: comment-current
+    help: Add comment to current branch issue
+    script: |-
+      if git rev-parse --git-dir > /dev/null 2>&1; then
+        {{ jira }} comment "TKT-$(git branch | grep \* | cut -d '-' -f 2)"
+      else
+        echo "Must run inside a git repo"
+      fi
+  - name: review
+    help: Move JIRA issue to code review
+    script: |-
+      if git rev-parse --git-dir > /dev/null 2>&1; then
+        {{ jira }} transition --noedit 'CODE REVIEW' "TKT-$(git branch | grep \* | cut -d '-' -f 2)"
+      else
+        echo "Must run inside a git repo"
+      fi
+  - name: qa
+    help: Move JIRA issue to VALIDATION
+    script: |-
+      if git rev-parse --git-dir > /dev/null 2>&1; then
+        {{ jira }} transition --noedit 'VALIDATION' "TKT-$(git branch | grep \* | cut -d '-' -f 2)"
+      else
+        echo "Must run inside a git repo"
+      fi
