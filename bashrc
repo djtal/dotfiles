@@ -1,8 +1,3 @@
-
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the start of this file.
-[ -s ~/.fig/shell/pre.sh ] && source ~/.fig/shell/pre.sh
-#### END FIG ENV VARIABLES ####
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
@@ -121,9 +116,7 @@ __git_complete g __git_main
 cowsay $(fortune -s)
 
 . "$HOME/.cargo/env"
-eval "$(starship init bash)"
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
 
-#### FIG ENV VARIABLES ####
-# Please make sure this block is at the end of this file.
-[ -s ~/.fig/fig.sh ] && source ~/.fig/fig.sh
-#### END FIG ENV VARIABLES ####
+eval "$(starship init bash)"
+#eval "$(atuin init bash)"
