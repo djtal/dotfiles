@@ -58,14 +58,27 @@ to suit your need. Theses are "cdproj" and "cddev"
 Quickly jump to any first level directory located in a base directory.
 Customize you base directory by setting the `CD_DEV_PATH` environement variable. Default to `~/`
 
-
 * **tm** :
 
 Easy open tmux session with the given name or switch to it if already exist
 
-### Quick scripts
+* **tm_proj** :
 
-**gifenc**
+Easy open tmux session with the given name or switch to it if already exist.
+It's the next evolution of `tm`
+Now it manage a layout file to describe how to split you pane(s). The layout file can be present on the root of you project. If not it will check at `~/`
+
+layout file is simple bash file which is sourced when opening.
+Sample layout file
+
+```bash
+
+split-window -v -p 35 -c "#{pane_current_path}"
+new-window -n "my-pane-name" -c "#{pane_current_path}"
+
+```
+
+* **gifenc** : 
 
 Create short gif from a video. Usefull to send terminal based video inside PR or
 via slack.
@@ -73,14 +86,20 @@ It need `ffmpeg` to work and is based on [High quality GIF with FFmpeg](http://b
 
 ### Apps
 
-These are specfic apps I use
+These are specfic apps I use. They're not always free or open source but I find them usefull in my day to day job.
 
 * [Alfred](https://www.alfredapp.com/)
 * [Rectangle](https://rectangleapp.com/)
 * [Karabiner Elements](https://karabiner-elements.pqrs.org/)
+* [Postgres Aapp](https://postgresapp.com/)
+* [Postico 2](https://eggerapps.at/postico2/)
+* [MacDown](https://macdown.uranusjr.com/)
+* [tad](https://www.tadviewer.com/)
+* [Choosy](https://choosy.app/)
+* [CleanShot](https://cleanshot.com/)
 
 
-### Additionals tools
+### Additionals cli tools
 
 Thoses tools are not automaticaly installed with a `brew bundle`command.
 You need to manualy install them if you need
@@ -106,9 +125,6 @@ read any files wilth syntax higlight on you terminal
 cli tool to read issue from jira and to manage lot of jira stuff too.
 Need to copy the `jira.d` directory to `~/.jira.d` and set appriate keys coresponding to your jira account
 
-**[tad](https://www.tadviewer.com/)**
-
-CSV viewer based on electron
 
 **[shfmt](https://github.com/mvdan/sh)**
 
@@ -138,12 +154,14 @@ The you can query it as you want
 Allow changing audio output device from cli
 The we use [Alfred](https://www.alfredapp.com/) to change source via keyboard easily
 
+**[dsq](https://github.com/multiprocessio/dsq)**
+
+Easily process any datasource
+
 
 ## Keyboard Setup
 
 It use [Karabiner](https://karabiner-elements.pqrs.org/) to add some custom mappings
-
-**Remap Capslock to Ctr when hold or escape when touch**
 
 **Remap Capslock to Ctr when hold or escape when touch**
 
