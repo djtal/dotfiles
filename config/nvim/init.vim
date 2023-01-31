@@ -23,7 +23,6 @@ Plug 'tpope/vim-endwise'
 Plug 'dense-analysis/ale'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'haml', 'eruby'] }
 Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'racer-rust/vim-racer'
 Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
 Plug 'janko-m/vim-test'
@@ -35,18 +34,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
 " Plug 'tweekmonster/fzf-filemru'
 Plug 'bfontaine/Brewfile.vim'
-Plug 'tpope/vim-bundler'
 Plug 'cespare/vim-toml'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'machakann/vim-highlightedyank'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/switch.vim'
-Plug 'lifepillar/pgsql.vim'
 Plug 'andymass/vim-matchup'
-Plug 'mcchrish/nnn.vim'
 Plug 'AndrewRadev/switch.vim'
-Plug 'liuchengxu/vista.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'bootleq/vim-textobj-rubysymbol'
 Plug 'nelstrom/vim-textobj-rubyblock'
@@ -69,6 +64,7 @@ Plug 'RRethy/vim-illuminate'
 " Themes
 
 Plug 'trevordmiller/nova-vim'
+Plug 'folke/tokyonight.nvim'
 
 
 " JS plugins
@@ -78,8 +74,6 @@ Plug 'trevordmiller/nova-vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'elzr/vim-json'
-Plug 'jparise/vim-graphql'
-Plug 'joukevandermaas/vim-ember-hbs'
 
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
@@ -95,28 +89,12 @@ set t_AB=^[[48;5;%dm
 set t_AF=^[[38;5;%dm
 
 set background=dark
-colorscheme nova
+" colorscheme nova
+colorscheme tokyonight-moon
 
 let g:gh_color = "soft"
 
 set colorcolumn=85,126
-" let &colorcolumn=join(range(85,999),",")
-"highlight ColorColumn ctermbg=246 guibg=#41535D
-highlight VertSplit guibg=#41535D
-highlight StatusLineNC guibg=#41535D
-
-hi TabLine      ctermfg=Black  ctermbg=Green     cterm=NONE
-hi TabLineFill  ctermfg=Black  ctermbg=Green     cterm=NONE
-hi TabLineSel   ctermfg=White  ctermbg=DarkBlue  cterm=NONE
-highlight Comment cterm=italic
-" avoid red background SignColor (maybe a bug with ALE/gitgutter)
-hi clear SignColumn
-" ufo folding
-hi default link UfoFoldedEllipsis Comment
-
-let g:gitgutter_override_sign_column_highlight = 0
-highlight SignColumn ctermbg=Black    " terminal Vim
-
 
 " No backup file and no swap file
 set nobackup
@@ -136,7 +114,6 @@ set splitright
 set clipboard=unnamed
 
 set number
-highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
 nmap <C-N><C-N> :set invnumber<CR>
 nmap <Leader>c :set cursorline!<CR>
 
@@ -145,6 +122,8 @@ let localmapleader=";"
 
 nnoremap <leader><leader> <c-^>
 nnoremap <leader><space> :noh<cr>
+nmap <leader>) <Plug>(GitGutterNextHunk)
+nmap <leader>( <Plug>(GitGutterPrevHunk)
 
 
 " Fast saving
@@ -225,7 +204,7 @@ vim.api.nvim_set_keymap('n', '<a-p>', '<cmd>lua require"illuminate".next_referen
 require'lspconfig'.solargraph.setup{}
 
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false }
+  vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = true, signs = true }
 )
 
 local nvim_lsp = require('lspconfig')
@@ -244,7 +223,7 @@ local on_attach = function(client, bufnr)
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>tab split | lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
@@ -259,6 +238,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
   buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  -- autofix lint for opened buffer
   buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
 end
 
@@ -310,26 +290,6 @@ let g:silicon = {
 let g:silicon['default-file-pattern'] =
       \ '~/Pictures/capture/silicon-{time:%Y-%m-%d-%H%M%S}.png'
 
-" vista.vim
-"
-" let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
-let g:vista_icon_indent = ["▸ ", ""]
-let g:vista#renderer#enable_icon = 0
-let g:vista_sidebar_width = 40
-let g:vista_default_executive = 'nvim_lsp'
-
-" let g:vista_executive_for = {
-"   \ 'ruby': 'vim_lsc',
-"   \ }
-
-" vim-racer
-set hidden
-let g:racer_cmd = "/Users/guillaume/.cargo/bin/racer"
-
-" pgsql.vim
-
-let g:sql_type_default = 'pgsql'
-
 " vim-fold-rspec
 "
 let g:fold_rspec_foldenable = 1      " disables folding (toggle with `zi`)
@@ -357,7 +317,7 @@ map g# <Plug>(incsearch-nohl-g#)
       " \   'gitbranch': 'fugitive#head',
 set noshowmode
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'tokyonight-storm',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename' ] ],
@@ -472,6 +432,8 @@ let g:javascript_conceal_super                = "Ω"
 
 " ALE
 "
+" disable to no consuse with lsp from now
+let g:ale_disable_lsp = 1
 let g:ale_sign_column_always = 0
 let g:ale_set_highlights = 0
 
@@ -480,7 +442,7 @@ let g:ale_sign_warning = ''
 let g:ale_sign_info = ''
 
 let g:ale_linters = {
-\   'ruby': ['standardrb'],
+\   'ruby': ['rubocop'],
 \   'haml': ['hamllint'],
 \   'vim': ['vint'],
 \}
@@ -489,7 +451,7 @@ let g:ale_fixers = {
       \   'javascript': ['prettier'],
       \   'ruby': ['standardrb'],
       \}
-let g:ale_fix_on_save = 1
+let g:ale_fix_on_save = 0
 let g:ale_fix_on_save_ignore = {
       \   'ruby': ['standardrb'],
       \ }
@@ -541,13 +503,6 @@ nnoremap <c-p> :Files<cr>
 let g:fzf_mru_relative = 1
 " nnoremap <c-t> :Tags<cr>
 
-" nnn
-let g:nnn#action = {
-      \ '<c-t>': 'tab split',
-      \ '<c-x>': 'split',
-      \ '<c-v>': 'vsplit' }
-let g:nnn#layout = { 'left': '~20%' }
-
 "" vim-jsx
 
 let g:jsx_ext_required = 0
@@ -590,26 +545,6 @@ fun! LoadGitrebaseBindings()
   nnoremap  C :Cycle<CR>
 endfun
 
-" sessions managment
-" based on https://dockyard.com/blog/2018/06/01/simple-vim-session-management-part-1
-"
-let g:sessions_dir = '~/vim-sessions'
-
-function! SessionName()
-  let sessionName = expand('%:r')
-  if exists('*fugitive#head')
-    let branch =  fugitive#head()
-    return sessionName . branch . '.vim'
-  endif
-  return sessionName . '.vim'
-endfunction
-
-" save a session
-" exec 'nnoremap <Leader>ss :mksession! ' . g:sessions_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
-exec 'nnoremap <Leader>ss :mksession! ' . g:sessions_dir . '/' . SessionName()
-
-" restore a session
-exec 'nnoremap <Leader>sr :so ' . g:sessions_dir . '/*.vim<C-D><BS><BS><BS><BS><BS>'
 
 " rubocop tips
 "
@@ -649,3 +584,6 @@ command! SJiraIssue call ReplaceJiraIssue()
 " * <IssueType> - Issue long summary [ISSUE-ID][]
 " It will then remove `<IssueType> -`
 command! SJiraIssueType %s/*\zs.\{-}-\ze//g | :noh
+
+autocmd bufwritepost .tmux.conf execute ':!tmux source-file %'
+autocmd bufwritepost .tmux.local.conf execute ':!tmux source-file %'
