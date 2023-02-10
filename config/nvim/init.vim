@@ -1,5 +1,4 @@
 call plug#begin('~/.local/share/nvim/plugged')
-
 " Git/Github interaction
 Plug 'RobertAudi/git-blame.vim'
 Plug 'tyru/open-browser.vim'
@@ -13,14 +12,12 @@ Plug 'tpope/vim-repeat'
 Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-abolish'
 Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
 Plug 'itchyny/vim-gitbranch'
 Plug 'mkitt/tabline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
-Plug 'dense-analysis/ale'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'haml', 'eruby'] }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align'
@@ -48,12 +45,20 @@ Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'vim-ruby/vim-ruby'
 Plug 'rlue/vim-fold-rspec'
 Plug 'segeljakt/vim-silicon'
-Plug 'edkolev/tmuxline.vim'
 Plug 'thirtythreeforty/lessspace.vim' " remove unwanted space
-Plug 'aserebryakov/vim-todo-lists'
 Plug 'pechorin/any-jump.vim'
 Plug 'rizzatti/dash.vim'
+
+" LSP
 Plug 'neovim/nvim-lspconfig'
+Plug 'smjonas/inc-rename.nvim'
+Plug 'josa42/nvim-lightline-lsp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'SmiteshP/nvim-navic'
 
 " Better search
 Plug 'haya14busa/incsearch.vim'
@@ -63,6 +68,8 @@ Plug 'RRethy/vim-illuminate'
 
 " Themes
 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'will/bgwinch.nvim'
 Plug 'trevordmiller/nova-vim'
 Plug 'folke/tokyonight.nvim'
 
@@ -146,7 +153,7 @@ if has('autocmd')
   " Delete all whitespace in end of line
   autocmd BufWritePre * :%s/\s\+$//e
   " autocmd! BufWritePost * Neomake
-  autocmd FileType html,css,scss,eruby,less EmmetInstall
+  autocmd FileType html,css,eruby EmmetInstall
 endif
 
 au FileType markdown setl conceallevel=0
@@ -183,8 +190,6 @@ map tp :tabprev<cr>
 
 
 nnoremap <leader>ft Vatzf
-" open tig in a new tabs
-nnoremap <Leader>gg :tabnew<CR>:terminal tig<CR>
 
 augroup terminalCallbacks
   autocmd!
@@ -196,63 +201,111 @@ imap <c-l> <space>=><space>
 lua require('leap').add_default_mappings()
 
 lua << EOF
+config = function() require("bgwinch").setup() end
+require("inc_rename").setup()
 
 -- lsp config
 vim.api.nvim_set_keymap('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
 vim.api.nvim_set_keymap('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
 
-require'lspconfig'.solargraph.setup{}
-
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = true, signs = true }
+  vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = true, signs = false }
 )
 
 local nvim_lsp = require('lspconfig')
+local navic = require("nvim-navic")
+
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
 local on_attach = function(client, bufnr)
-  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  --Enable completion triggered by <c-x><c-o>
-  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  -- setup navic if server support it
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
-  local opts = { noremap=true, silent=true }
-
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>tab split | lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
-  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
-  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
-  -- autofix lint for opened buffer
-  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<space>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<space>nn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, bufopts)
 end
+
+-- Set up nvim-cmp.
+local cmp = require'cmp'
+
+cmp.setup({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+    end,
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Set configuration for specific filetype.
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
 local servers = { "solargraph" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup {
-	on_attach = on_attach,
-	flags = {
-	  debounce_text_changes = 150,
-	}
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
   }
 end
+vim.keymap.set("n", "<leader>rn", ":IncRename ")
 EOF
 
 
@@ -315,18 +368,7 @@ map g# <Plug>(incsearch-nohl-g#)
 " vim light-line
 "
       " \   'gitbranch': 'fugitive#head',
-set noshowmode
-let g:lightline = {
-      \ 'colorscheme': 'tokyonight-storm',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename' ] ],
-      \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok'], ['filetype']]
-      \ },
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \   'gitbranch': 'gitbranch#name'
-      \ },
+      " \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok'], ['filetype']]
       \ 'component_expand': {
       \   'linter_warnings': 'LightlineLinterWarnings',
       \   'linter_errors': 'LightlineLinterErrors',
@@ -337,8 +379,27 @@ let g:lightline = {
       \   'linter_warnings': 'warning',
       \   'linter_errors': 'error'
       \ },
+set noshowmode
+let g:lightline = {
+      \ 'colorscheme': 'tokyonight-storm',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename'] ],
+      \   'right': [['lineinfo'], ['percent'], ['readonly', 'lsp_ok', 'lsp_warnings', 'lsp_info', 'lsp_errors', 'lsp_hints' ], ['filetype']]
+      \ },
+      \ 'component_function': {
+      \   'current_lsp_symbol': 'LightLineLSPCurrentSymbol',
+      \   'filename': 'LightlineFilename',
+      \   'gitbranch': 'gitbranch#name'
+      \ },
       \ }
+call lightline#lsp#register()
 
+function! LightLineLSPCurrentSymbol()
+  return '%{%v:lua.require'nvim-navic'.get_location()%}'
+endfunction
+
+" dont work for now
 function! LightlineFilename()
   let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
   let modified = &modified ? '🔥 ' : ''
@@ -366,7 +427,7 @@ function! LightlineLinterOK() abort
   return l:counts.total == 0 ? '✓ ' : ''
 endfunction
 
-autocmd User ALELint call s:MaybeUpdateLightline()
+"autocmd User ALELint call s:MaybeUpdateLightline()
 
 " Update and show lightline but only if it's visible (e.g., not in Goyo)
 function! s:MaybeUpdateLightline()
@@ -429,38 +490,6 @@ let g:javascript_conceal_NaN                  = "ℕ"
 let g:javascript_conceal_prototype            = "¶"
 let g:javascript_conceal_static               = "•"
 let g:javascript_conceal_super                = "Ω"
-
-" ALE
-"
-" disable to no consuse with lsp from now
-let g:ale_disable_lsp = 1
-let g:ale_sign_column_always = 0
-let g:ale_set_highlights = 0
-
-let g:ale_sign_error = ''
-let g:ale_sign_warning = ''
-let g:ale_sign_info = ''
-
-let g:ale_linters = {
-\   'ruby': ['rubocop'],
-\   'haml': ['hamllint'],
-\   'vim': ['vint'],
-\}
-
-let g:ale_fixers = {
-      \   'javascript': ['prettier'],
-      \   'ruby': ['standardrb'],
-      \}
-let g:ale_fix_on_save = 0
-let g:ale_fix_on_save_ignore = {
-      \   'ruby': ['standardrb'],
-      \ }
-
-let g:airline#extensions#ale#enabled = 1
-let g:go_fmt_fail_silently = 1 " avoid conflict with vim-ogo : https://github.com/w0rp/ale/issues/609
-
-nmap <silent> <C-M> <Plug>(ale_previous_wrap)
-nmap <silent> <C-m> <Plug>(ale_next_wrap)
 
 " vim-test config
 
@@ -544,16 +573,6 @@ fun! LoadGitrebaseBindings()
   nnoremap  F :Fixup<CR>
   nnoremap  C :Cycle<CR>
 endfun
-
-
-" rubocop tips
-"
-function! RubocopAutocorrect()
-  execute "!rubocop -a " . bufname("%")
-  " call ALELint()
-endfunction
-
-map <silent> <Leader>cop :call RubocopAutocorrect()<cr>
 
 function! GetJiraIssueFromGit()
   let l:jiraIssue = matchstr(gitbranch#name(), '\v\c(TKT-[0-9]*)')
