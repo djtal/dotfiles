@@ -8,12 +8,11 @@ Plug 'preservim/vim-markdown'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-surround'
 Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-abolish'
 Plug 'itchyny/lightline.vim'
 Plug 'itchyny/vim-gitbranch'
-Plug 'mkitt/tabline.vim'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
@@ -24,8 +23,6 @@ Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
 Plug 'janko-m/vim-test'
 Plug 'BlakeWilliams/vim-tbro'
-Plug 'dag/vim-fish'
-Plug 'tpope/vim-projectionist'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
@@ -38,7 +35,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'AndrewRadev/sideways.vim'
 Plug 'AndrewRadev/switch.vim'
 Plug 'andymass/vim-matchup'
-Plug 'AndrewRadev/switch.vim'
 Plug 'kana/vim-textobj-user'
 Plug 'bootleq/vim-textobj-rubysymbol'
 Plug 'nelstrom/vim-textobj-rubyblock'
@@ -202,6 +198,7 @@ lua require('leap').add_default_mappings()
 
 lua << EOF
 require('lsp')
+-- require('lualine_config')
 EOF
 
 
@@ -335,43 +332,6 @@ endfunction
 " vim-grepper
 nnoremap <leader>g :Grepper -tool rg<cr>
 
-
-" vim-projectionnist
-"
-let g:projectionist_heuristics = {
-      \  "config/prod.exs": {
-      \    "web/controllers/*_controller.ex": {
-      \      "type": "controller",
-      \      "alternate": "test/controllers/{}_controller_test.exs",
-      \    },
-      \    "web/models/*.ex": {
-      \      "type": "model",
-      \      "alternate": "test/models/{}_test.exs",
-      \    },
-      \    "web/views/*_view.ex": {
-      \      "type": "view",
-      \      "alternate": "test/views/{}_view_test.exs",
-      \    },
-      \    "web/templates/*.html.eex": {
-      \      "type": "template",
-      \      "alternate": "web/views/{dirname|basename}_view.ex"
-      \    },
-      \    "lib/organizations_api/*.ex": {
-      \      "type": "lib",
-      \      "alternate": "test/lib/organizations_api/*.ex"
-      \    },
-      \    "CHANGELOG.md": {
-      \      "type": "change",
-      \    },
-      \    "doc/swagger.yaml": {
-      \      "type": "swag",
-      \    },
-      \    "test/*_test.exs": {
-      \      "type": "test",
-      \      "alternate": "web/{}.ex",
-      \    }
-      \  }
-      \}
 
 
 let g:jsx_ext_required = 0
