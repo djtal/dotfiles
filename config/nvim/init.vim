@@ -10,8 +10,6 @@ Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-abolish'
-Plug 'itchyny/lightline.vim'
-Plug 'itchyny/vim-gitbranch'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'airblade/vim-gitgutter'
 Plug 'elixir-editors/vim-elixir'
@@ -48,7 +46,6 @@ Plug 'rizzatti/dash.vim'
 " LSP
 Plug 'neovim/nvim-lspconfig'
 Plug 'smjonas/inc-rename.nvim'
-Plug 'josa42/nvim-lightline-lsp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
@@ -58,6 +55,7 @@ Plug 'SmiteshP/nvim-navic'
 
 Plug 'ggandor/leap.nvim'
 Plug 'RRethy/vim-illuminate'
+Plug 'nvim-tree/nvim-web-devicons'
 " Plug 'mhinz/vim-grepper'
 
 " Themes
@@ -194,7 +192,8 @@ lua require('leap').add_default_mappings()
 
 lua << EOF
 require('lsp')
--- require('lualine_config')
+require('dev_icon')
+require('lualine_config')
 EOF
 
 
@@ -239,76 +238,7 @@ let g:fold_rspec_foldlevel = 2       " sets initial open/closed state of all fol
 let g:fold_rspec_foldcolumn = 4      " shows a 4-character column on the lefthand side of the window displaying the document's fold structure
 let g:fold_rspec_foldminlines = 3    " disables closing of folds containing two lines or fewer
 
-" vim light-line
-"
-      " \   'gitbranch': 'fugitive#head',
-      " \   'right': [['lineinfo'], ['percent'], ['readonly', 'linter_warnings', 'linter_errors', 'linter_ok'], ['filetype']]
-      \ 'component_expand': {
-      \   'linter_warnings': 'LightlineLinterWarnings',
-      \   'linter_errors': 'LightlineLinterErrors',
-      \   'linter_ok': 'LightlineLinterOK'
-      \ },
-      \ 'component_type': {
-      \   'readonly': 'error',
-      \   'linter_warnings': 'warning',
-      \   'linter_errors': 'error'
-      \ },
 set noshowmode
-let g:lightline = {
-      \ 'colorscheme': 'tokyonight-storm',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename'] ],
-      \   'right': [['lineinfo'], ['percent'], ['readonly', 'lsp_ok', 'lsp_warnings', 'lsp_info', 'lsp_errors', 'lsp_hints' ], ['filetype']]
-      \ },
-      \ 'component_function': {
-      \   'current_lsp_symbol': 'LightLineLSPCurrentSymbol',
-      \   'filename': 'LightlineFilename',
-      \   'gitbranch': 'gitbranch#name'
-      \ },
-      \ }
-call lightline#lsp#register()
-
-function! LightLineLSPCurrentSymbol()
-  return '%{%v:lua.require'nvim-navic'.get_location()%}'
-endfunction
-
-" dont work for now
-function! LightlineFilename()
-  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
-  let modified = &modified ? '🔥 ' : ''
-  return modified . filename
-endfunction
-
-function! LightlineLinterWarnings() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d ◆', all_non_errors)
-endfunction
-
-function! LightlineLinterErrors() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '' : printf('%d ✗', all_errors)
-endfunction
-
-function! LightlineLinterOK() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-  return l:counts.total == 0 ? '✓ ' : ''
-endfunction
-
-"autocmd User ALELint call s:MaybeUpdateLightline()
-
-" Update and show lightline but only if it's visible (e.g., not in Goyo)
-function! s:MaybeUpdateLightline()
-  if exists('#lightline')
-    call lightline#update()
-  end
-endfunction
 
 " vim-grepper
 nnoremap <leader>g :Grepper -tool rg<cr>
