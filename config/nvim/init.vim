@@ -56,8 +56,6 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'SmiteshP/nvim-navic'
 
-" Better search
-Plug 'haya14busa/incsearch.vim'
 Plug 'ggandor/leap.nvim'
 Plug 'RRethy/vim-illuminate'
 " Plug 'mhinz/vim-grepper'
@@ -95,9 +93,7 @@ set background=dark
 " colorscheme nova
 colorscheme tokyonight-moon
 
-let g:gh_color = "soft"
-
-set colorcolumn=85,126
+set colorcolumn=85,120
 
 " No backup file and no swap file
 set nobackup
@@ -242,21 +238,6 @@ let g:fold_rspec_foldenable = 1      " disables folding (toggle with `zi`)
 let g:fold_rspec_foldlevel = 2       " sets initial open/closed state of all folds (open unless nested more than two levels deep)
 let g:fold_rspec_foldcolumn = 4      " shows a 4-character column on the lefthand side of the window displaying the document's fold structure
 let g:fold_rspec_foldminlines = 3    " disables closing of folds containing two lines or fewer
-
-" vim-incsearch
-
-map /  <Plug>(incsearch-forward)
-map ?  <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-
-set hlsearch
-let g:incsearch#auto_nohlsearch = 1
-map n  <Plug>(incsearch-nohl-n)
-map N  <Plug>(incsearch-nohl-N)
-map *  <Plug>(incsearch-nohl-*)
-map #  <Plug>(incsearch-nohl-#)
-map g* <Plug>(incsearch-nohl-g*)
-map g# <Plug>(incsearch-nohl-g#)
 
 " vim light-line
 "
