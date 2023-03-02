@@ -17,7 +17,6 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'haml', 'eruby'] }
 Plug 'junegunn/rainbow_parentheses.vim'
-Plug 'junegunn/vim-easy-align'
 Plug 'tpope/vim-vinegar'
 Plug 'janko-m/vim-test'
 Plug 'BlakeWilliams/vim-tbro'
