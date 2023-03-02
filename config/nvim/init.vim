@@ -53,7 +53,6 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'SmiteshP/nvim-navic'
 
-Plug 'RRethy/vim-illuminate'
 Plug 'nvim-tree/nvim-web-devicons'
 " Plug 'mhinz/vim-grepper'
 
@@ -199,9 +198,6 @@ EOF
 " vnoremap k :m '<-2<cr>gv=gv
 
 
-" vim-illuminate
-
-nnoremap <c-s> '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>'
 
 " don't show previw  on automplete
 set completeopt-=preview
