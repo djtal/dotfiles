@@ -53,7 +53,6 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'SmiteshP/nvim-navic'
 
-Plug 'ggandor/leap.nvim'
 Plug 'RRethy/vim-illuminate'
 Plug 'nvim-tree/nvim-web-devicons'
 " Plug 'mhinz/vim-grepper'
@@ -187,8 +186,6 @@ augroup terminalCallbacks
 augroup END
 
 imap <c-l> <space>=><space>
-
-lua require('leap').add_default_mappings()
 
 lua << EOF
 require('lsp')
