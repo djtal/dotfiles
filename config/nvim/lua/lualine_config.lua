@@ -1,8 +1,10 @@
+local navic = require("nvim-navic")
+
 require('lualine').setup {
   options = {
     icons_enabled = true,
     theme = 'auto',
-    component_separators = { left = '', right = ''},
+    component_separators = { left = '|', right = '|'},
     section_separators = { left = '', right = ''},
     disabled_filetypes = {
       statusline = {},
@@ -20,7 +22,7 @@ require('lualine').setup {
   sections = {
     lualine_a = {'mode' },
     lualine_b = {{'filename', symbols = { modified = '🔥', alternate_file = '#'}}},
-    lualine_c = {{'branch', icon = ''}},
+    lualine_c = {{'branch', icon = ''}, { navic.get_location, cond = navic.is_available }},
     lualine_x = {'filetype'},
     lualine_y = {{'diagnostics', sources = { 'nvim_lsp' }, always_visible = true, symbols = {error = '×', warn = '•', info = '~', hint = '>'}}},
     lualine_z = {'location'}
