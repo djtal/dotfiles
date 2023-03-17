@@ -40,7 +40,7 @@ Plug 'rlue/vim-fold-rspec'
 Plug 'segeljakt/vim-silicon'
 Plug 'thirtythreeforty/lessspace.vim' " remove unwanted space
 Plug 'pechorin/any-jump.vim'
-Plug 'rizzatti/dash.vim'
+Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.*', 'do': 'make install_jsregexp'}
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -114,7 +114,8 @@ nmap <Leader>c :set cursorline!<CR>
 let mapleader=","
 let localmapleader=";"
 
-nnoremap <leader><leader> <c-^>
+" make leader,leader jump to previous buffer
+" nnoremap <leader><leader> <c-^>
 nnoremap <leader><space> :noh<cr>
 nmap <leader>) <Plug>(GitGutterNextHunk)
 nmap <leader>( <Plug>(GitGutterPrevHunk)
@@ -189,6 +190,7 @@ lua << EOF
 require('lsp')
 require('dev_icon')
 require('lualine_config')
+require('lua_snip')
 EOF
 
 
