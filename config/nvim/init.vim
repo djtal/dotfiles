@@ -11,7 +11,7 @@ Plug 'tpope/vim-repeat'
 Plug 'machakann/vim-sandwich'
 Plug 'tpope/vim-abolish'
 Plug 'nvim-lualine/lualine.nvim'
-Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-endwise'
@@ -191,6 +191,7 @@ require('lsp')
 require('dev_icon')
 require('lualine_config')
 require('lua_snip')
+require('git_signs')
 EOF
 
 
