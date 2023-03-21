@@ -166,6 +166,14 @@ nvim_lsp["lua_ls"].setup {
     debounce_text_changes = 150,
   }
 }
+nvim_lsp["bashls"].setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  }
+}
+
 require("trouble").setup {
   -- your configuration comes here
   -- or leave it empty to use the default settings
