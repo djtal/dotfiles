@@ -165,10 +165,14 @@ map <leader>ev :vsp %%
 map <leader>et :tabe %%
 
 " easier navigation between split windows
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-h> <c-w>h
-nnoremap <c-l> <c-w>l
+" Disabled j and k to use with luasnip
+" nnoremap <c-j> <c-w>j
+" nnoremap <c-k> <c-w>k
+" disabled since used by sideway.vim
+" nnoremap <c-h> <c-w>h
+" nnoremap <c-l> <c-w>l
+nnoremap <c-h> :SidewaysLeft<cr>
+nnoremap <c-l> :SidewaysRight<cr>
 
 " tabs managment
 map <C-S-tab> :tabprevious<CR>
