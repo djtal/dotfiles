@@ -173,6 +173,13 @@ nvim_lsp["bashls"].setup {
     debounce_text_changes = 150,
   }
 }
+nvim_lsp["tsserver"].setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  },
+}
 
 require("trouble").setup {
   -- your configuration comes here

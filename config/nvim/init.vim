@@ -51,8 +51,9 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'SmiteshP/nvim-navic'
-Plug 'simrat39/inlay-hints.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'cuducos/yaml.nvim'
 
 Plug 'nvim-tree/nvim-web-devicons'
 " Plug 'mhinz/vim-grepper'
@@ -193,6 +194,7 @@ augroup END
 imap <c-l> <space>=><space>
 
 lua << EOF
+require('tree_sitter_config')
 require('lsp')
 require('dev_icon')
 require('lualine_config')
