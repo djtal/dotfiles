@@ -51,6 +51,8 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'SmiteshP/nvim-navic'
+Plug 'simrat39/inlay-hints.nvim'
+Plug 'folke/trouble.nvim'
 
 Plug 'nvim-tree/nvim-web-devicons'
 " Plug 'mhinz/vim-grepper'
