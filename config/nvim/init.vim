@@ -42,6 +42,7 @@ Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.*', 'do': 'make install_jsregexp'}
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'smjonas/inc-rename.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -194,10 +195,17 @@ imap <c-l> <space>=><space>
 lua << EOF
 require('tree_sitter_config')
 require('lsp')
+require('nulls_config')
 require('dev_icon')
 require('lualine_config')
+require('neotest_config')
 require('lua_snip')
 require('git_signs')
+require'nvim-treesitter.configs'.setup {
+  matchup = {
+    enable = true,
+  },
+}
 EOF
 
 
