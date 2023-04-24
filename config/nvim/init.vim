@@ -34,11 +34,13 @@ Plug 'kana/vim-textobj-user'
 Plug 'bootleq/vim-textobj-rubysymbol'
 Plug 'nelstrom/vim-textobj-rubyblock'
 Plug 'vim-ruby/vim-ruby'
-Plug 'rlue/vim-fold-rspec'
 Plug 'segeljakt/vim-silicon'
 Plug 'thirtythreeforty/lessspace.vim' " remove unwanted space
 Plug 'pechorin/any-jump.vim'
 Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.*', 'do': 'make install_jsregexp'}
+
+" more ruby
+"Plug 'jlcrochet/vim-ruby'
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
@@ -53,6 +55,7 @@ Plug 'SmiteshP/nvim-navic'
 Plug 'folke/trouble.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'cuducos/yaml.nvim'
+Plug 'pedrohdz/vim-yaml-folds'
 
 Plug 'nvim-tree/nvim-web-devicons'
 " Plug 'mhinz/vim-grepper'
@@ -76,6 +79,18 @@ Plug 'elzr/vim-json'
 Plug 'othree/html5.vim'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
+
+
+Plug 'nvim-lua/plenary.nvim'
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'nvim-neotest/neotest'
+Plug 'olimorris/neotest-rspec'
+
+Plug 'dstein64/vim-startuptime'
+
+Plug 'kevinhwang91/nvim-ufo'
+Plug 'kevinhwang91/promise-async'
+Plug 'luukvbaal/statuscol.nvim'
 
 call plug#end()
 
@@ -195,11 +210,13 @@ imap <c-l> <space>=><space>
 lua << EOF
 require('tree_sitter_config')
 require('lsp')
+require('ufo_config')
 require('nulls_config')
 require('dev_icon')
 require('lualine_config')
 require('neotest_config')
 require('lua_snip')
+require('statuscol_config')
 require('git_signs')
 require'nvim-treesitter.configs'.setup {
   matchup = {
@@ -207,7 +224,6 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
-
 
 " visual move block of line
 " vnoremap J :m '>+1<CR>gv=gv
@@ -240,12 +256,6 @@ let g:silicon = {
 let g:silicon['default-file-pattern'] =
       \ '~/Pictures/capture/silicon-{time:%Y-%m-%d-%H%M%S}.png'
 
-" vim-fold-rspec
-"
-let g:fold_rspec_foldenable = 1      " disables folding (toggle with `zi`)
-let g:fold_rspec_foldlevel = 2       " sets initial open/closed state of all folds (open unless nested more than two levels deep)
-let g:fold_rspec_foldcolumn = 4      " shows a 4-character column on the lefthand side of the window displaying the document's fold structure
-let g:fold_rspec_foldminlines = 3    " disables closing of folds containing two lines or fewer
 
 set noshowmode
 
