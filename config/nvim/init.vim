@@ -13,8 +13,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-endwise'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'haml', 'eruby'] }
+Plug 'mattn/emmet-vim', { 'for': ['html', 'eruby'] }
 Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'janko-m/vim-test'
 Plug 'BlakeWilliams/vim-tbro'
@@ -53,7 +52,12 @@ Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'SmiteshP/nvim-navic'
 Plug 'folke/trouble.nvim'
+
+" tree-sitter stuff
 Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'RRethy/nvim-treesitter-endwise'
+Plug 'windwp/nvim-ts-autotag'
+
 Plug 'cuducos/yaml.nvim'
 Plug 'pedrohdz/vim-yaml-folds'
 
@@ -218,11 +222,6 @@ require('neotest_config')
 require('lua_snip')
 require('statuscol_config')
 require('git_signs')
-require'nvim-treesitter.configs'.setup {
-  matchup = {
-    enable = true,
-  },
-}
 EOF
 
 " visual move block of line
