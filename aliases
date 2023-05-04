@@ -44,3 +44,4 @@ alias preview="fzf --preview 'bat --color \"always\" {}'"
 alias git='LC_ALL=en_GB git'
 alias abrew='/opt/homebrew/bin/brew'
 alias ibrew='arch -x86_64 /usr/local/bin/brew'
+alias fvi='NVIM_APPNAME=nvim-fresh-lazy nvim'
