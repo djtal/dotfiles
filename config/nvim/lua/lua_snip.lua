@@ -19,6 +19,28 @@ for _, ft_path in ipairs(vim.api.nvim_get_runtime_file("lua/snips/*.lua", true))
   loadfile(ft_path)()
 end
 
+-- see https://github.com/L3MON4D3/LuaSnip/blob/master/DOC.md#edit_snippet_files
+-- see also https://github.com/L3MON4D3/Dotfiles/blob/89e0d2d0b8285a3368ff2eaa2f537193a371d42c/.config/nvim/lua/plugins/luasnip/ft_edit.lua
+-- Need to autoselect filetype
+-- use telescope
+local edit_snips = function()
+  require("luasnip.loaders").edit_snippet_files {
+    ft_filter = function(_)
+      return false
+    end,
+    edit = function(file)
+      print("edit func")
+      vim.cmd('tabnew ' .. file)
+    end,
+    format = function(file, source_name)
+      print(file .. ' ' .. source_name)
+      return file
+    end,
+  }
+end
+
+vim.api.nvim_create_user_command("LuaSnipEdit", edit_snips, {})
+
 
 -- <c-k> is my expansion key
 -- this will expand the current item or jump to the next item within the snippet.
