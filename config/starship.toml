@@ -34,7 +34,7 @@ stashed =  ""
 
 [git_branch]
 format = "\\[[$symbol$branch]($style)\\]"
-symbol = '⎇ '
+symbol = ' '
 style = 'green'
 
 [git_state]
