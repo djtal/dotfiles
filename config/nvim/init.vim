@@ -11,7 +11,6 @@ Plug 'tpope/vim-repeat'
 Plug 'machakann/vim-sandwich'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'elixir-editors/vim-elixir'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim', { 'for': ['html', 'eruby'] }
 Plug 'junegunn/rainbow_parentheses.vim'
@@ -43,7 +42,7 @@ Plug 'L3MON4D3/LuaSnip', {'tag': 'v1.*', 'do': 'make install_jsregexp'}
 
 " LSP
 Plug 'neovim/nvim-lspconfig'
-Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'nvimtools/none-ls.nvim'
 Plug 'smjonas/inc-rename.nvim'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
@@ -68,8 +67,12 @@ Plug 'nvim-tree/nvim-web-devicons'
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'will/bgwinch.nvim'
-Plug 'trevordmiller/nova-vim'
 Plug 'folke/tokyonight.nvim'
+
+
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+Plug 'nvim-telescope/telescope-ui-select.nvim'
 
 
 " JS plugins
@@ -85,10 +88,7 @@ Plug 'hail2u/vim-css3-syntax'
 Plug 'ap/vim-css-color'
 
 
-Plug 'nvim-lua/plenary.nvim'
 Plug 'antoinemadec/FixCursorHold.nvim'
-Plug 'nvim-neotest/neotest'
-Plug 'olimorris/neotest-rspec'
 
 Plug 'dstein64/vim-startuptime'
 
@@ -106,8 +106,7 @@ set t_AB=^[[48;5;%dm
 set t_AF=^[[38;5;%dm
 
 set background=dark
-" colorscheme nova
-colorscheme tokyonight-moon
+colorscheme tokyonight-storm
 
 set colorcolumn=85,120
 
@@ -172,6 +171,7 @@ augroup filetypedetect
     au BufRead,BufNewFile Dangerfile setfiletype ruby
     au BufNewFile,BufRead *.json.jbuilder set ft=ruby
     au BufNewFile,BufRead *.json.jb set ft=ruby
+    au BufNewFile,BufRead *.gemfile set ft=ruby
     au BufRead,BufNewFile *.ronn setfiletype markdown
     " associate *.foo with php filetype
 augroup END
@@ -218,7 +218,6 @@ require('ufo_config')
 require('nulls_config')
 require('dev_icon')
 require('lualine_config')
-require('neotest_config')
 require('lua_snip')
 require('statuscol_config')
 require('git_signs')
@@ -294,9 +293,10 @@ endfunction
 let g:test#custom_strategies = {'tbro': function('TbroStrategy')}
 let g:test#strategy = 'tbro'
 
-
-nmap <silent> <leader>t :TestNearest<CR>
-nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>t :TestNearest CAPYBARA_DRIVER=chrome_headless<CR>
+nmap <silent> <leader><leader>t :TestNearest CAPYBARA_DRIVER='chrome'<CR>
+nmap <silent> <leader>T :TestFile CAPYBARA_DRIVER=chrome_headless<CR>
+nmap <silent> <leader><leader>T :TestFile CAPYBARA_DRIVER=''<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 
