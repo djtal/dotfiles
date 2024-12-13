@@ -1,5 +1,10 @@
 local null_ls = require("null-ls")
 
+-- note that as of july 2023 this plugin is not maintained anymore
+-- need to check if other plugin exist to replace
+--  * erb_lint
+--  * yaml_lint
+
 null_ls.setup({
   on_attach = function(client, bufnr)
     -- Allow formating if supported by client

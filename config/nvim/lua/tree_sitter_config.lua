@@ -7,9 +7,11 @@ require'nvim-treesitter.configs'.setup {
   },
   highlight = {
     enable = true,
+    disable = { "yaml", "eruby.yaml", },
   },
   matchup = {
     enable = true,
   },
+  embedded_template = { enable = true, },
 }
 require('nvim-ts-autotag').setup({ filetypes = { "html" , "xml", "eruby", "embedded_template" } })
