@@ -63,6 +63,7 @@ local on_attach = function(client, bufnr)
   -- Mappings.
   -- See `:help vim.lsp.*` for documentation on any of the below functions
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'cl', vim.lsp.codelens.display, bufopts)
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
@@ -142,7 +143,7 @@ require('ufo').setup()
 --     }
 --   }
 -- end
-nvim_lsp["solargraph"].setup {
+nvim_lsp["ruby_lsp"].setup {
   on_attach = on_attach,
   capabilities = capabilities,
   flags = {
@@ -180,35 +181,47 @@ nvim_lsp["bashls"].setup {
     debounce_text_changes = 150,
   }
 }
-nvim_lsp["tsserver"].setup {
+nvim_lsp["ts_ls"].setup {
   on_attach = on_attach,
   capabilities = capabilities,
   flags = {
     debounce_text_changes = 150,
   },
 }
+nvim_lsp["emmet_ls"].setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug", "typescriptreact", "vue" },
+  init_options = {
+    html = {
+      options = {
+        -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+        ["bem.enabled"] = true,
+      },
+    },
+  }
+}
 
 require("trouble").setup {
   -- your configuration comes here
   -- or leave it empty to use the default settings
   -- refer to the configuration section below
+  modes = {
+    diagnostics_buffer = {
+      mode = "diagnostics", -- inherit from diagnostics mode
+      filter = { buf = 0 }, -- filter diagnostics to the current buffer
+    },
+    symbols = {
+      win = {
+        size = 0.35
+      }
+    },
+  },
 }
-vim.keymap.set("n", "<leader>xx", "<cmd>TroubleToggle<cr>",
+vim.keymap.set("n", "<space>q", "<cmd>Trouble toggle diagnostics_buffer<cr>",
   {silent = true, noremap = true}
 )
-vim.keymap.set("n", "<leader>xw", "<cmd>TroubleToggle workspace_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<space>q", "<cmd>TroubleToggle document_diagnostics<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xl", "<cmd>TroubleToggle loclist<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "<leader>xq", "<cmd>TroubleToggle quickfix<cr>",
-  {silent = true, noremap = true}
-)
-vim.keymap.set("n", "gR", "<cmd>TroubleToggle lsp_references<cr>",
+vim.keymap.set("n", "<space>s", "<cmd>Trouble toggle symbols<cr>",
   {silent = true, noremap = true}
 )
 
