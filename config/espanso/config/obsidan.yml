@@ -1,0 +1,4 @@
+filter_exec: '/Applications/Obsidian.app'
+
+extra_includes:
+  - "../match/_jira.yml"

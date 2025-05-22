@@ -1,0 +1,5 @@
+matches:
+  - regex: ":web-(?P<id>\\d*)"
+    replace: "JIRA:WEB-{{id}}"
+  - regex: ":team-(?P<id>\\d*)"
+    replace: "JIRA:TEAMS-{{id}}"
