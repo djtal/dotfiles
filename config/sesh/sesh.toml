@@ -1,0 +1,2 @@
+[default_session]
+preview_command = "eza --git --icons --git-ignore --group-directories-first -1 --no-user --color=always {}"
